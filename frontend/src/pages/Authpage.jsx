@@ -2,13 +2,16 @@ import { useState } from "react";
 import AuthWrapper from "@/components/common/AuthWrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import GoogleIcon from "@/assets/icons/google_icon.svg";
+import fbIcon from "@/assets/icons/Vector.svg";
+import AppleIcon from "@/assets/icons/Group.svg";
 
 export default function AuthPage() {
   const [mode, setMode] = useState("register");
 
   return (
     <AuthWrapper>
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md mt-auto mb-6">
         <h2 className="text-2xl font-semibold mb-4 text-left ml-1">
           Good Morning! <span className="inline-block">👋</span>
         </h2>
@@ -40,7 +43,7 @@ export default function AuthPage() {
                 <Input placeholder="Last Name" />
               </div>
               <div className="flex space-x-2">
-                <Input placeholder="Gender" />
+                <Input className="w-24" placeholder="Gender" />
                 <Input placeholder="Date of Birth" />
               </div>
             </>
@@ -53,12 +56,12 @@ export default function AuthPage() {
         </form>
 
         {/* Social login */}
-        <div className="text-center mt-4 text-sm">
+        <div className="text-center mt-6 text-sm">
           or Sign up With
-          <div className="flex justify-center mt-2 space-x-4">
-            <img src="/icons/facebook.svg" className="w-5" />
-            <img src="/icons/google.svg" className="w-5" />
-            <img src="/icons/apple.svg" className="w-5" />
+          <div className="flex justify-center mt-4 space-x-8">
+            <img src={GoogleIcon} alt="Google Login" className="h-15 w-15" />
+            <img src={fbIcon} alt="Facebook Login" className="h-15 w-15" />
+            <img src={AppleIcon} alt="Apple Login" className="h-15 w-15" />
           </div>
         </div>
       </div>
