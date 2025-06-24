@@ -5,6 +5,9 @@
 body {
   @apply font-sans;
 }
+html, body, #root {
+  height: 100%;
+}
 
 @layer base {
   :root {

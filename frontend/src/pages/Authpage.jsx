@@ -5,9 +5,29 @@ import { Input } from "@/components/ui/input";
 import GoogleIcon from "@/assets/icons/google_icon.svg";
 import fbIcon from "@/assets/icons/Vector.svg";
 import AppleIcon from "@/assets/icons/Group.svg";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
-export default function AuthPage() {
-  const [mode, setMode] = useState("register");
+export default function AuthPage({ mode: initialMode }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [mode, setMode] = useState(initialMode);
+
+  useEffect(() => {
+    if (location.pathname.includes("register")) setMode("register");
+    else setMode("login");
+  }, [location.pathname]);
+
+  const handleToggle = (targetMode) => {
+    navigate(`/${targetMode}`);
+  };
+  const handleSubmit = (e) => {
+  e.preventDefault();
+  navigate("/dashboard");
+};
+
 
   return (
     <AuthWrapper>
@@ -19,23 +39,23 @@ export default function AuthPage() {
         {/* Tabs */}
         <div className="flex justify-center mb-6">
           <button
-            onClick={() => setMode("login")}
-            className={`px-4 py-2 border-b-2 ${mode === "login" ? "border-black font-semibold" : "border-transparent"
-              }`}
+            onClick={() => handleToggle("login")}
+            className={`px-4 py-2 border-b-2 ${mode === "login" ? "border-black font-semibold" : "border-transparent"}`}
           >
             Login
           </button>
+
           <button
-            onClick={() => setMode("register")}
-            className={`px-4 py-2 border-b-2 ${mode === "register" ? "border-black font-semibold" : "border-transparent"
-              }`}
+            onClick={() => handleToggle("register")}
+            className={`px-4 py-2 border-b-2 ${mode === "register" ? "border-black font-semibold" : "border-transparent"}`}
           >
             Register
           </button>
+
         </div>
 
         {/* Form */}
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           {mode === "register" && (
             <>
               <div className="flex space-x-2">
@@ -52,7 +72,7 @@ export default function AuthPage() {
           <Input placeholder="Email Address" />
           <Input placeholder="Create your Password" type="password" />
 
-          <Button className="w-full">Continue →</Button>
+          <Button className="w-full" type="submit">Continue →</Button>
         </form>
 
         {/* Social login */}
