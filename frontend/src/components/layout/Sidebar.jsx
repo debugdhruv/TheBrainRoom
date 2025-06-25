@@ -72,11 +72,10 @@ export default function Sidebar() {
               <NavLink
                 key={name}
                 to={path}
-                className={`flex items-center gap-3 px-4 py-2 rounded-md transition-colors ${
-                  isActive
-                    ? "bg-zinc-200 text-black font-semibold"
-                    : "text-zinc-600 hover:bg-zinc-100"
-                }`}
+                className={`flex items-center gap-3 px-4 py-2 rounded-md transition-colors ${isActive
+                  ? "bg-zinc-200 text-black font-semibold"
+                  : "text-zinc-600 hover:bg-zinc-100"
+                  }`}
               >
                 <img src={isActive ? iconActive : icon} alt={name} className="h-5 w-5" />
                 {name}
@@ -103,10 +102,7 @@ export default function Sidebar() {
             <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
             Logout
           </button>
-          <a
-            href="https://github.com/debugdhruv/The-Brain-Room"
-            className="text-zinc-500 underline text-xs"
-          >
+          <a href="https://github.com/debugdhruv/The-Brain-Room" target="blank" className="text-zinc-500 underline text-xs">
             Source Code
           </a>
         </div>
