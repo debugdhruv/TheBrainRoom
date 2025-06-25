@@ -20,12 +20,84 @@ export default function Dashboard() {
       thumbnail: "https://source.unsplash.com/400x200/?calm",
       link: "https://www.healthline.com/health/how-to-reduce-anxiety",
     },
+    {
+      title: "How to stop overthinking",
+      source: "YouTube",
+      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    },
+    {
+      title: "Tips to reduce anxiety",
+      source: "Article",
+      thumbnail: "https://source.unsplash.com/400x200/?calm",
+      link: "https://www.healthline.com/health/how-to-reduce-anxiety",
+    },
+    {
+      title: "How to stop overthinking",
+      source: "YouTube",
+      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    },
+    {
+      title: "Tips to reduce anxiety",
+      source: "Article",
+      thumbnail: "https://source.unsplash.com/400x200/?calm",
+      link: "https://www.healthline.com/health/how-to-reduce-anxiety",
+    },
+    {
+      title: "How to stop overthinking",
+      source: "YouTube",
+      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    },
+    {
+      title: "Tips to reduce anxiety",
+      source: "Article",
+      thumbnail: "https://source.unsplash.com/400x200/?calm",
+      link: "https://www.healthline.com/health/how-to-reduce-anxiety",
+    },
+    {
+      title: "How to stop overthinking",
+      source: "YouTube",
+      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    },
+    {
+      title: "Tips to reduce anxiety",
+      source: "Article",
+      thumbnail: "https://source.unsplash.com/400x200/?calm",
+      link: "https://www.healthline.com/health/how-to-reduce-anxiety",
+    },
+    {
+      title: "How to stop overthinking",
+      source: "YouTube",
+      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    },
+    {
+      title: "Tips to reduce anxiety",
+      source: "Article",
+      thumbnail: "https://source.unsplash.com/400x200/?calm",
+      link: "https://www.healthline.com/health/how-to-reduce-anxiety",
+    },
+    {
+      title: "How to stop overthinking",
+      source: "YouTube",
+      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    },
+    {
+      title: "Tips to reduce anxiety",
+      source: "Article",
+      thumbnail: "https://source.unsplash.com/400x200/?calm",
+      link: "https://www.healthline.com/health/how-to-reduce-anxiety",
+    },
   ];
 
   return (
     <div className="w-full">
-      <h1 className="text-2xl font-semibold mb-2">Hi Dhruv 👋</h1>
-      <p className="text-zinc-600 mb-8">{quote}</p>
+      <h1 className="text-2xl text-slate-600 font-semibold mb-2">Hello Dhruv! 👋</h1>
+      <p className="text-slate-400 mb-8">{quote}</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {sampleCards.map((card, index) => (

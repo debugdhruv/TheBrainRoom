@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { NavLink, useLocation } from "react-router-dom";
 import Logo from "@/assets/darklogo.png";
 
@@ -24,6 +25,7 @@ import LogoutIcon from "@/assets/icons/logout 1.svg";
 export default function Sidebar() {
   const location = useLocation();
   const isPremiumActive = location.pathname === "/dashboard/premium";
+  const navigate = useNavigate();
 
   const navItems = [
     {
@@ -112,10 +114,13 @@ export default function Sidebar() {
           </a>
         </div>
         <div className="flex justify-between items-center">
-          <button className="flex items-center gap-2 text-purple-700 bg-purple-100 px-3 py-1 rounded-full text-base">
-            <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
-            Logout
-          </button>
+          <button
+  onClick={() => navigate("/login")}
+  className="flex items-center gap-2 text-purple-700 bg-purple-100 px-3 py-1 rounded-full text-base"
+>
+  <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
+  Logout
+</button>
           <a href="https://github.com/debugdhruv/The-Brain-Room" target="blank" className="text-zinc-500 underline text-xs">
             Source Code
           </a>

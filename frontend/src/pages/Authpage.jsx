@@ -12,8 +12,15 @@ import { useEffect } from "react";
 export default function AuthPage({ mode: initialMode }) {
   const location = useLocation();
   const navigate = useNavigate();
-
   const [mode, setMode] = useState(initialMode);
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+
+    if (hour >= 2 && hour < 12) return "Good Morning";
+    if (hour >= 12 && hour < 16) return "Good Afternoon";
+    return "Good Evening";
+  };
 
   useEffect(() => {
     if (location.pathname.includes("register")) setMode("register");
@@ -24,16 +31,16 @@ export default function AuthPage({ mode: initialMode }) {
     navigate(`/${targetMode}`);
   };
   const handleSubmit = (e) => {
-  e.preventDefault();
-  navigate("/dashboard");
-};
+    e.preventDefault();
+    navigate("/dashboard");
+  };
 
 
   return (
     <AuthWrapper>
       <div className="w-full max-w-md mt-auto mb-6">
         <h2 className="text-2xl font-semibold mb-4 text-left ml-1">
-          Good Morning! <span className="inline-block">👋</span>
+          {getGreeting()}! <span className="inline-block">👋</span>
         </h2>
 
         {/* Tabs */}
