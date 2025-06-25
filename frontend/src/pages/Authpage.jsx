@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { format } from "date-fns";
 import AuthWrapper from "@/components/common/AuthWrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +17,9 @@ export default function AuthPage({ mode: initialMode }) {
   const location = useLocation();
   const navigate = useNavigate();
   const [mode, setMode] = useState(initialMode);
+
+  const [gender, setGender] = useState("");
+  const [dob, setDob] = useState(null);
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -30,8 +37,11 @@ export default function AuthPage({ mode: initialMode }) {
   const handleToggle = (targetMode) => {
     navigate(`/${targetMode}`);
   };
+  // Use a single handleSubmit that logs gender and dob and navigates
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Gender:", gender); // this will remove the warning
+    console.log("DOB:", dob);
     navigate("/dashboard");
   };
 
@@ -70,8 +80,45 @@ export default function AuthPage({ mode: initialMode }) {
                 <Input placeholder="Last Name" />
               </div>
               <div className="flex space-x-2">
-                <Input className="w-24" placeholder="Gender" />
-                <Input placeholder="Date of Birth" />
+                {/* Gender Select */}
+                <Select onValueChange={setGender}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Gender" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Male">Male</SelectItem>
+                    <SelectItem value="Female">Female</SelectItem>
+                    <SelectItem value="Others">Others</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                {/* Date Picker */}
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="opacity-60 hover:opacity-100 transition-opacity w-full justify-between text-left font-normal text-zinc-800 px-3"
+                    >
+                      <span>{dob ? format(dob, "dd-MM-yyyy") : "Date of Birth"}</span>
+                      <img
+                        src="/src/assets/icons/calendar.svg"
+                        alt="calendar icon"
+                        className="h-5 w-5"
+                      />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto max-h-[300px] overflow-y-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={dob}
+                      onSelect={setDob}
+                      captionLayout="dropdown"
+                      dropdownCaption={true}
+                      fromYear={1950}
+                      toYear={new Date().getFullYear()}
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
             </>
           )}
