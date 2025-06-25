@@ -16,11 +16,14 @@ import ForumIconFilled from "@/assets/icons/forum 2.svg";
 import ProfileIcon from "@/assets/icons/profile 1.svg";
 import ProfileIconFilled from "@/assets/icons/profile 2.svg";
 
-import DiamondIcon from "@/assets/icons/diamond 2.svg";
+import DiamondIcon from "@/assets/icons/diamond 1.svg";
+import DiamondIconFilled from "@/assets/icons/diamond 2.svg";
+
 import LogoutIcon from "@/assets/icons/logout 1.svg";
 
 export default function Sidebar() {
   const location = useLocation();
+  const isPremiumActive = location.pathname === "/dashboard/premium";
 
   const navItems = [
     {
@@ -74,7 +77,7 @@ export default function Sidebar() {
                 to={path}
                 className={`flex items-center gap-3 px-4 py-2 rounded-md transition-colors ${isActive
                   ? "bg-zinc-200 text-black font-semibold"
-                  : "text-zinc-600 hover:bg-zinc-100"
+                  : "text-zinc-500 hover:bg-zinc-50"
                   }`}
               >
                 <img src={isActive ? iconActive : icon} alt={name} className="h-5 w-5" />
@@ -84,10 +87,21 @@ export default function Sidebar() {
           })}
         </nav>
 
-        <button className="mt-6 flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 to-slate-900 text-white px-4 py-2 rounded-md w-full">
-          <img src={DiamondIcon} alt="plus" className="h-5 w-5" />
+        <NavLink
+          to="/dashboard/premium"
+          className={`mt-10 flex items-center justify-center gap-2 px-4 py-2 rounded-md w-full transition-all 
+    ${isPremiumActive
+              ? "font-semibold border border-zinc-200 bg-gradient-to-r from-purple-500 to-slate-900 text-white hover:brightness-110"
+              : "bg-purple-100 text-purple-800 font-semibold border border-purple-300"
+            }`}
+        >
+          <img
+            src={isPremiumActive ? DiamondIconFilled : DiamondIcon}
+            alt="Premium"
+            className="h-5 w-5"
+          />
           The Brain Room+
-        </button>
+        </NavLink>
       </div>
 
       <div className="text-sm space-y-10">

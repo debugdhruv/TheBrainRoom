@@ -8,6 +8,7 @@ import Mood from "./pages/Moodcheck";
 import Bot from "./pages/Chatbot";
 import Forums from "./pages/Forums";
 import Profile from "./pages/Profile";
+import Premium from "./pages/Premium";
 
 import DashboardLayout from "./components/layout/DashboardLayout";
 
@@ -28,6 +29,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="bot" element={<Bot />} />
           <Route path="forums" element={<Forums />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="premium" element={<Premium />} />
         </Route>
 
         {/* Fallback */}
