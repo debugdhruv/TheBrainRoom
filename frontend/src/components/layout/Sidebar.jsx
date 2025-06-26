@@ -88,7 +88,6 @@ export default function Sidebar() {
             );
           })}
         </nav>
-
         <NavLink
           to="/dashboard/premium"
           className={`mt-10 flex items-center justify-center gap-2 px-4 py-2 rounded-md w-full transition-all 
@@ -115,12 +114,12 @@ export default function Sidebar() {
         </div>
         <div className="flex justify-between items-center">
           <button
-  onClick={() => navigate("/login")}
-  className="flex items-center gap-2 text-purple-700 bg-purple-100 px-3 py-1 rounded-full text-base"
->
-  <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
-  Logout
-</button>
+            onClick={() => navigate("/login")}
+            className="flex items-center gap-2 text-purple-700 bg-purple-100 px-3 py-1 rounded-full text-base"
+          >
+            <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
+            Logout
+          </button>
           <a href="https://github.com/debugdhruv/The-Brain-Room" target="blank" className="text-zinc-500 underline text-xs">
             Source Code
           </a>

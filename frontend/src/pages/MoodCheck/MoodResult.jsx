@@ -1,7 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import BotIcon from "@/assets/icons/chat 2.svg";
+import BotIcon from "@/assets/icons/chat 3.svg";
+import BackIcon from "@/assets/icons/back.svg";
+import { moodQuestions } from "./moodData";
 
 export default function MoodResult() {
     const location = useLocation();
@@ -13,11 +15,30 @@ export default function MoodResult() {
         return location.state?.responses?.length ? location.state.responses : [];
     }, [location.state]);
 
-    const averageScore = useMemo(() => {
-        if (!responses.length) return 0;
-        const sum = responses.reduce((acc, val) => acc + val, 0);
-        return (sum / responses.length).toFixed(1);
+    const weightedScore = useMemo(() => {
+        if (!responses.length || responses.length !== moodQuestions.length) return 0;
+
+        let total = 0;
+        let totalWeight = 0;
+
+        for (let i = 0; i < responses.length; i++) {
+            const { polarity, weight } = moodQuestions[i];
+            const score = responses[i];
+
+            const normalized = polarity === "negative" ? 10 - score : score;
+            total += normalized * weight;
+            totalWeight += weight;
+        }
+
+        return (total / totalWeight).toFixed(1);
     }, [responses]);
+
+    const averageScore = weightedScore;
+
+    // Arc length for the foreground arc
+    const radius = 40;
+    const arcLength = Math.PI * radius * 1.5; // 270° arc length
+    const scoreRatio = Math.max(0, Math.min(averageScore / 10, 1)); // clamp between 0-1
 
     const moodMap = [
         { label: "Depressed", message: "It’s okay to not be okay. You’re not alone." },
@@ -56,48 +77,107 @@ export default function MoodResult() {
             link: "https://www.youtube.com/watch?v=ZToicYcHIOU",
             thumbnail: "https://img.youtube.com/vi/ZToicYcHIOU/mqdefault.jpg",
         },
+        {
+            title: "5-minute breathing practice",
+            source: "YouTube",
+            link: "https://www.youtube.com/watch?v=aNXKjGFUlMs",
+            thumbnail: "https://img.youtube.com/vi/aNXKjGFUlMs/mqdefault.jpg",
+        },
+        {
+            title: "Declutter your mind before bed",
+            source: "YouTube",
+            link: "https://www.youtube.com/watch?v=ZToicYcHIOU",
+            thumbnail: "https://img.youtube.com/vi/ZToicYcHIOU/mqdefault.jpg",
+        },
+        {
+            title: "5-minute breathing practice",
+            source: "YouTube",
+            link: "https://www.youtube.com/watch?v=aNXKjGFUlMs",
+            thumbnail: "https://img.youtube.com/vi/aNXKjGFUlMs/mqdefault.jpg",
+        },
     ];
 
     const handleRetake = () => navigate("/dashboard/mood");
     const handleTalk = () => navigate("/dashboard/bot");
 
     return (
-        <div className="w-full max-w-6xl mx-auto px-4 flex flex-col gap-10 pb-20">
-            {/* Top Score Card */}
-            <div className="flex flex-col lg:flex-row items-center gap-10">
-                {/* Left: Score Meter */}
-                <div className="relative w-[180px] h-[180px] bg-gradient-to-tr from-purple-100 to-slate-100 rounded-full flex items-center justify-center shadow-inner">
-                    <div className="absolute w-[160px] h-[160px] bg-white rounded-full flex flex-col items-center justify-center text-center">
-                        <p className="text-xl font-bold text-slate-700">{averageScore}/10</p>
-                        <p className="text-sm text-zinc-500">Your Score</p>
-                    </div>
-                </div>
+        <div className="w-full min-h-screen flex justify-center px-4 pb-20">
+          <div className="flex flex-col justify-center w-full max-w-5xl gap-10">
+            {/* Retake Button */}
+            <div className="flex justify-start">
+              <Button
+                  onClick={handleRetake}
+                  disabled={false}
+                  className="flex items-center gap-1 bg-purple-200 text-purple-600 font-semibold text-sm border border-zinc-100 px-4 py-2 rounded-md hover:bg-purple-100 disabled:opacity-30 shadow-none"
+              >
+                  <img src={BackIcon} alt="Back" className="h-4 w-4" />
+                  Retake Assessment
+              </Button>
+            </div>
 
+            {/* Top Score Card */}
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-6 sm:gap-10">
+                {/* Left: Score Meter */}
+                <div className="relative w-[170px] h-[180px]">
+                  <svg viewBox="0 0 100 100" className="w-full h-full">
+                    {/* Background Arc */}
+                    <path
+                      d="M25,75 A40,40 0 1,1 75,75"
+                      fill="none"
+                      stroke="#f3e8ff"
+                      strokeWidth="10"
+                      strokeLinecap="round"
+                    />
+
+                    {/* Foreground Arc */}
+                    <path
+                      d="M25,75 A40,40 0 1,1 75,75"
+                      fill="none"
+                      stroke="url(#grad)"
+                      strokeWidth="10"
+                      strokeLinecap="round"
+                      strokeDasharray={arcLength}
+                      strokeDashoffset={(1 - scoreRatio) * arcLength}
+                      style={{ transition: "stroke-dashoffset 0.8s ease-out" }}
+                    />
+
+                    {/* Progress Tip */}
+                    <circle
+                      r="5"
+                      fill="#9333EA"
+                      transform={`rotate(${135 + 270 * scoreRatio}, 50, 50) translate(0, -40)`}
+                    />
+
+                    <defs>
+                      <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#9333EA" />
+                        <stop offset="100%" stopColor="#7C3AED" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+
+                  {/* Center Text */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center mt-[-16px]">
+                    <p className="text-xl font-bold text-purple-700">{averageScore}/10</p>
+                  </div>
+                </div>
+                
                 {/* Right: Mood Info */}
-                <div className="flex-1">
+                <div className="flex-1 mb-4 sm:mb-0">
                     <h2 className="text-2xl font-semibold text-slate-700 mb-2">{mood.label}</h2>
                     <p className="text-zinc-500 text-sm max-w-md">{mood.message}</p>
-
-                    <Button
-                        variant="ghost"
-                        onClick={handleRetake}
-                        className="mt-4 text-purple-600 hover:underline"
-                    >
-                        ← Retake Assessment
-                    </Button>
                 </div>
             </div>
 
             {/* Suggestions */}
-            <div>
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center mt-[-40px] mb-2">
                     <h3 className="text-xl font-semibold text-slate-700">Suggestions for you</h3>
                     <Button variant="link" className="text-purple-700 p-0 text-sm" onClick={() => navigate("/dashboard")}>
                         View all →
                     </Button>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-[-32px]">
                     {suggestions.map((sug, idx) => (
                         <a
                             key={idx}
@@ -107,17 +187,15 @@ export default function MoodResult() {
                             className="bg-white border rounded-lg shadow-sm hover:shadow-md transition overflow-hidden"
                         >
                             <img src={sug.thumbnail} alt={sug.title} className="w-full aspect-video object-cover" />
-                            <div className="p-4">
+                            <div className="p-2">
                                 <h4 className="text-sm font-medium">{sug.title}</h4>
                                 <p className="text-xs text-zinc-500">{sug.source}</p>
                             </div>
                         </a>
                     ))}
                 </div>
-            </div>
-
             {/* Talk to Bot */}
-            <div className="w-full flex justify-center mt-10">
+            <div className="w-full flex justify-center mt-6">
                 <Button
                     onClick={handleTalk}
                     className="flex items-center gap-3 bg-purple-600 hover:bg-purple-700 text-white"
@@ -126,6 +204,7 @@ export default function MoodResult() {
                     Talk to Brain Bot
                 </Button>
             </div>
+          </div>
         </div>
     );
 }
