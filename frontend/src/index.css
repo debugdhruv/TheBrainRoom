@@ -73,3 +73,19 @@ html, body, #root {
     @apply bg-background text-foreground;
   }
 }
+
+
+@layer utilities {
+  .animate-loaderBar {
+    animation: loaderBar 2.5s ease-in-out forwards;
+  }
+
+  @keyframes loaderBar {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+}
