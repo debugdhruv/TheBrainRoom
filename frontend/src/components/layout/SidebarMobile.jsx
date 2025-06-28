@@ -31,7 +31,10 @@ export default function SidebarMobile() {
     { name: "Profile", path: "/dashboard/profile", icon: ProfileIcon, iconActive: ProfileIconFilled },
   ];
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path) => 
+  path === "/dashboard"
+    ? location.pathname === path
+    : location.pathname.startsWith(path);
 
   return (
     <>

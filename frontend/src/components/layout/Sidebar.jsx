@@ -72,7 +72,9 @@ export default function Sidebar() {
 
         <nav className="flex flex-col space-y-3">
           {navItems.map(({ name, path, icon, iconActive }) => {
-            const isActive = location.pathname === path;
+            const isActive = path === "/dashboard"
+              ? location.pathname === path
+              : location.pathname.startsWith(path);
             return (
               <NavLink
                 key={name}

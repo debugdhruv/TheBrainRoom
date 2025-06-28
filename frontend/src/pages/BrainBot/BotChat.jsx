@@ -1,57 +1,104 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ChatBubble from "./ChatBubble";
 import MessageInput from "./MessageInput";
 import BotReportCard from "./BotReportCard";
+import StarIcon from "@/assets/icons/starsAI.svg";
 
-export default function BotChat({ initialMessage = "", moodReport = null }) {
-  const [messages, setMessages] = useState([]);
-  const bottomRef = useRef(null);
+const suggestions = [
+  "I feel overwhelmed lately",
+  "How can I sleep better?",
+  "Give me some journaling ideas",
+  "Suggest calming exercises",
+];
 
-  // 👇 Scroll to bottom on new message
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+export default function BotChat({ initialMessage, moodReport = null, fromMoodResult = false }) {
+  const [messages, setMessages] = useState(initialMessage ? [{ type: "user", text: initialMessage }] : []);
+  const showReport = fromMoodResult;
+  const [started, setStarted] = useState(!!initialMessage);
 
-  // 👇 Trigger first AI reply if initialMessage exists
   useEffect(() => {
     if (initialMessage) {
-      const userMsg = { type: "user", text: initialMessage };
+      const msg = { type: "user", text: initialMessage };
       const botReply = {
         type: "bot",
-        text: `Thanks for sharing. Let's talk about "${initialMessage}"`,
+        text: "Thanks for sharing! Let's work through this together. 💬",
       };
 
-      setMessages([userMsg, botReply]);
+      setMessages([msg, botReply]);
     }
   }, [initialMessage]);
 
-  const handleSend = (text) => {
-    const userMsg = { type: "user", text };
-    const botReply = {
-      type: "bot",
-      text: "That's interesting. Tell me more...",
-    };
+  const handleSend = (newText) => {
+    if (!newText.trim()) return;
+    const updated = [...messages, { type: "user", text: newText }];
+    setMessages(updated);
 
-    setMessages((prev) => [...prev, userMsg, botReply]);
+    // Simulate bot reply
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        {
+          type: "bot",
+          text: "Got it! Here’s something you can try...",
+        },
+      ]);
+    }, 900);
+
+    if (!started) setStarted(true);
+  };
+
+  const handleSuggestionClick = (text) => {
+    handleSend(text);
+    setStarted(true);
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 pb-32 pt-10 space-y-6">
-      {/* Report Card (if coming from Mood Result) */}
-      {moodReport && (
-        <BotReportCard score={moodReport.score} mood={moodReport.mood} />
+    <div className="max-w-3xl mx-auto px-4 pb-28 pt-10 space-y-6">
+      {/* Suggestions UI */}
+      {!started && (
+        <div className="flex flex-col items-center text-center space-y-6">
+          <img src={StarIcon} alt="BrainBot Icon" className="w-10 h-10" />
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800">Ask BrainBot anything</h1>
+            <p className="text-sm text-zinc-500 max-w-xs mx-auto">
+              Talk about your feelings, ask for suggestions or just vent.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+            {suggestions.map((item, index) => (
+              <button
+                key={index}
+                onClick={() => handleSuggestionClick(item)}
+                className="px-4 py-2 text-sm border border-zinc-300 rounded-lg bg-white hover:bg-zinc-50 shadow-sm transition"
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        </div>
       )}
 
-      {/* Chat Messages */}
-      {messages.map((msg, idx) => (
-        <ChatBubble key={idx} type={msg.type} text={msg.text} />
-      ))}
+      {/* Mood Report (only if visible + started) */}
+      {showReport && moodReport && started && (
+        <BotReportCard mood={moodReport.mood} score={moodReport.score} />
+      )}
+  
 
-      {/* Chat Input */}
-      <MessageInput onSend={handleSend} />
+      {/* Chat Bubbles */}
+      {started && (
+        <div className="space-y-4">
+          {messages.map((msg, idx) => (
+            <ChatBubble key={idx} type={msg.type} text={msg.text} />
+          ))}
+        </div>
+      )}
 
-      {/* Invisible div to auto-scroll into view */}
-      <div ref={bottomRef} />
+      {/* Input */}
+      <MessageInput
+        onSend={(msg) => {
+          handleSend(msg);
+        }}
+      />
     </div>
   );
 }
