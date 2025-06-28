@@ -12,6 +12,7 @@ import AppleIcon from "@/assets/icons/Group.svg";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import CalendarIcon from "@/assets/icons/calendar.svg"
 
 export default function AuthPage({ mode: initialMode }) {
   const location = useLocation();
@@ -101,7 +102,7 @@ export default function AuthPage({ mode: initialMode }) {
                     >
                       <span>{dob ? format(dob, "dd-MM-yyyy") : "Date of Birth"}</span>
                       <img
-                        src="/src/assets/icons/calendar.svg"
+                        src={CalendarIcon}
                         alt="calendar icon"
                         className="h-5 w-5"
                       />
