@@ -6,7 +6,7 @@ import AuthPage from "./pages/Authpage";
 import Dashboard from "./pages/Dashboard";
 import Mood from "./pages/MoodCheck/MoodCheck";
 import MoodResult from "./pages/MoodCheck/MoodResult";
-import Bot from "./pages/Chatbot";
+import Bot from "./pages/BrainBot/Chatbot";
 import Forums from "./pages/Forums";
 import Profile from "./pages/Profile";
 import Premium from "./pages/Premium";

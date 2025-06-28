@@ -98,78 +98,89 @@ export default function MoodResult() {
     ];
 
     const handleRetake = () => navigate("/dashboard/mood");
-    const handleTalk = () => navigate("/dashboard/bot");
+    const handleTalk = () => {
+
+navigate("/dashboard/bot", {
+  state: {
+    fromMoodResult: true,
+    moodReport: {
+      score: averageScore,
+      mood: mood.label,
+    },
+  },
+});
+};
 
     return (
         <div className="w-full min-h-screen flex justify-center px-4 pb-20">
-          <div className="flex flex-col justify-center w-full max-w-5xl gap-10">
-            {/* Retake Button */}
-            <div className="flex justify-start">
-              <Button
-                  onClick={handleRetake}
-                  disabled={false}
-                  className="flex items-center gap-1 bg-purple-200 text-purple-600 font-semibold text-sm border border-zinc-100 px-4 py-2 rounded-md hover:bg-purple-100 disabled:opacity-30 shadow-none"
-              >
-                  <img src={BackIcon} alt="Back" className="h-4 w-4" />
-                  Retake Assessment
-              </Button>
-            </div>
-
-            {/* Top Score Card */}
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-6 sm:gap-10">
-                {/* Left: Score Meter */}
-                <div className="relative w-[170px] h-[180px]">
-                  <svg viewBox="0 0 100 100" className="w-full h-full">
-                    {/* Background Arc */}
-                    <path
-                      d="M25,75 A40,40 0 1,1 75,75"
-                      fill="none"
-                      stroke="#f3e8ff"
-                      strokeWidth="10"
-                      strokeLinecap="round"
-                    />
-
-                    {/* Foreground Arc */}
-                    <path
-                      d="M25,75 A40,40 0 1,1 75,75"
-                      fill="none"
-                      stroke="url(#grad)"
-                      strokeWidth="10"
-                      strokeLinecap="round"
-                      strokeDasharray={arcLength}
-                      strokeDashoffset={(1 - scoreRatio) * arcLength}
-                      style={{ transition: "stroke-dashoffset 0.8s ease-out" }}
-                    />
-
-                    {/* Progress Tip */}
-                    <circle
-                      r="5"
-                      fill="#9333EA"
-                      transform={`rotate(${135 + 270 * scoreRatio}, 50, 50) translate(0, -40)`}
-                    />
-
-                    <defs>
-                      <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#9333EA" />
-                        <stop offset="100%" stopColor="#7C3AED" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-
-                  {/* Center Text */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center mt-[-16px]">
-                    <p className="text-xl font-bold text-purple-700">{averageScore}/10</p>
-                  </div>
+            <div className="flex flex-col justify-center w-full max-w-5xl gap-10">
+                {/* Retake Button */}
+                <div className="flex justify-start">
+                    <Button
+                        onClick={handleRetake}
+                        disabled={false}
+                        className="flex items-center gap-1 bg-purple-200 text-purple-600 font-semibold text-sm border border-zinc-100 px-4 py-2 rounded-md hover:bg-purple-100 disabled:opacity-30 shadow-none"
+                    >
+                        <img src={BackIcon} alt="Back" className="h-4 w-4" />
+                        Retake Assessment
+                    </Button>
                 </div>
-                
-                {/* Right: Mood Info */}
-                <div className="flex-1 mb-4 sm:mb-0">
-                    <h2 className="text-2xl font-semibold text-slate-700 mb-2">{mood.label}</h2>
-                    <p className="text-zinc-500 text-sm max-w-md">{mood.message}</p>
-                </div>
-            </div>
 
-            {/* Suggestions */}
+                {/* Top Score Card */}
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-6 sm:gap-10">
+                    {/* Left: Score Meter */}
+                    <div className="relative w-[170px] h-[180px]">
+                        <svg viewBox="0 0 100 100" className="w-full h-full">
+                            {/* Background Arc */}
+                            <path
+                                d="M25,75 A40,40 0 1,1 75,75"
+                                fill="none"
+                                stroke="#f3e8ff"
+                                strokeWidth="10"
+                                strokeLinecap="round"
+                            />
+
+                            {/* Foreground Arc */}
+                            <path
+                                d="M25,75 A40,40 0 1,1 75,75"
+                                fill="none"
+                                stroke="url(#grad)"
+                                strokeWidth="10"
+                                strokeLinecap="round"
+                                strokeDasharray={arcLength}
+                                strokeDashoffset={(1 - scoreRatio) * arcLength}
+                                style={{ transition: "stroke-dashoffset 0.8s ease-out" }}
+                            />
+
+                            {/* Progress Tip */}
+                            <circle
+                                r="5"
+                                fill="#9333EA"
+                                transform={`rotate(${135 + 270 * scoreRatio}, 50, 50) translate(0, -40)`}
+                            />
+
+                            <defs>
+                                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stopColor="#9333EA" />
+                                    <stop offset="100%" stopColor="#7C3AED" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+
+                        {/* Center Text */}
+                        <div className="absolute inset-0 flex flex-col items-center justify-center mt-[-16px]">
+                            <p className="text-xl font-bold text-purple-700">{averageScore}/10</p>
+                        </div>
+                    </div>
+
+                    {/* Right: Mood Info */}
+                    <div className="flex-1 mb-4 sm:mb-0">
+                        <h2 className="text-2xl font-semibold text-slate-700 mb-2">{mood.label}</h2>
+                        <p className="text-zinc-500 text-sm max-w-md">{mood.message}</p>
+                    </div>
+                </div>
+
+                {/* Suggestions */}
                 <div className="flex justify-between items-center mt-[-40px] mb-2">
                     <h3 className="text-xl font-semibold text-slate-700">Suggestions for you</h3>
                     <Button variant="link" className="text-purple-700 p-0 text-sm" onClick={() => navigate("/dashboard")}>
@@ -194,17 +205,17 @@ export default function MoodResult() {
                         </a>
                     ))}
                 </div>
-            {/* Talk to Bot */}
-            <div className="w-full flex justify-center mt-6">
-                <Button
-                    onClick={handleTalk}
-                    className="flex items-center gap-3 bg-purple-600 hover:bg-purple-700 text-white"
-                >
-                    <img src={BotIcon} alt="Bot" className="h-5 w-5" />
-                    Talk to Brain Bot
-                </Button>
+                {/* Talk to Bot */}
+                <div className="w-full flex justify-center mt-6">
+                    <Button
+                        onClick={handleTalk}
+                        className="flex items-center gap-3 bg-purple-600 hover:bg-purple-700 text-white"
+                    >
+                        <img src={BotIcon} alt="Bot" className="h-5 w-5" />
+                        Talk to Brain Bot
+                    </Button>
+                </div>
             </div>
-          </div>
         </div>
     );
 }
