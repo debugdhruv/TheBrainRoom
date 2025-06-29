@@ -27,7 +27,7 @@ export default function MoodQuestion({ index, question, value, onNext }) {
             max={10}
             step={1}
             onValueChange={handleSliderChange}
-            className="w-full"
+            className="w-full touch-none"
           />
           <div className="pointer-events-none absolute inset-0 flex justify-center">
             <div

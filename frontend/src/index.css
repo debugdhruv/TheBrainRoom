@@ -89,3 +89,9 @@ html, body, #root {
     }
   }
 }
+
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
