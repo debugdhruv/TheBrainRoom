@@ -5,7 +5,6 @@ import BotChat from "./BotChat";
 
 const suggestions = [
   "I feel overwhelmed lately",
-  "How can I sleep better?",
   "Give me some journaling ideas",
   "Suggest calming exercises",
 ];
@@ -25,31 +24,39 @@ export default function BotIdle() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center h-full max-w-2xl mx-auto px-4 pb-10">
-      {/* Welcome Header */}
-      <div className="flex flex-col items-center space-y-3 mb-8">
-        <img src={StarIcon} alt="Bot Icon" className="w-10 h-10" />
-        <h1 className="text-2xl font-bold text-slate-800 text-center">Ask BrainBot anything</h1>
-        <p className="text-sm text-zinc-500 text-center max-w-sm">
-          Talk about your feelings, ask for suggestions or just vent.
-        </p>
-      </div>
+    <div className="flex flex-col min-h-screen max-w-3xl mx-auto px-4 py-24">
+  {/* Header */}
+  <div className="flex flex-col items-center space-y-2">
+    <img src={StarIcon} alt="Bot Icon" className="w-10 h-10" />
+    <h1 className="text-lg font-medium text-center text-zinc-800 font-mono tracking-tight">
+      Ask BrainBot about anything
+    </h1>
+  </div>
 
-      {/* Suggestions */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full mb-10">
-        {suggestions.map((text, index) => (
-          <button
-            key={index}
-            onClick={() => handleStart(text)}
-            className="px-4 py-2 text-sm border border-zinc-300 rounded-lg bg-white hover:bg-zinc-50 shadow-sm transition"
-          >
-            {text}
-          </button>
-        ))}
-      </div>
+  <div className="flex-1" />
 
-      {/* Input */}
-      <MessageInput onSend={handleStart} />
+  {/* Middle - suggestions grow to fill space */}
+  <div>
+    <p className="flex justify-center text-xs text-zinc-500 mb-3">
+      Suggestions on what to ask our AI
+    </p>
+    <div className="flex justify-center mb-2 flex-wrap gap-2">
+      {suggestions.map((text, index) => (
+        <button
+          key={index}
+          onClick={() => handleStart(text)}
+          className="px-4 py-2 text-xs font-medium text-purple-700 bg-purple-100/70 rounded-full hover:bg-purple-200 transition border border-purple-200">
+          {text}  
+        </button>
+      ))}
     </div>
+  </div>
+
+  {/* Footer - message input and disclaimer */}
+    <MessageInput onSend={handleStart} />
+    <p className="text-[10px] font-bold text-center text-zinc-500">
+      BrainBot can make mistakes. Please consult your doctor to get better advice.
+    </p>
+</div>
   );
 }

@@ -7,7 +7,7 @@ export default function MoodQuestion({ index, question, value, onNext }) {
 
   useEffect(() => {
     setSliderValue(value || 0);
-  }, [value]);
+  }, [value, question]);
 
   const handleSliderChange = (val) => {
     setSliderValue(Math.round(val[0]));
@@ -22,24 +22,14 @@ export default function MoodQuestion({ index, question, value, onNext }) {
 
         <div className="relative w-full max-w-[65%] mx-auto">
           <Slider
-            defaultValue={[sliderValue]}
+            key={question} // 👈 forces full reset when question changes
+            value={[sliderValue]}
             min={0}
             max={10}
             step={1}
             onValueChange={handleSliderChange}
             className="w-full touch-none"
           />
-          <div className="pointer-events-none absolute inset-0 flex justify-center">
-            <div
-              className="absolute -top-6 w-8 text-center text-lg font-bold text-purple-600"
-              style={{
-                left: `${(sliderValue / 10) * 100}%`,
-                transform: "translateX(-50%)",
-              }}
-            >
-              {Math.round(sliderValue)}
-            </div>
-          </div>
         </div>
       </div>
 
