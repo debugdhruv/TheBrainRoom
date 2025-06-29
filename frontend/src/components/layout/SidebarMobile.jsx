@@ -78,7 +78,7 @@ export default function SidebarMobile() {
           </NavLink>
         </div>
 
-        <div className="flex flex-col items-center gap-4 pb-10">
+        <div className="flex flex-col items-center gap-4 pb-20">
           <button onClick={() => navigate("/login")} className="p-2 rounded-md hover:bg-zinc-100">
             <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
           </button>

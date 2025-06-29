@@ -43,7 +43,7 @@ export default function AuthWrapper({ children }) {
         <div className="md:hidden flex-1" />
 
         {/* Form */}
-        <div className="w-full max-w-md mx-auto mb-4">{children}</div>
+        <div className="w-full max-w-md mx-auto mb-16">{children}</div>
       </div>
     </div>
   );
