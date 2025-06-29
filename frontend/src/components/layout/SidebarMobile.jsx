@@ -39,17 +39,15 @@ export default function SidebarMobile() {
   return (
     <>
       {/* Collapsed Sidebar (Default) */}
-      <div className="fixed top-0 left-0 h-screen w-[60px] bg-white border-r z-30 flex flex-col justify-between py-4 items-center md:hidden">
-        <div className="flex flex-col items-center gap-6">
-          {/* Menu Toggle */}
+      <div className="fixed top-0 left-0 h-screen w-[60px] bg-white border-r z-30 flex flex-col py-4 items-center md:hidden">
+        <div className="flex-1 flex flex-col items-center gap-6 overflow-y-auto">
           <img
             src={MenuIcon}
             alt="Menu"
             onClick={() => setIsExpanded(true)}
-            className="h-6 w-6 cursor-pointer"
+            className="h-6 w-6 cursor-pointer mb-6"
           />
 
-          {/* Nav Icons */}
           {navItems.map(({ name, path, icon, iconActive }) => (
             <NavLink
               key={name}
@@ -64,7 +62,6 @@ export default function SidebarMobile() {
             </NavLink>
           ))}
 
-          {/* Premium Icon */}
           <NavLink
             to="/dashboard/premium"
             className={`p-2 rounded-md ${
@@ -81,8 +78,7 @@ export default function SidebarMobile() {
           </NavLink>
         </div>
 
-        {/* Logout + Mini Branding */}
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-4 pb-10">
           <button onClick={() => navigate("/login")} className="p-2 rounded-md hover:bg-zinc-100">
             <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
           </button>
@@ -92,7 +88,7 @@ export default function SidebarMobile() {
 
       {/* Expanded Sidebar (Always Rendered + Transitions) */}
       <div
-        className={`fixed top-0 left-0 h-screen w-[65vw] bg-white border-r z-40 px-6 py-6 shadow-md md:hidden flex flex-col justify-between transition-transform duration-500 ease-in-out ${
+        className={`fixed top-0 left-0 h-full max-h-screen w-[65vw] bg-white border-r z-40 px-6 py-6 shadow-md md:hidden flex flex-col justify-between transition-transform duration-500 ease-in-out ${
           isExpanded ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -103,7 +99,7 @@ export default function SidebarMobile() {
               src={MenuIcon}
               alt="Close Sidebar"
               onClick={() => setIsExpanded(false)}
-              className="h-6 w-6 cursor-pointer"
+              className="h-6 w-6 cursor-pointer mb-4"
             />
 
             {/* Nav Items */}
@@ -146,7 +142,7 @@ export default function SidebarMobile() {
           </div>
 
           {/* BOTTOM: Footer Content */}
-          <div className="space-y-6 text-sm">
+          <div className="space-y-6 text-sm pb-8">
             <div>
               <p className="text-zinc-400">Reach out to me:</p>
               <a href="mailto:dhruvtiwari.1130@gmail.com" className="underline">
@@ -163,7 +159,7 @@ export default function SidebarMobile() {
             </button>
 
             <div className="flex items-center gap-3 pt-6 border-t">
-              <img src={Logo} alt="logo" className="h-10 w-10" />
+              <img src={Logo} alt="logo" className="h-8 w-8" />
               <h1 className="font-semibold italic text-lg">The Brain Room</h1>
             </div>
           </div>
