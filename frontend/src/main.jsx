@@ -7,7 +7,7 @@ import Mood from "./pages/MoodCheck/MoodCheck";
 import MoodResult from "./pages/MoodCheck/MoodResult";
 import Bot from "./pages/BrainBot/Chatbot";
 import Forums from "./pages/Forums";
-import Profile from "./pages/Profile";
+import Profile from "./pages/Profile/ProfileMain";
 import Premium from "./pages/Premium";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
