@@ -1,4 +1,4 @@
-import linky  from "@/assets/icons/linky.svg"
+import linky from "@/assets/icons/linky.svg"
 
 const forumServers = [
   {
@@ -11,7 +11,7 @@ const forumServers = [
     name: "Mental Health Support",
     members: "14.7K+",
     invite: "https://discord.com/invite/mhsc",
- image: "https://placehold.co/400x200?text=The+Server",
+    image: "https://placehold.co/400x200?text=The+Server",
   },
   {
     name: "Fight Through Mental Health",
@@ -70,35 +70,33 @@ export default function Forums() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
         {forumServers.map((server, idx) => (
           <div key={idx} className="relative bg-white border border-zinc-200 rounded-lg shadow-md overflow-hidden">
-  {/* Link icon with enhanced blur and contrast */}
-  <div className="absolute top-2 right-2">
-    <img className="w-5 h-5 shadow-xl rounded-full" src={linky} alt="redirect" />
-  </div>
-  {/* Thumbnail */}
-  <img
-    src={server.image}
-    alt={`${server.name} logo`}
-    className="w-full h-32 sm:h-40 object-cover"
-  />
+            {/* Link icon with enhanced blur and contrast */}
+            <div className="absolute top-2 right-2">
+              <img className="w-5 h-5 shadow-xl rounded-full" src={linky} alt="redirect" />
+            </div>
+            {/* Thumbnail */}
+            <img
+              src={server.image}
+              alt={`${server.name} logo`}
+              className="w-full h-32 sm:h-40 object-cover" />
 
-  {/* Card content */}
-  <div className="p-4 flex flex-col items-center space-y-2">
-    <h3 className="text-center font-semibold text-lg text-zinc-800">{server.name}</h3>
-    <p className="text-xs text-zinc-500">{server.members} members</p>
-    {server.tagline && (
-      <p className="text-center text-xs text-zinc-600">{server.tagline}</p>
-    )}
+            {/* Card content */}
+            <div className="p-4 flex flex-col items-center space-y-2">
+              <h3 className="text-center font-semibold text-lg text-zinc-800">{server.name}</h3>
+              <p className="text-xs text-zinc-500">{server.members} members</p>
+              {server.tagline && (
+                <p className="text-center text-xs text-zinc-600">{server.tagline}</p>
+              )}
 
-    <a
-      href={server.invite}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="mt-3 w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white text-sm font-medium rounded-full py-2 text-center hover:opacity-90 transition"
-    >
-      Join Server
-    </a>
-  </div>
-</div>
+              <a
+                href={server.invite}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 w-full bg-purple-600 text-white text-sm font-medium rounded-full py-2 text-center hover:opacity-70 transition">
+                Join Server
+              </a>
+            </div>
+          </div>
         ))}
       </div>
     </div>

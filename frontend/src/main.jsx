@@ -1,7 +1,6 @@
+import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
 import AuthPage from "./pages/Authpage";
 import Dashboard from "./pages/Dashboard";
 import Mood from "./pages/MoodCheck/MoodCheck";
@@ -10,24 +9,20 @@ import Bot from "./pages/BrainBot/Chatbot";
 import Forums from "./pages/Forums";
 import Profile from "./pages/Profile";
 import Premium from "./pages/Premium";
-
 import DashboardLayout from "./components/layout/DashboardLayout";
-
-import "./index.css";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        {/* Auth Pages */}
+
         <Route path="/login" element={<AuthPage mode="login" />} />
         <Route path="/register" element={<AuthPage mode="register" />} />
 
-        {/* Dashboard + Nested Tabs */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
 
-          {/* MoodCheck Flow */}
           <Route path="mood">
             <Route index element={<Mood />} />
             <Route path="result" element={<MoodResult />} />

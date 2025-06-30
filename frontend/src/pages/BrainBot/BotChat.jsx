@@ -4,20 +4,20 @@ import MessageInput from "./MessageInput";
 import BotReportCard from "./BotReportCard";
 import StarIcon from "@/assets/icons/starsAI.svg";
 
-const suggestions = [
-  "I feel overwhelmed lately",
-  "How can I sleep better?",
-  "Give me some journaling ideas",
-  "Suggest calming exercises",
-];
 
 export default function BotChat({ initialMessage, moodReport = null, fromMoodResult = false }) {
+
   const [messages, setMessages] = useState(initialMessage ? [{ type: "user", text: initialMessage }] : []);
   const showReport = fromMoodResult;
   const [started, setStarted] = useState(!!initialMessage);
   const [isBotTyping, setIsBotTyping] = useState(false);
-
   const scrollRef = useRef(null);
+  const suggestions = [
+    "I feel overwhelmed lately",
+    "How can I sleep better?",
+    "Give me some journaling ideas",
+    "Suggest calming exercises",
+  ];
 
   useEffect(() => {
     if (initialMessage) {
@@ -31,12 +31,10 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
     }
   }, [initialMessage]);
 
-
   const handleSend = (newText) => {
     if (!newText.trim()) return;
     const updated = [...messages, { type: "user", text: newText }];
     setMessages(updated);
-
     setIsBotTyping(true);
 
     // Scroll immediately when bot starts typing
@@ -47,7 +45,7 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
       });
     }
 
-    // Simulate bot reply after 2 seconds (randomly card or text)
+    // Simulate bot reply after 2 seconds (randomly card ya to fir text) (fake hai
     setTimeout(() => {
       const shouldSendCard = Math.random() < 0.5;
 
@@ -72,7 +70,6 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
           },
         ]);
       }
-
       setIsBotTyping(false);
     }, 2000);
 
@@ -83,7 +80,6 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
     handleSend(text);
     setStarted(true);
   };
-
   const handleScroll = () => {
     // intentionally left blank; logic handled in useEffect now
   };
@@ -91,11 +87,7 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
   return (
     <div className="flex flex-col h-screen max-w-3xl mx-auto">
       {/* Scrollable chat area */}
-      <div
-        ref={scrollRef}
-        onScroll={handleScroll}
-        className="flex-1 overflow-y-auto px-4 py-6 space-y-4"
-      >
+      <div ref={scrollRef} onScroll={handleScroll} className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
         {/* Suggestions */}
         {!started && (
           <div className="flex flex-col items-center text-center space-y-6">
@@ -111,8 +103,7 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
                 <button
                   key={index}
                   onClick={() => handleSuggestionClick(item)}
-                  className="px-4 py-2 text-sm border border-zinc-300 rounded-lg bg-white hover:bg-zinc-50 shadow-sm transition"
-                >
+                  className="px-4 py-2 text-sm border border-zinc-300 rounded-lg bg-white hover:bg-zinc-50 shadow-sm transition">
                   {item}
                 </button>
               ))}

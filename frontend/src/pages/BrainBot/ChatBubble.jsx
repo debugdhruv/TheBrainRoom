@@ -1,8 +1,8 @@
 import BotIcon from "@/assets/icons/starsAI.svg";
 
 export default function ChatBubble({ type, text, title, description, url, image, source }) {
-  const isUser = type === "user";
 
+  const isUser = type === "user";
   if (type === "card") {
     return (
       <div className="w-full flex justify-start px-2">
@@ -22,8 +22,7 @@ export default function ChatBubble({ type, text, title, description, url, image,
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block text-xs text-purple-600 font-medium hover:underline"
-              >
+                className="inline-block text-xs text-purple-600 font-medium hover:underline">
                 {source ? `View on ${source}` : "Open Resource"}
               </a>
             )}
@@ -40,8 +39,7 @@ export default function ChatBubble({ type, text, title, description, url, image,
           isUser
             ? "bg-purple-600 text-white rounded-br-none"
             : "bg-zinc-100 text-slate-700 rounded-bl-none"
-        }`}
-      >
+        }`}>
         {!isUser && (
           <div className="flex items-center gap-2 mb-1">
             <img src={BotIcon} alt="Bot" className="h-4 w-4" />

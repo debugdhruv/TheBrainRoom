@@ -1,4 +1,5 @@
 export default function BotReportCard({ mood, score }) {
+  
   return (
     <div className="w-full bg-purple-50 border border-purple-100 text-slate-700 px-6 py-4 rounded-xl shadow-sm mb-4">
       <div className="flex items-center justify-between gap-4">

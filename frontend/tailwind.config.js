@@ -13,7 +13,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"JetBrains Mono"', "monospace"],
+        sans: ["Noto Sans", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",

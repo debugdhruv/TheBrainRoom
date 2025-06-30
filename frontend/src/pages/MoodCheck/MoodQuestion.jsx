@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 
 export default function MoodQuestion({ index, question, value, onNext }) {
-  const [sliderValue, setSliderValue] = useState(value || 0);
 
+  const [sliderValue, setSliderValue] = useState(value || 0);
+  
   useEffect(() => {
     setSliderValue(value || 0);
   }, [value, question]);
@@ -22,14 +23,13 @@ export default function MoodQuestion({ index, question, value, onNext }) {
 
         <div className="relative w-full max-w-[65%] mx-auto">
           <Slider
-            key={question} // 👈 forces full reset when question changes
+            key={question}
             value={[sliderValue]}
             min={0}
             max={10}
             step={1}
             onValueChange={handleSliderChange}
-            className="w-full touch-none"
-          />
+            className="w-full touch-none"/>
         </div>
       </div>
 
@@ -38,8 +38,7 @@ export default function MoodQuestion({ index, question, value, onNext }) {
         <Button
           variant="outline"
           onClick={() => onNext(sliderValue)}
-          className="border border-black text-black hover:bg-black hover:text-white transition-all"
-        >
+          className="border border-black text-black hover:bg-black hover:text-white transition-all">
           {index === 4 ? "Continue" : "Next →"}
         </Button>
       </div>

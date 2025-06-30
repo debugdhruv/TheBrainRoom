@@ -6,11 +6,12 @@ import BackIcon from "@/assets/icons/back.svg";
 import { moodQuestions } from "./moodData";
 
 export default function MoodResult() {
+
     const location = useLocation();
     const navigate = useNavigate();
+    const averageScore = weightedScore;
 
-    console.log("📦 Location state:", location.state);
-
+    // console.log("Location state:", location.state);
     const responses = useMemo(() => {
         return location.state?.responses?.length ? location.state.responses : [];
     }, [location.state]);
@@ -20,11 +21,9 @@ export default function MoodResult() {
 
         let total = 0;
         let totalWeight = 0;
-
         for (let i = 0; i < responses.length; i++) {
             const { polarity, weight } = moodQuestions[i];
             const score = responses[i];
-
             const normalized = polarity === "negative" ? 10 - score : score;
             total += normalized * weight;
             totalWeight += weight;
@@ -33,13 +32,10 @@ export default function MoodResult() {
         return (total / totalWeight).toFixed(1);
     }, [responses]);
 
-    const averageScore = weightedScore;
-
     // Arc length for the foreground arc
     const radius = 40;
     const arcLength = Math.PI * radius * 1.5; // 270° arc length
     const scoreRatio = Math.max(0, Math.min(averageScore / 10, 1)); // clamp between 0-1
-
     const moodMap = [
         { label: "Depressed", message: "It’s okay to not be okay. You’re not alone." },
         { label: "Anxious", message: "Breathe. It’s just a bad moment, not a bad life." },
@@ -119,8 +115,7 @@ export default function MoodResult() {
                     <Button
                         onClick={handleRetake}
                         disabled={false}
-                        className="flex items-center gap-1 bg-purple-200 text-purple-600 font-semibold text-sm border border-zinc-100 px-4 py-2 rounded-md hover:bg-purple-100 disabled:opacity-30 shadow-none"
-                    >
+                        className="flex items-center gap-1 bg-purple-200 text-purple-600 font-semibold text-sm border border-zinc-100 px-4 py-2 rounded-md hover:bg-purple-100 disabled:opacity-30 shadow-none">
                         <img src={BackIcon} alt="Back" className="h-4 w-4" />
                         Retake Assessment
                     </Button>
@@ -137,8 +132,7 @@ export default function MoodResult() {
                                 fill="none"
                                 stroke="#f3e8ff"
                                 strokeWidth="10"
-                                strokeLinecap="round"
-                            />
+                                strokeLinecap="round" />
 
                             {/* Foreground Arc */}
                             <path
@@ -149,10 +143,9 @@ export default function MoodResult() {
                                 strokeLinecap="round"
                                 strokeDasharray={arcLength}
                                 strokeDashoffset={(1 - scoreRatio) * arcLength}
-                                style={{ transition: "stroke-dashoffset 0.8s ease-out" }}
-                            />
+                                style={{ transition: "stroke-dashoffset 0.8s ease-out" }} />
 
-                            {/* Progress Tip */}
+                            {/* Progress Tip (nahi ban raha😭)*/}
                             {/* {scoreRatio > 0 && (
                               <circle
                                 r="10"
@@ -200,8 +193,7 @@ export default function MoodResult() {
                             href={sug.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="bg-white border rounded-lg shadow-sm hover:shadow-md transition overflow-hidden"
-                        >
+                            className="bg-white border rounded-lg shadow-sm hover:shadow-md transition overflow-hidden">
                             <img src={sug.thumbnail} alt={sug.title} className="w-full aspect-video object-cover" />
                             <div className="p-2">
                                 <h4 className="text-sm font-medium">{sug.title}</h4>
@@ -215,8 +207,7 @@ export default function MoodResult() {
                     <div className="max-w-2xl flex justify-center mx-auto">
                         <Button
                             onClick={handleTalk}
-                            className="bg-gradient-to-r from-purple-700 to-zinc-700 text-white hover:from-purple-700 hover:to-pink-400 px-6 py-6 rounded-full text-base font-extrabold transition"
-                        >
+                            className="bg-gradient-to-r from-purple-700 to-zinc-700 text-white hover:from-purple-700 hover:to-pink-400 px-6 py-6 rounded-full text-base font-extrabold transition">
                             <img src={BotIcon} alt="Bot" className="h-6 w-6" />
                             Talk to Brain Bot
                         </Button>

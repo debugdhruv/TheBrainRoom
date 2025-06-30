@@ -1,6 +1,8 @@
 import { useState } from "react";
 import SendIcon from "@/assets/icons/send.svg";
+
 export default function MessageInput({ onSend }) {
+
   const [message, setMessage] = useState("");
   const handleSend = () => {
     if (!message.trim()) return;
@@ -27,8 +29,7 @@ export default function MessageInput({ onSend }) {
           />
           <button
             onClick={handleSend}
-            className="hover:bg-zinc-100 rounded-full transition"
-          >
+            className="hover:bg-zinc-100 rounded-full transition">
             <img src={SendIcon} alt="Send" className="w-8 h-8" />
           </button>
         </div>

@@ -14,7 +14,7 @@ export default function Chatbot() {
     if (location.state?.fromMoodResult) {
       const { moodReport } = location.state;
       setMoodReport(moodReport || null);
-      setInitialMessage("I'm feeling a little off today..."); // default first msg
+      setInitialMessage("I'm feeling a little off today..."); // default pehla message (will connect the backend later)
       setFromMoodResult(true);
       setStarted(true);
     }

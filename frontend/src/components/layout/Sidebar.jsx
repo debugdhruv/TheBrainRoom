@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { NavLink, useLocation } from "react-router-dom";
+
 import Logo from "@/assets/darklogo.png";
 
 import HomeIcon from "@/assets/icons/home 1.svg";
@@ -83,8 +84,7 @@ export default function Sidebar() {
                   className={`flex items-center gap-3 px-4 py-2 rounded-md transition-colors ${isActive
                     ? "bg-zinc-200 text-black font-semibold"
                     : "text-zinc-500 hover:bg-zinc-50"
-                    }`}
-                >
+                    }`}>
                   <img src={isActive ? iconActive : icon} alt={name} className="h-5 w-5" />
                   {name}
                 </NavLink>
@@ -94,16 +94,14 @@ export default function Sidebar() {
           <NavLink
             to="/dashboard/premium"
             className={`mt-6 flex items-center justify-center gap-2 px-4 py-2 rounded-md w-full transition-all 
-      ${isPremiumActive
+              ${isPremiumActive
                 ? "font-semibold border border-zinc-200 bg-gradient-to-r from-purple-500 to-slate-900 text-white hover:brightness-110"
                 : "bg-purple-100 text-purple-800 font-semibold border border-purple-300"
-              }`}
-          >
+              }`}>
             <img
               src={isPremiumActive ? DiamondIconFilled : DiamondIcon}
               alt="Premium"
-              className="h-5 w-5"
-            />
+              className="h-5 w-5" />
             The Brain Room+
           </NavLink>
         </div>
@@ -118,8 +116,7 @@ export default function Sidebar() {
           <div className="flex justify-between items-center">
             <button
               onClick={() => navigate("/login")}
-              className="flex items-center gap-2 text-purple-700 bg-purple-100 px-3 py-1 rounded-full text-base"
-            >
+              className="flex items-center gap-2 text-purple-700 bg-purple-100 px-3 py-1 rounded-full text-base">
               <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
               Logout
             </button>

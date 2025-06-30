@@ -1,10 +1,12 @@
 export default function Dashboard() {
+
   const randomQuotes = [
     "You are not your thoughts.",
     "Feelings are visitors, let them come and go.",
     "Healing is not linear.",
     "You're doing your best — and that's enough.",
   ];
+
   const quote = randomQuotes[Math.floor(Math.random() * randomQuotes.length)];
 
   const sampleCards = [
@@ -106,14 +108,13 @@ export default function Dashboard() {
             href={card.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all overflow-hidden border"
-          >
+            className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all overflow-hidden border">
+
             <div className="w-full aspect-video bg-zinc-200 flex items-center justify-center overflow-hidden">
               <img
                 src={card.thumbnail}
                 alt={card.title}
-                className="w-full h-full object-cover"
-              />
+                className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
               <h3 className="text-lg font-semibold text-zinc-800">{card.title}</h3>
