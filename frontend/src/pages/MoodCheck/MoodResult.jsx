@@ -34,7 +34,7 @@ export default function MoodResult() {
     const averageScore = weightedScore;
 
     // Arc length for the foreground arc
-    const radius = 40;
+    const radius = 42;
     const arcLength = Math.PI * radius * 1.5; // 270° arc length
     const scoreRatio = Math.max(0, Math.min(averageScore / 10, 1)); // clamp between 0-1
     const moodMap = [
@@ -137,7 +137,7 @@ export default function MoodResult() {
 
                             {/* Foreground Arc */}
                             <path
-                                d="M25,75 A40,40 0 1,1 75,75"
+                                d="M25,75 A40,40 0, 1, 1 75,75"
                                 fill="none"
                                 stroke="url(#grad)"
                                 strokeWidth="10"
@@ -145,18 +145,6 @@ export default function MoodResult() {
                                 strokeDasharray={arcLength}
                                 strokeDashoffset={(1 - scoreRatio) * arcLength}
                                 style={{ transition: "stroke-dashoffset 0.8s ease-out" }} />
-
-                            {/* Progress Tip (nahi ban raha😭)*/}
-                            {/* {scoreRatio > 0 && (
-                              <circle
-                                r="10"
-                                fill="#f3e8ff"
-                                cx="50"
-                                cy="50"
-                                transform={`rotate(${135 + 270 * scoreRatio}, 50, 50) translate(0, -44)`}
-                                className="transition-transform duration-500 ease-out"
-                              />
-                            )} */}
 
                             <defs>
                                 <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">

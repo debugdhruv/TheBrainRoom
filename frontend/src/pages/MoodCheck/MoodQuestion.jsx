@@ -38,7 +38,7 @@ export default function MoodQuestion({ index, question, value, onNext }) {
         <Button
           variant="outline"
           onClick={() => onNext(sliderValue)}
-          className="border border-black text-black hover:bg-black hover:text-white transition-all">
+          className="border border-purple-700 text-purple-700 hover:bg-purple-700 hover:text-white transition-all">
           {index === 4 ? "Continue" : "Next →"}
         </Button>
       </div>
