@@ -9,7 +9,6 @@ export default function MoodResult() {
 
     const location = useLocation();
     const navigate = useNavigate();
-    const averageScore = weightedScore;
 
     // console.log("Location state:", location.state);
     const responses = useMemo(() => {
@@ -31,6 +30,8 @@ export default function MoodResult() {
 
         return (total / totalWeight).toFixed(1);
     }, [responses]);
+
+    const averageScore = weightedScore;
 
     // Arc length for the foreground arc
     const radius = 40;
