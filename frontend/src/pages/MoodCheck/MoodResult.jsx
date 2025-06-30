@@ -100,16 +100,16 @@ export default function MoodResult() {
     const handleRetake = () => navigate("/dashboard/mood");
     const handleTalk = () => {
 
-navigate("/dashboard/bot", {
-  state: {
-    fromMoodResult: true,
-    moodReport: {
-      score: averageScore,
-      mood: mood.label,
-    },
-  },
-});
-};
+        navigate("/dashboard/bot", {
+            state: {
+                fromMoodResult: true,
+                moodReport: {
+                    score: averageScore,
+                    mood: mood.label,
+                },
+            },
+        });
+    };
 
     return (
         <div className="w-full min-h-screen flex justify-center px-4 pb-20">
@@ -153,11 +153,16 @@ navigate("/dashboard/bot", {
                             />
 
                             {/* Progress Tip */}
-                            <circle
-                                r="5"
-                                fill="#9333EA"
-                                transform={`rotate(${135 + 270 * scoreRatio}, 50, 50) translate(0, -40)`}
-                            />
+                            {/* {scoreRatio > 0 && (
+                              <circle
+                                r="10"
+                                fill="#f3e8ff"
+                                cx="50"
+                                cy="50"
+                                transform={`rotate(${135 + 270 * scoreRatio}, 50, 50) translate(0, -44)`}
+                                className="transition-transform duration-500 ease-out"
+                              />
+                            )} */}
 
                             <defs>
                                 <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -206,14 +211,16 @@ navigate("/dashboard/bot", {
                     ))}
                 </div>
                 {/* Talk to Bot */}
-                <div className="w-full flex justify-center mt-6">
-                    <Button
-                        onClick={handleTalk}
-                        className="flex items-center gap-3 bg-purple-600 hover:bg-purple-700 text-white"
-                    >
-                        <img src={BotIcon} alt="Bot" className="h-5 w-5" />
-                        Talk to Brain Bot
-                    </Button>
+                <div className="md:static fixed bottom-0 left-4 w-full px-4 py-3 bg-white border-t border-zinc-200 z-10">
+                    <div className="max-w-2xl flex justify-center mx-auto">
+                        <Button
+                            onClick={handleTalk}
+                            className="bg-gradient-to-r from-purple-700 to-zinc-700 text-white hover:from-purple-700 hover:to-pink-400 px-6 py-6 rounded-full text-base font-extrabold transition"
+                        >
+                            <img src={BotIcon} alt="Bot" className="h-6 w-6" />
+                            Talk to Brain Bot
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>
