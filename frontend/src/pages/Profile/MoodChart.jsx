@@ -1,14 +1,12 @@
 import {
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
-  YAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  CartesianGrid,
 } from "recharts";
 
-// Mapping moods to numeric levels
 const moodScoreMap = {
   Low: 1,
   Anxious: 2,
@@ -27,8 +25,20 @@ const moodLabels = {
 
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+// Custom Tooltip
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-black text-white text-xs px-3 py-2 rounded-lg shadow-lg">
+        <p className="font-semibold">{label}</p>
+        <p>{moodLabels[payload[0].value]}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
 export default function MoodChart() {
-  // 🧠 Simulated mood entries (normally fetched from localStorage or DB)
   const moodEntries = [
     { date: "2025-06-24", mood: "Neutral" },
     { date: "2025-06-25", mood: "Low" },
@@ -37,20 +47,18 @@ export default function MoodChart() {
     { date: "2025-06-28", mood: "Anxious" },
     { date: "2025-06-29", mood: "Good" },
     { date: "2025-06-30", mood: "Neutral" },
-    { date: "2025-07-01", mood: "Calm" }, // today
+    { date: "2025-07-01", mood: "Calm" },
   ];
 
   const today = new Date();
   const last7 = [];
 
-  // Prepare data for the past 7 days
   for (let i = 6; i >= 0; i--) {
     const d = new Date(today);
     d.setDate(d.getDate() - i);
     const dateStr = d.toISOString().split("T")[0];
     const day = dayNames[d.getDay()];
 
-    // Find matching mood for that day (latest one if multiple)
     const moodEntry = [...moodEntries]
       .reverse()
       .find((entry) => entry.date === dateStr);
@@ -62,31 +70,38 @@ export default function MoodChart() {
   }
 
   return (
-    <div className="bg-white rounded-xl border p-4 shadow-md w-full max-w-3xl">
-      <h2 className="text-lg font-semibold text-zinc-700 mb-2">Mood Trend (Past 7 Days)</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={last7}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="day" />
-          <YAxis
-            domain={[1, 5]}
-            ticks={[1, 2, 3, 4, 5]}
-            tickFormatter={(value) => moodLabels[value]}
+    <div className="bg-white rounded-xl border p-4 shadow-sm w-full">
+      <ResponsiveContainer width="100%" height={340}>
+        <AreaChart data={last7} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+          <defs>
+            <linearGradient id="moodGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#9333EA" stopOpacity={0.3} />
+              <stop offset="95%" stopColor="#9333EA" stopOpacity={0.05} />
+            </linearGradient>
+          </defs>
+
+          <XAxis
+            dataKey="day"
+            tick={{ fontSize: 12, fill: "#666" }}
+            axisLine={false}
+            tickLine={false}
           />
-          <Tooltip
-            formatter={(value) => moodLabels[value]}
-            labelStyle={{ color: "#9333EA", fontWeight: "bold" }}
-          />
-          <Line
+          {/* ⛔ Removed Y-Axis completely */}
+
+          <CartesianGrid vertical={false} stroke="#E4E4E7" strokeDasharray="" />
+
+          <Tooltip content={<CustomTooltip />} cursor={{ stroke: "#9333EA", strokeWidth: 1 }} />
+
+          <Area
             type="monotone"
             dataKey="mood"
             stroke="#9333EA"
-            strokeWidth={3}
-            dot={{ r: 5, stroke: "#9333EA", strokeWidth: 2, fill: "#fff" }}
-            activeDot={{ r: 8 }}
-            isAnimationActive={true}
+            strokeWidth={2}
+            fill="url(#moodGradient)"
+            activeDot={{ r: 5, fill: "#9333EA", stroke: "white", strokeWidth: 2 }}
+            dot={false}
           />
-        </LineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );

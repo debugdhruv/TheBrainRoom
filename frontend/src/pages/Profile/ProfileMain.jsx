@@ -29,7 +29,7 @@ export default function ProfileMain() {
             {user.firstName} {user.lastName}
           </h2>
           <p className="text-sm text-zinc-500">
-            {user.age} • {user.gender}
+            {user.age} , {user.gender}
           </p>
         </div>
         {/* Edit Button */}
@@ -42,16 +42,12 @@ export default function ProfileMain() {
 
       {/* Edit Modal */}
       <EditProfileModal open={isEditOpen} onClose={() => setIsEditOpen(false)} />
-        {/* Chart + XP Box Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
-          {/* Mood Chart spans 2 columns */}
-          <div className="md:col-span-2">
-            <MoodChart />
-          </div>
 
-          {/* XP Box */}
-          <XPBox xp={145}/>
-        </div>
+      {/* Chart + XP Section */}
+      <div className="mt-10">
+        <MoodChart />
+        <XPBox xp={145} />
+      </div>
     </div>
   );
 }
