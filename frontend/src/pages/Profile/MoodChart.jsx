@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   AreaChart,
   Area,
@@ -6,14 +7,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
-
-const moodScoreMap = {
-  Low: 1,
-  Anxious: 2,
-  Neutral: 3,
-  Good: 4,
-  Calm: 5,
-};
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const moodLabels = {
   1: "Low",
@@ -39,40 +33,40 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export default function MoodChart() {
-  const moodEntries = [
-    { date: "2025-06-24", mood: "Neutral" },
-    { date: "2025-06-25", mood: "Low" },
-    { date: "2025-06-26", mood: "Good" },
-    { date: "2025-06-27", mood: "Calm" },
-    { date: "2025-06-28", mood: "Anxious" },
-    { date: "2025-06-29", mood: "Good" },
-    { date: "2025-06-30", mood: "Neutral" },
-    { date: "2025-07-01", mood: "Calm" },
-  ];
+  const [range, setRange] = useState("7d");
 
   const today = new Date();
-  const last7 = [];
+  const rangeMap = { "7d": 7, "30d": 30, "90d": 90 };
+  const daysToShow = rangeMap[range] || 7;
 
-  for (let i = 6; i >= 0; i--) {
+  const chartData = [];
+  for (let i = daysToShow - 1; i >= 0; i--) {
     const d = new Date(today);
     d.setDate(d.getDate() - i);
-    const dateStr = d.toISOString().split("T")[0];
-    const day = dayNames[d.getDay()];
+    const label =
+      range === "7d"
+        ? dayNames[d.getDay()]
+        : String(daysToShow - i); // Just number 1 to 30
 
-    const moodEntry = [...moodEntries]
-      .reverse()
-      .find((entry) => entry.date === dateStr);
+    const moodScore = Math.floor(Math.random() * 5) + 1;
 
-    last7.push({
-      day,
-      mood: moodEntry ? moodScoreMap[moodEntry.mood] : null,
-    });
+    chartData.push({ day: label, mood: moodScore });
   }
 
   return (
     <div className="bg-white rounded-xl border p-4 shadow-sm w-full">
+      <div className="flex justify-between items-center mb-2">
+        <div className="text-lg font-semibold text-zinc-700">Mood Chart</div>
+        <Tabs value={range} onValueChange={setRange}>
+          <TabsList>
+            <TabsTrigger value="7d">7D</TabsTrigger>
+            <TabsTrigger value="30d">30D</TabsTrigger>
+            {/* <TabsTrigger value="90d">3M</TabsTrigger> */}
+          </TabsList>
+        </Tabs>
+      </div>
       <ResponsiveContainer width="100%" height={340}>
-        <AreaChart data={last7} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+        <AreaChart data={chartData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="moodGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#9333EA" stopOpacity={0.3} />
@@ -85,11 +79,10 @@ export default function MoodChart() {
             tick={{ fontSize: 12, fill: "#666" }}
             axisLine={false}
             tickLine={false}
+            interval="preserveStartEnd"
           />
-          {/* ⛔ Removed Y-Axis completely */}
 
           <CartesianGrid vertical={false} stroke="#E4E4E7" strokeDasharray="" />
-
           <Tooltip content={<CustomTooltip />} cursor={{ stroke: "#9333EA", strokeWidth: 1 }} />
 
           <Area
