@@ -69,9 +69,7 @@ export default function ProfileMain() {
             <MoodChart range={range} />
           </div>
         </div>
-        <div className="w-full">
-          <XPBox xp={145} />
-        </div>
+        <XPBox xp={185} />
       </div>
     </div>
   );
