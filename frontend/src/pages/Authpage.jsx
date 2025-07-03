@@ -23,6 +23,11 @@ export default function AuthPage({ mode: initialMode }) {
   const [dob, setDob] = useState(null);
   const { addXP } = useContext(XPContext);
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour >= 2 && hour < 12) return "Good Morning";
@@ -49,11 +54,42 @@ export default function AuthPage({ mode: initialMode }) {
   const handleToggle = (targetMode) => {
     navigate(`/${targetMode}`);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Gender:", gender);
-    console.log("DOB:", dob);
-    navigate("/dashboard");
+
+    const payload =
+      mode === "register"
+        ? {
+            username: `${firstName} ${lastName}`,
+            email,
+            password,
+            gender,
+          }
+        : {
+            email,
+            password,
+          };
+
+    try {
+      const res = await fetch(`http://localhost:5050/api/auth/${mode}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.error("❌ Error:", data.message);
+        return;
+      }
+
+      localStorage.setItem("token", data.token);
+      console.log("✅ Success:", data);
+      navigate("/dashboard");
+    } catch (err) {
+      console.error("❌ Request failed:", err);
+    }
   };
 
   return (
@@ -83,8 +119,8 @@ export default function AuthPage({ mode: initialMode }) {
           {mode === "register" && (
             <>
               <div className="flex space-x-2">
-                <Input placeholder="First Name" />
-                <Input placeholder="Last Name" />
+                <Input placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                <Input placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
               </div>
               <div className="flex space-x-2">
                 {/* Gender Select */}
@@ -127,8 +163,8 @@ export default function AuthPage({ mode: initialMode }) {
             </>
           )}
 
-          <Input placeholder="Email Address" />
-          <Input placeholder="Create your Password" type="password" />
+          <Input placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Input placeholder="Create your Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
           <Button className="w-full" type="submit">Continue →</Button>
         </form>
