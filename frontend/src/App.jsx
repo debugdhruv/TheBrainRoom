@@ -14,9 +14,9 @@ export default function App() {
   return (
     <>
       <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<AuthPage mode="login" />} />
         <Route path="/register" element={<AuthPage mode="register" />} />
-        <Route path="*" element={<NotFound />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="mood">
@@ -28,8 +28,10 @@ export default function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="premium" element={<Premium />} />
         </Route>
-
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        {/* Fallback Route Page */}
+        <Route path="*" element={<NotFound />} />
+        {/* Explicit /404 Page */}
+        <Route path="/404" element={<NotFound />} />
       </Routes>
       <Toaster position="top-center" />
     </>
