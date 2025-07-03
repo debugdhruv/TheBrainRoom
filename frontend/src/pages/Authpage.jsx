@@ -27,6 +27,7 @@ export default function AuthPage({ mode: initialMode }) {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -37,6 +38,14 @@ export default function AuthPage({ mode: initialMode }) {
   useEffect(() => {
     if (location.pathname.includes("register")) setMode("register");
     else setMode("login");
+
+    // Reset form fields when switching modes
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
+    setGender("");
+    setDob(null);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -103,13 +112,13 @@ export default function AuthPage({ mode: initialMode }) {
         <div className="flex justify-center mb-6">
           <button
             onClick={() => handleToggle("login")}
-            className={`px-4 py-2 border-b-2 ${mode === "login" ? "border-black font-semibold" : "border-transparent"}`}>
+            className={`px-4 py-2 border-b-2 transition-all duration-200 ${mode === "login" ? "border-black font-semibold" : "border-transparent"}`}>
             Login
           </button>
 
           <button
             onClick={() => handleToggle("register")}
-            className={`px-4 py-2 border-b-2 ${mode === "register" ? "border-black font-semibold" : "border-transparent"}`}>
+            className={`px-4 py-2 border-b-2 transition-all duration-200 ${mode === "register" ? "border-black font-semibold" : "border-transparent"}`}>
             Register
           </button>
         </div>
@@ -164,7 +173,22 @@ export default function AuthPage({ mode: initialMode }) {
           )}
 
           <Input placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <Input placeholder="Create your Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <div className="relative">
+            <Input
+              placeholder="Create your Password"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="pr-16"
+            />
+            <button
+              type="button"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-zinc-600 hover:text-zinc-800 transition-colors duration-200"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
 
           <Button className="w-full" type="submit">Continue →</Button>
         </form>
