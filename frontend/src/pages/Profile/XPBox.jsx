@@ -20,18 +20,18 @@ export default function XPBox({ xp }) {
         <Popover>
           <PopoverTrigger asChild>
             <button
-              className="absolute underline top-4 right-4 flex items-center gap-1 text-xs text-purple-700 hover:opacity-80 transition"
+              className="absolute underline top-4 right-4 flex items-center gap-1 text-sm text-purple-700 hover:opacity-80 transition"
             >
               <span>how is XP calculated?</span>
             </button>
           </PopoverTrigger>
           <PopoverContent
             sideOffset={12}
-            align="end"
-            className="w-64 bg-white border rounded-lg shadow-lg p-4"
+            align="start"
+            className="w-96 bg-white border rounded-lg shadow-lg p-6"
           >
-            <p className="text-sm font-semibold text-zinc-700 mb-2">XP Breakdown</p>
-            <ul className="space-y-2 text-sm text-zinc-600">
+            <p className="text-lg font-semibold text-zinc-700 mb-2">XP Breakdown</p>
+            <ul className="space-y-2 text-md text-zinc-600">
               <li className="flex justify-between">
                 <span>Daily login</span>
                 <span className="text-purple-700 font-medium">+10 XP</span>
