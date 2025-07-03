@@ -72,7 +72,7 @@ export default function MoodChart({ range }) {
             interval="preserveStartEnd"
           />
 
-          <CartesianGrid vertical={false} stroke="#E4E4E7" strokeDasharray={false} />
+          <CartesianGrid vertical={false} stroke="#E4E4E7" />
           <Tooltip content={<CustomTooltip />} cursor={{ stroke: "#9333EA", strokeWidth: 1 }} />
 
           <Area

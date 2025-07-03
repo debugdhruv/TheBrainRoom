@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -11,7 +11,7 @@ import fbIcon from "@/assets/icons/Vector.svg";
 import AppleIcon from "@/assets/icons/Group.svg";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { XPContext } from "@/context/XPContext";
 import CalendarIcon from "@/assets/icons/calendar.svg"
 
 export default function AuthPage({ mode: initialMode }) {
@@ -21,6 +21,8 @@ export default function AuthPage({ mode: initialMode }) {
   const [mode, setMode] = useState(initialMode);
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState(null);
+  const { addXP } = useContext(XPContext);
+
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour >= 2 && hour < 12) return "Good Morning";
@@ -31,6 +33,19 @@ export default function AuthPage({ mode: initialMode }) {
     if (location.pathname.includes("register")) setMode("register");
     else setMode("login");
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const today = new Date().toISOString().split("T")[0];
+      const lastLogin = localStorage.getItem("lastLoginXP");
+
+      if (lastLogin !== today) {
+        addXP("Daily login", 10);
+        localStorage.setItem("lastLoginXP", today);
+      }
+    }
+  }, [addXP]);
+
   const handleToggle = (targetMode) => {
     navigate(`/${targetMode}`);
   };

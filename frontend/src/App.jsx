@@ -9,14 +9,14 @@ import Profile from "./pages/Profile/ProfileMain";
 import Premium from "./pages/Premium";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import { Toaster } from "@/components/ui/sonner";
-
+import NotFound from "@/pages/NotFound";
 export default function App() {
   return (
     <>
       <Routes>
         <Route path="/login" element={<AuthPage mode="login" />} />
         <Route path="/register" element={<AuthPage mode="register" />} />
-
+        <Route path="*" element={<NotFound />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="mood">

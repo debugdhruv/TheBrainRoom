@@ -1,14 +1,16 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import BotIcon from "@/assets/icons/chat 3.svg";
 import BackIcon from "@/assets/icons/back.svg";
 import { moodQuestions } from "./moodData";
+import { useXP } from "@/context/useXP";
 
 export default function MoodResult() {
 
     const location = useLocation();
     const navigate = useNavigate();
+    const { addXP } = useXP();
 
     // console.log("Location state:", location.state);
     const responses = useMemo(() => {
@@ -54,6 +56,17 @@ export default function MoodResult() {
     };
 
     const mood = getMood(averageScore);
+
+    // XP reward for completing mood check
+    useEffect(() => {
+      const today = new Date().toISOString().split("T")[0];
+      const lastRewardDate = localStorage.getItem("xp_moodcheck_date");
+
+      if (lastRewardDate !== today) {
+        addXP(25, "Completed Mood Check");
+        localStorage.setItem("xp_moodcheck_date", today);
+      }
+    }, []);
 
     const suggestions = [
         {
@@ -182,6 +195,13 @@ export default function MoodResult() {
                             href={sug.link}
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              addXP(50, "Followed AI suggestion");
+                              setTimeout(() => {
+                                window.open(sug.link, "_blank", "noopener,noreferrer");
+                              }, 1000);
+                            }}
                             className="bg-white border rounded-lg shadow-sm hover:shadow-md transition overflow-hidden">
                             <img src={sug.thumbnail} alt={sug.title} className="w-full aspect-video object-cover" />
                             <div className="p-2">

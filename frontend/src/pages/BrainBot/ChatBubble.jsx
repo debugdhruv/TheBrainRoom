@@ -6,7 +6,13 @@ export default function ChatBubble({ type, text, title, description, url, image,
   if (type === "card") {
     return (
       <div className="w-full flex justify-start px-2">
-        <div className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg w-full bg-white border border-zinc-200 rounded-xl overflow-hidden shadow-sm">
+        <a
+          href={url}
+          data-bot-link
+          target="_blank"
+          rel="noopener noreferrer"
+          className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg w-full bg-white border border-zinc-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all block"
+        >
           {image && (
             <img src={image} alt="Suggestion Thumbnail" className="w-full h-40 object-cover" />
           )}
@@ -17,17 +23,11 @@ export default function ChatBubble({ type, text, title, description, url, image,
             </div>
             <h3 className="text-sm font-semibold text-slate-800">{title}</h3>
             <p className="text-xs text-zinc-600">{description}</p>
-            {url && (
-              <a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block text-xs text-purple-600 font-medium hover:underline">
-                {source ? `View on ${source}` : "Open Resource"}
-              </a>
+            {source && (
+              <p className="text-xs text-purple-600 font-medium">{`View on ${source}`}</p>
             )}
           </div>
-        </div>
+        </a>
       </div>
     );
   }

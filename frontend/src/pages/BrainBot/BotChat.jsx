@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import ChatBubble from "./ChatBubble";
 import MessageInput from "./MessageInput";
-import BotReportCard from "./BotReportCard";
+// import BotReportCard from "./BotReportCard";
 import StarIcon from "@/assets/icons/starsAI.svg";
-
+import { useXP } from "@/context/useXP";
 
 export default function BotChat({ initialMessage, moodReport = null, fromMoodResult = false }) {
-
+  const { addXP } = useXP();
   const [messages, setMessages] = useState(initialMessage ? [{ type: "user", text: initialMessage }] : []);
   const showReport = fromMoodResult;
   const [started, setStarted] = useState(!!initialMessage);
@@ -84,6 +84,35 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
     // intentionally left blank; logic handled in useEffect now
   };
 
+  // Intercept clicks on card links to add XP before opening
+  useEffect(() => {
+    const handleLinkClick = (e) => {
+      const link = e.target.closest("[data-bot-link]");
+      if (link) {
+        e.preventDefault();
+        addXP(50, "Followed AI Suggestion");
+
+        setTimeout(() => {
+          const a = document.createElement("a");
+          a.href = link.href;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.style.display = "none";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }, 1000);
+      }
+    };
+
+    const container = scrollRef.current;
+    container?.addEventListener("click", handleLinkClick);
+
+    return () => {
+      container?.removeEventListener("click", handleLinkClick);
+    };
+  }, [addXP]);
+
   return (
     <div className="flex flex-col h-screen max-w-3xl mx-auto">
       {/* Scrollable chat area */}
@@ -146,6 +175,7 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
                 source={msg.source}
               />
             ))}
+
             {isBotTyping && (
               <div className="w-full flex justify-start px-2">
                 <div className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg text-sm px-4 py-3 rounded-xl shadow-sm bg-zinc-100 text-slate-700 rounded-bl-none">

@@ -1,4 +1,5 @@
 import linky from "@/assets/icons/linky.svg"
+import { useXP } from "@/context/useXP";
 
 const forumServers = [
   {
@@ -64,6 +65,8 @@ const forumServers = [
 ];
 
 export default function Forums() {
+  const { addXP } = useXP();
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
       <h1 className="text-xl sm:text-2xl font-bold text-zinc-800 mb-6">Community Forums</h1>
@@ -88,13 +91,16 @@ export default function Forums() {
                 <p className="text-center text-xs text-zinc-600">{server.tagline}</p>
               )}
 
-              <a
-                href={server.invite}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => {
+                  addXP(5, "Joined a server");
+                  setTimeout(() => {
+                    window.open(server.invite, "_blank", "noopener,noreferrer");
+                  }, 1000);
+                }}
                 className="mt-3 w-full bg-purple-600 text-white text-sm font-medium rounded-full py-2 text-center hover:opacity-70 transition">
                 Join Server
-              </a>
+              </button>
             </div>
           </div>
         ))}
