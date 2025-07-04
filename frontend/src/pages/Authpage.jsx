@@ -67,17 +67,18 @@ export default function AuthPage({ mode: initialMode }) {
     e.preventDefault();
 
     const payload =
-      mode === "register"
-        ? {
-            username: `${firstName} ${lastName}`,
-            email,
-            password,
-            gender,
-          }
-        : {
-            email,
-            password,
-          };
+  mode === "register"
+    ? {
+        username: `${firstName} ${lastName}`,
+        email,
+        password,
+        gender,
+        dob: dob ? dob.toISOString() : null,
+      }
+    : {
+        email,
+        password,
+      };
 
     try {
       const baseUrl = import.meta.env.VITE_API_BASE_URL;
