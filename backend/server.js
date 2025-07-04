@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5050;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://thebrainroom.vercel.app",
+  process.env.FRONTEND_URL,
   "https://thebrainroom.onrender.com"
 ];
 
