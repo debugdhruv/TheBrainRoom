@@ -13,7 +13,7 @@ const cors = require('cors');
 
 const allowedOrigins = [
   'http://localhost:5173',
-  process.env.FRONTEND_URL, // this needs to be defined in your .env
+  'https://thebrainroom.vercel.app'
 ];
 
 app.use(cors({
