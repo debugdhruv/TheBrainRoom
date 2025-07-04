@@ -24,7 +24,8 @@ dist/
 *.sw?
 
 # Environment files
-*.env
+frontend/.env
+backend/.env
 
 # Build folders
 frontend/dist/

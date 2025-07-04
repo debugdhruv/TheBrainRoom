@@ -80,7 +80,8 @@ export default function AuthPage({ mode: initialMode }) {
           };
 
     try {
-      const res = await fetch(`http://localhost:5050/api/auth/${mode}`, {
+      const baseUrl = import.meta.env.VITE_API_BASE_URL;
+      const res = await fetch(`${baseUrl}/api/auth/${mode}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
