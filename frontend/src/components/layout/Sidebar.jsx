@@ -28,6 +28,12 @@ export default function Sidebar() {
   const isPremiumActive = location.pathname === "/dashboard/premium";
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("loginTimestamp");
+    navigate("/login");
+  };
+
   const navItems = [
     {
       name: "Home",
@@ -115,8 +121,9 @@ export default function Sidebar() {
           </div>
           <div className="flex justify-between items-center">
             <button
-              onClick={() => navigate("/login")}
-              className="flex items-center gap-2 text-purple-700 bg-purple-100 px-3 py-1 rounded-full text-base">
+              onClick={handleLogout}
+              className="flex items-center gap-2 text-purple-700 bg-purple-100 px-3 py-1 rounded-full text-base"
+            >
               <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
               Logout
             </button>

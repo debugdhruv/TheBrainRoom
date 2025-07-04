@@ -30,6 +30,12 @@ export default function SidebarMobile() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("loginTimestamp");
+    navigate("/login");
+  };
+
   const navItems = [
     { name: "Home", path: "/dashboard", icon: HomeIcon, iconActive: HomeIconFilled },
     { name: "Mood Check", path: "/dashboard/mood", icon: MoodIcon, iconActive: MoodIconFilled },
@@ -81,7 +87,7 @@ export default function SidebarMobile() {
         </div>
 
         <div className="flex flex-col items-center gap-4 pb-20">
-          <button onClick={() => navigate("/login")} className="p-2 rounded-md hover:bg-zinc-100">
+          <button onClick={handleLogout} className="p-2 rounded-md hover:bg-zinc-100">
             <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
           </button>
           <img src={Logo} alt="Brain Room" className="h-6 w-6" />
@@ -145,7 +151,7 @@ export default function SidebarMobile() {
             </div>
 
             <button
-              onClick={() => navigate("/login")}
+              onClick={handleLogout}
               className="flex items-center gap-2 text-purple-700 bg-purple-100 px-3 py-1 rounded-full text-base">
               <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
               Logout

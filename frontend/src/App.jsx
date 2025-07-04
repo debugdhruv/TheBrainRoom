@@ -10,23 +10,75 @@ import Premium from "./pages/Premium";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import { Toaster } from "@/components/ui/sonner";
 import NotFound from "@/pages/NotFound";
+import ProtectedRoute from "@/components/common/ProtectedRoute";
+import { isSessionValid } from "@/utils/session";
+
 export default function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to={isSessionValid() ? "/dashboard" : "/login"} />} />
         <Route path="/login" element={<AuthPage mode="login" />} />
         <Route path="/register" element={<AuthPage mode="register" />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<Dashboard />} />
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
           <Route path="mood">
-            <Route index element={<Mood />} />
-            <Route path="result" element={<MoodResult />} />
+            <Route
+              index
+              element={
+                <ProtectedRoute>
+                  <Mood />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="result"
+              element={
+                <ProtectedRoute>
+                  <MoodResult />
+                </ProtectedRoute>
+              }
+            />
           </Route>
-          <Route path="bot" element={<Bot />} />
-          <Route path="forums" element={<Forums />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="premium" element={<Premium />} />
+          <Route
+            path="bot"
+            element={
+              <ProtectedRoute>
+                <Bot />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="forums"
+            element={
+              <ProtectedRoute>
+                <Forums />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="premium"
+            element={
+              <ProtectedRoute>
+                <Premium />
+              </ProtectedRoute>
+            }
+          />
         </Route>
         {/* Fallback Route Page */}
         <Route path="*" element={<NotFound />} />
