@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { XPContext } from "@/context/XPContext";
 import CalendarIcon from "@/assets/icons/calendar.svg"
+import { toast } from "sonner";
 
 export default function AuthPage({ mode: initialMode }) {
 
@@ -52,18 +53,16 @@ export default function AuthPage({ mode: initialMode }) {
     setDob(null);
     setSubmitted(false);
     setErrors({});
+    setShowPassword(false);
   }, [location.pathname]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const today = new Date().toISOString().split("T")[0];
-      const lastLogin = localStorage.getItem("lastLoginXP");
-
-      if (lastLogin !== today) {
-        addXP("Daily login", 10);
-        localStorage.setItem("lastLoginXP", today);
-      }
-    }
+    const handleXP = (e) => {
+      const { reason, amount } = e.detail;
+      addXP(reason, amount);
+    };
+    window.addEventListener("addXP", handleXP);
+    return () => window.removeEventListener("addXP", handleXP);
   }, [addXP]);
 
   const validateForm = useCallback(() => {
@@ -128,14 +127,32 @@ export default function AuthPage({ mode: initialMode }) {
       const data = await res.json();
 
       if (!res.ok) {
-        console.error("❌ Error:", data.message);
+        toast.error("Wrong credentials", { duration: 1500, position: "top-center" });
         return;
       }
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("loginTimestamp", Date.now());
-      console.log("✅ Success:", data);
-      navigate("/dashboard");
+      toast.success("Logging in...", { duration: 2000, position: "top-center" });
+
+      // Give XP only if not already given today, with delay and XP toast
+      const today = new Date().toISOString().split("T")[0];
+      const lastLogin = localStorage.getItem("lastLoginXP");
+
+      if (lastLogin !== today) {
+        setTimeout(() => {
+          const xpEvent = new CustomEvent("addXP", { detail: { reason: "Daily login", amount: 10 } });
+          window.dispatchEvent(xpEvent);
+          localStorage.setItem("lastLoginXP", today);
+          toast.success("+10 XP for Daily Login 🎉", { duration: 3000, position: "top-center" });
+        }, 1000);
+      }
+
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
+      // console.log("✅ Success:", data);
+      // navigate("/dashboard");
     } catch (err) {
       console.error("❌ Request failed:", err);
     }
@@ -282,7 +299,11 @@ export default function AuthPage({ mode: initialMode }) {
               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-zinc-600 hover:text-zinc-800 transition-colors duration-200"
               onClick={() => setShowPassword((prev) => !prev)}
             >
-              {showPassword ? "Hide" : "Show"}
+              <img
+                src={showPassword ? "/src/assets/icons/eye2.svg" : "/src/assets/icons/eye1.svg"}
+                alt={showPassword ? "Hide password" : "Show password"}
+                className="h-5 w-5 opacity-60 hover:opacity-100"
+              />
             </button>
           </div>
           {submitted && errors.password && (
