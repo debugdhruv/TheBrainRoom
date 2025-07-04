@@ -25,6 +25,7 @@ dist/
 
 # Environment files
 frontend/.env
+frontend/.env.local
 backend/.env
 
 # Build folders
