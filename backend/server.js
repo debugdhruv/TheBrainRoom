@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5050;
 const allowedOrigins = [
   "http://localhost:5173",
   process.env.FRONTEND_URL,
-  "https://thebrainroom.onrender.com"
+  "https://tbr-apibkend-x86.onrender.com"
 ];
 
 app.use((req, res, next) => {
@@ -42,7 +42,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 
 app.get("/", (req, res) => {
-  res.status(403).send("🚫 Access Denied");
+  res.status(404).end();
 });
 
 app.listen(PORT, () => {
