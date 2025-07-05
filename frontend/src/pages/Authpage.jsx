@@ -14,6 +14,8 @@ import { useLocation } from "react-router-dom";
 import { XPContext } from "@/context/XPContext";
 import CalendarIcon from "@/assets/icons/calendar.svg"
 import { toast } from "sonner";
+import EyeOpen from "@/assets/icons/eye1.svg"
+import EyeClosed from "@/assets/icons/eye2.svg"
 
 export default function AuthPage({ mode: initialMode }) {
 
@@ -300,7 +302,7 @@ export default function AuthPage({ mode: initialMode }) {
               onClick={() => setShowPassword((prev) => !prev)}
             >
               <img
-                src={showPassword ? "/src/assets/icons/eye2.svg" : "/src/assets/icons/eye1.svg"}
+                src={showPassword ? EyeClosed : EyeOpen}
                 alt={showPassword ? "Hide password" : "Show password"}
                 className="h-5 w-5 opacity-60 hover:opacity-100"
               />

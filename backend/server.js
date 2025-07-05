@@ -16,6 +16,16 @@ const allowedOrigins = [
   "https://thebrainroom.onrender.com"
 ];
 
+app.use((req, res, next) => {
+  const origin = req.get("origin");
+  if (!origin || allowedOrigins.includes(origin)) {
+    next();
+  } else {
+    console.log("❌ Blocked by origin middleware:", origin);
+    res.status(403).send("Access Denied");
+  }
+});
+
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -32,7 +42,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 
 app.get("/", (req, res) => {
-  res.send("🧠 Brain Room backend is up and running!");
+  res.status(403).send("🚫 Access Denied");
 });
 
 app.listen(PORT, () => {
