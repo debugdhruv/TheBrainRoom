@@ -2,6 +2,7 @@ import AvatarCircle from "./AvatarCircle";
 import { Button } from "@/components/ui/button";
 import EditProfileModal from "./EditProfileModal";
 import { useState } from "react";
+import { useEffect } from "react";
 import MoodChart from "./MoodChart";
 import XPBox from "./XPBox";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,6 +14,7 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { useXP } from "@/context/useXP";
+import { useUser } from "@/context/useUser";
 
 export default function ProfileMain() {
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -21,21 +23,35 @@ export default function ProfileMain() {
   const [showFullHistory, setShowFullHistory] = useState(false);
   const { addXP } = useXP();
   const { xp, history } = useXP();
+  const { userDetails } = useUser();
 
-  // Dummy user data — to be replaced with real user state later
-  const user = {
-    firstName: "Dhruv",
-    lastName: "Tiwari",
-    age: 22,
-    gender: "Male",
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (userDetails) {
+      setUser(userDetails);
+    }
+  }, [userDetails]);
+
+  const getAge = (dobString) => {
+    const dob = new Date(dobString);
+    const diffMs = Date.now() - dob.getTime();
+    const ageDate = new Date(diffMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   };
+
+  if (!user || !user.firstName || !user.lastName) {
+    return <div className="text-center py-10 text-zinc-500">Loading profile… 🧠</div>;
+  }
+
+  const age = user.dob ? getAge(user.dob) : "--";
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       {/* Header Section */}
       <div className="relative flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
         {/* Avatar */}
-        <AvatarCircle firstName={user.firstName} lastName={user.lastName} />
+        <AvatarCircle firstName={user.firstName || ""} lastName={user.lastName || ""} />
 
         {/* User Info & Button wrapper */}
         <div className="flex-1 flex flex-col sm:flex-row sm:items-center justify-between w-full">
@@ -47,7 +63,7 @@ export default function ProfileMain() {
                     {user.firstName} {user.lastName}
                   </h2>
                   <p className="font-medium text-lg text-zinc-400">
-                    {user.age} , {user.gender}
+                    {age} , {user.gender}
                   </p>
                 </div>
 

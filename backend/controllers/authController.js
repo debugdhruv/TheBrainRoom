@@ -7,7 +7,7 @@ const generateToken = (userId) => {
 };
 
 exports.registerUser = async (req, res) => {
-  const { username, email, password, gender, dob } = req.body;
+  const { firstName, lastName, email, password, gender, dob } = req.body;
   console.log("📥 Registration Payload:", req.body);
 
   try {
@@ -18,7 +18,8 @@ exports.registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const user = await User.create({
-      username,
+      firstName,
+      lastName,
       email,
       password: hashedPassword,
       gender: gender || null,
@@ -30,7 +31,8 @@ exports.registerUser = async (req, res) => {
     res.status(201).json({
       user: {
         id: user._id,
-        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         gender: user.gender,
         dob: user.dob
@@ -58,10 +60,13 @@ exports.loginUser = async (req, res) => {
     res.status(200).json({
       user: {
         id: user._id,
-        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         gender: user.gender,
-        dob: user.dob
+        dob: user.dob,
+        xp: user.xp,
+        xpHistory: user.xpHistory,
       },
       token
     });

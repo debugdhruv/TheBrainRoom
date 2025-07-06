@@ -104,10 +104,11 @@ export default function AuthPage({ mode: initialMode }) {
     validateForm();
     if (!isFormValid) return;
 
-    const payload =
+const payload =
   mode === "register"
     ? {
-        username: `${firstName} ${lastName}`,
+        firstName,
+        lastName,
         email,
         password,
         gender,
@@ -119,7 +120,7 @@ export default function AuthPage({ mode: initialMode }) {
       };
 
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL;
+      const baseUrl = import.meta.env.VITE_APP_BASE_URL;
       const res = await fetch(`${baseUrl}/api/auth/${mode}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -135,6 +136,7 @@ export default function AuthPage({ mode: initialMode }) {
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("loginTimestamp", Date.now());
+      localStorage.setItem("userData", JSON.stringify(data.user));
       toast.success("Logging in...", { duration: 2000, position: "top-center" });
 
       // Give XP only if not already given today, with delay and XP toast
@@ -143,8 +145,7 @@ export default function AuthPage({ mode: initialMode }) {
 
       if (lastLogin !== today) {
         setTimeout(() => {
-          const xpEvent = new CustomEvent("addXP", { detail: { reason: "Daily login", amount: 10 } });
-          window.dispatchEvent(xpEvent);
+          addXP(10, "Daily login");
           localStorage.setItem("lastLoginXP", today);
           toast.success("+10 XP for Daily Login 🎉", { duration: 3000, position: "top-center" });
         }, 1000);

@@ -1,38 +1,61 @@
 import { createContext, useState, useEffect } from "react";
+import { useUser } from "./useUser";
 import { toast } from "sonner";
 
 const XPContext = createContext();
 export { XPContext };
 
 export const XPProvider = ({ children }) => {
-  const [xp, setXP] = useState(() => {
-    const stored = localStorage.getItem("user_xp");
-    return stored ? parseInt(stored) : 0;
-  });
+  const { userDetails, setUserDetails } = useUser();
 
-  const [history, setHistory] = useState(() => {
-    const stored = localStorage.getItem("xp_history");
-    return stored ? JSON.parse(stored) : [];
-  });
+  const [xp, setXP] = useState(0);
+  const [history, setHistory] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem("user_xp", xp);
-    localStorage.setItem("xp_history", JSON.stringify(history));
-  }, [xp, history]);
+    if (userDetails) {
+      setXP(userDetails.xp || 0);
+      setHistory(userDetails.xpHistory || []);
+    }
+  }, [userDetails]);
 
-  const addXP = (amount, reason) => {
+  const addXP = async (amount, reason) => {
     const date = new Date().toISOString().split("T")[0];
-
-    setXP((prev) => prev + amount);
-    setHistory((prev) => [
+    const updatedXP = xp + amount;
+    const updatedHistory = [
       { date, action: reason, points: amount },
-      ...prev.slice(0, 19),
-    ]);
+      ...history.slice(0, 19)
+    ];
+
+    setXP(updatedXP);
+    setHistory(updatedHistory);
+
+    // Update local userDetails context for instant frontend update
+    setUserDetails(prev => ({
+      ...prev,
+      xp: updatedXP,
+      xpHistory: updatedHistory,
+    }));
 
     toast.success(`+${amount} XP for ${reason}`, {
-  position: "top-center",
-  duration: 2000,
-});
+      position: "top-center",
+      duration: 2000,
+    });
+
+    try {
+      const token = localStorage.getItem("token");
+      const baseUrl = import.meta.env.VITE_APP_BASE_URL;
+
+      await fetch(`${baseUrl}/api/profile/xp`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ amount, reason }),
+      });
+    } catch (err) {
+      console.error("❌ Failed to persist XP:", err);
+    }
   };
 
   return (

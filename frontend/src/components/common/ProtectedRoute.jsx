@@ -9,6 +9,10 @@ const ProtectedRoute = ({ children }) => {
     if (!isSessionValid()) {
       localStorage.removeItem("token");
       localStorage.removeItem("loginTimestamp");
+      localStorage.removeItem("token");
+  localStorage.removeItem("userData");
+  localStorage.removeItem("loginTimestamp");
+  localStorage.removeItem("lastLoginXP");
       navigate("/login");
     }
   }, [navigate]);
