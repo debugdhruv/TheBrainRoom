@@ -34,7 +34,7 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem("userData");
     localStorage.removeItem("user_xp");
     localStorage.removeItem("xp_history");
-    localStorage.removeItem("lastLoginXP");
+    // localStorage.removeItem("lastLoginXP");
     setUserDetails(null);
   };
 

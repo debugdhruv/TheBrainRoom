@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children }) => {
       localStorage.removeItem("token");
   localStorage.removeItem("userData");
   localStorage.removeItem("loginTimestamp");
-  localStorage.removeItem("lastLoginXP");
+  // localStorage.removeItem("lastLoginXP");
       navigate("/login");
     }
   }, [navigate]);
