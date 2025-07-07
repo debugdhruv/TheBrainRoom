@@ -138,16 +138,18 @@ const payload =
       window.dispatchEvent(new Event("storage"));
       localStorage.setItem("loginTimestamp", Date.now());
       localStorage.setItem("userData", JSON.stringify(data.user));
+      const userId = data.user.id || data.user._id || data.user.email;
       toast.success("Logging in...", { duration: 2000, position: "top-center" });
 
       // Give XP only if not already given today, with delay and XP toast
       const today = new Date().toISOString().split("T")[0];
-      const lastLogin = localStorage.getItem("lastLoginXP");
+      const lastLoginKey = `lastLoginXP_${userId}`;
+      const lastLogin = localStorage.getItem(lastLoginKey);
 
       if (lastLogin !== today) {
         setTimeout(() => {
           addXP(10, "Daily login");
-          localStorage.setItem("lastLoginXP", today);
+          localStorage.setItem(lastLoginKey, today);
           toast.success("+10 XP for Daily Login 🎉", { duration: 3000, position: "top-center" });
         }, 1000);
       }

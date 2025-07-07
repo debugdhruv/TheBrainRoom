@@ -1,4 +1,5 @@
 // import dayjs from "dayjs";
+import thumbImage from "@/assets/thumbo.png";
 import { useXP } from "@/context/useXP";
 import { useEffect } from "react";
 import { useUser } from "@/context/useUser";
@@ -28,7 +29,6 @@ useEffect(() => {
   };
 
   fetchQuote(); // fetch once initially
-
   const intervalId = setInterval(fetchQuote, 2 * 60 * 1000); // every 2 mins
 
   return () => clearInterval(intervalId); // cleanup on unmount
@@ -48,9 +48,9 @@ useEffect(() => {
 
   const sampleCards = [
     {
-      title: "How to stop overthinking",
+      title: "Enroll with our Patreon and earn upto 50$ every week 👀",
       source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+      thumbnail: thumbImage,
       link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     },
     {
@@ -60,15 +60,9 @@ useEffect(() => {
       link: "https://www.healthline.com/health/how-to-reduce-anxiety",
     },
     {
-      title: "How to stop overthinking",
+      title: "Enroll with our Patreon and earn upto 50$ every week 👀",
       source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
-      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    },
-    {
-      title: "How to stop overthinking",
-      source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+      thumbnail: thumbImage,
       link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     },
     {
@@ -78,15 +72,9 @@ useEffect(() => {
       link: "https://www.healthline.com/health/how-to-reduce-anxiety",
     },
     {
-      title: "How to stop overthinking",
+      title: "Enroll with our Patreon and earn upto 50$ every week 👀",
       source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
-      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    },
-    {
-      title: "How to stop overthinking",
-      source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+      thumbnail: thumbImage,
       link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     },
     {
@@ -96,15 +84,9 @@ useEffect(() => {
       link: "https://www.healthline.com/health/how-to-reduce-anxiety",
     },
     {
-      title: "How to stop overthinking",
+      title: "Enroll with our Patreon and earn upto 50$ every week 👀",
       source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
-      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    },
-    {
-      title: "How to stop overthinking",
-      source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+      thumbnail: thumbImage,
       link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     },
     {
@@ -114,15 +96,9 @@ useEffect(() => {
       link: "https://www.healthline.com/health/how-to-reduce-anxiety",
     },
     {
-      title: "How to stop overthinking",
+      title: "Enroll with our Patreon and earn upto 50$ every week 👀",
       source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
-      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    },
-    {
-      title: "How to stop overthinking",
-      source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+      thumbnail: thumbImage,
       link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     },
     {
@@ -132,15 +108,9 @@ useEffect(() => {
       link: "https://www.healthline.com/health/how-to-reduce-anxiety",
     },
     {
-      title: "How to stop overthinking",
+      title: "Enroll with our Patreon and earn upto 50$ every week 👀",
       source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
-      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    },
-    {
-      title: "How to stop overthinking",
-      source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+      thumbnail: thumbImage,
       link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     },
     {
@@ -150,15 +120,9 @@ useEffect(() => {
       link: "https://www.healthline.com/health/how-to-reduce-anxiety",
     },
     {
-      title: "How to stop overthinking",
+      title: "Enroll with our Patreon and earn upto 50$ every week 👀",
       source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
-      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    },
-    {
-      title: "How to stop overthinking",
-      source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+      thumbnail: thumbImage,
       link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     },
     {
@@ -166,54 +130,6 @@ useEffect(() => {
       source: "Article",
       thumbnail: "https://source.unsplash.com/400x200/?calm",
       link: "https://www.healthline.com/health/how-to-reduce-anxiety",
-    },
-    {
-      title: "How to stop overthinking",
-      source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
-      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    },
-    {
-      title: "How to stop overthinking",
-      source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
-      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    },
-    {
-      title: "Tips to reduce anxiety",
-      source: "Article",
-      thumbnail: "https://source.unsplash.com/400x200/?calm",
-      link: "https://www.healthline.com/health/how-to-reduce-anxiety",
-    },
-    {
-      title: "How to stop overthinking",
-      source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
-      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    },
-    {
-      title: "How to stop overthinking",
-      source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
-      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    },
-    {
-      title: "Tips to reduce anxiety",
-      source: "Article",
-      thumbnail: "https://source.unsplash.com/400x200/?calm",
-      link: "https://www.healthline.com/health/how-to-reduce-anxiety",
-    },
-    {
-      title: "How to stop overthinking",
-      source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
-      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    },
-    {
-      title: "How to stop overthinking",
-      source: "YouTube",
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
-      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     },
   ];
 
