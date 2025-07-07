@@ -135,6 +135,7 @@ const payload =
       }
 
       localStorage.setItem("token", data.token);
+      window.dispatchEvent(new Event("storage"));
       localStorage.setItem("loginTimestamp", Date.now());
       localStorage.setItem("userData", JSON.stringify(data.user));
       toast.success("Logging in...", { duration: 2000, position: "top-center" });

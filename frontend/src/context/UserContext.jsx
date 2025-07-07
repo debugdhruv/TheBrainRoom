@@ -7,7 +7,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchProfile = async () => {
       const token = localStorage.getItem("token");
-      if (!token) return;
+      if (!token) return setUserDetails(null); // Clear if no token
 
       try {
         const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/profile/me`, {
@@ -21,13 +21,29 @@ export const UserProvider = ({ children }) => {
           setUserDetails(data.user);
         } else {
           console.error("❌ Failed to load profile:", data.message);
+          setUserDetails(null);
         }
       } catch (err) {
         console.error("❌ Profile fetch error:", err);
+        setUserDetails(null);
       }
     };
 
+    // const token = localStorage.getItem("token");
     fetchProfile();
+
+    // Watch for token changes and refetch profile
+    const onStorageChange = () => {
+      const newToken = localStorage.getItem("token");
+      if (!newToken) {
+        setUserDetails(null);
+      } else {
+        fetchProfile();
+      }
+    };
+
+    window.addEventListener("storage", onStorageChange);
+    return () => window.removeEventListener("storage", onStorageChange);
   }, []);
   const clearUserDetails = () => {
     localStorage.removeItem("token");

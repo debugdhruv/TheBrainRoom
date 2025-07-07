@@ -40,25 +40,25 @@ export default function ProfileMain() {
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   };
 
-  if (!user || !user.firstName || !user.lastName) {
-    return <div className="text-center py-10 text-zinc-500">Loading profile… 🧠</div>;
-  }
+  // if (!user) {
+  //   return <div className="text-center py-10 text-zinc-500">Loading profile… 🧠</div>;
+  // }
 
-  const age = user.dob ? getAge(user.dob) : "--";
-
+  const age = user && user.dob ? getAge(user.dob) : "--";
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       {/* Header Section */}
       <div className="relative flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
         {/* Avatar */}
-        <AvatarCircle firstName={user.firstName || ""} lastName={user.lastName || ""} />
+        {user && <AvatarCircle firstName={user.firstName || ""} lastName={user.lastName || ""} />}
 
         {/* User Info & Button wrapper */}
         <div className="flex-1 flex flex-col sm:flex-row sm:items-center justify-between w-full">
           <div className="w-full flex justify-between items-start sm:items-center">
             <div className="relative w-full">
               <div className="flex items-center gap-3">
-                <div>
+                {user &&
+                <><div>
                   <h2 className="text-3xl font-bold text-zinc-800">
                     {user.firstName} {user.lastName}
                   </h2>
@@ -66,7 +66,7 @@ export default function ProfileMain() {
                     {age} , {user.gender}
                   </p>
                 </div>
-
+                </>}
                 {/* Desktop Share Button beside name */}
                 <Popover>
                   <PopoverTrigger asChild>
