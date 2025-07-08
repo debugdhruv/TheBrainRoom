@@ -150,7 +150,6 @@ const payload =
         setTimeout(() => {
           addXP(10, "Daily login");
           localStorage.setItem(lastLoginKey, today);
-          toast.success("+10 XP for Daily Login 🎉", { duration: 3000, position: "top-center" });
         }, 1000);
       }
 
