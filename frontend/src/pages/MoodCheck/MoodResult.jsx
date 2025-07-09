@@ -1,5 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useMemo, useEffect } from "react";
+// import { useUser } from "@/context/useUser";
+// invokes the hook for context setup, doesn't extract anything
+// const { userDetails } = useUser(); 
+import { useMemo, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import BotIcon from "@/assets/icons/chat 3.svg";
 import BackIcon from "@/assets/icons/back.svg";
@@ -12,9 +15,38 @@ export default function MoodResult() {
     const navigate = useNavigate();
     const { addXP } = useXP();
 
-    // console.log("Location state:", location.state);
-    const responses = useMemo(() => {
-        return location.state?.responses?.length ? location.state.responses : [];
+    const [responses, setResponses] = useState([]);
+
+    useEffect(() => {
+      const fetchMood = async () => {
+        const token = localStorage.getItem("token");
+        try {
+          const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/mood/today`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const data = await res.json();
+          if (res.ok && data && data.scores) {
+            const scoresArray = [
+              data.scores.q1,
+              data.scores.q2,
+              data.scores.q3,
+              data.scores.q4,
+              data.scores.q5,
+            ];
+            setResponses(scoresArray);
+          }
+        } catch (err) {
+          console.error("❌ Could not fetch today's mood result:", err);
+        }
+      };
+
+      if (!location.state?.responses?.length) {
+        fetchMood();
+      } else {
+        setResponses(location.state.responses);
+      }
     }, [location.state]);
 
     const weightedScore = useMemo(() => {
@@ -66,7 +98,7 @@ export default function MoodResult() {
         addXP(25, "Completed Mood Check");
         localStorage.setItem("xp_moodcheck_date", today);
       }
-    }, []);
+    }, [addXP]);
 
     const suggestions = [
         {
