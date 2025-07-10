@@ -6,7 +6,7 @@ const MoodLog = require("../models/MoodLog");
 const saveMood = async (req, res) => {
   const userId = req.user._id;
   const today = new Date().toISOString().split("T")[0];
-
+  // const today = req.body.date || new Date().toISOString().split("T")[0];
   const { q1, q2, q3, q4, q5, moodResult, moodScore, notesToAI } = req.body;
 
   if (
@@ -19,13 +19,18 @@ const saveMood = async (req, res) => {
     const existingLog = await MoodLog.findOne({ user: userId, date: today });
 
     if (existingLog) {
-      // Update today's mood (retake logic)
-      existingLog.scores = { q1, q2, q3, q4, q5 };
-      existingLog.moodResult = moodResult;
-      existingLog.moodScore = moodScore;
-      existingLog.notesToAI = notesToAI || "";
-      await existingLog.save();
-      return res.status(200).json({ message: "Mood updated", data: existingLog });
+      // Only update if the new moodScore is better than the existing one
+      if (moodScore > existingLog.moodScore) {
+        existingLog.scores = { q1, q2, q3, q4, q5 };
+        existingLog.moodResult = moodResult;
+        existingLog.moodScore = moodScore;
+        existingLog.notesToAI = notesToAI || existingLog.notesToAI;
+        await existingLog.save();
+        return res.status(200).json({ message: "Mood updated with better score", data: existingLog });
+      }
+
+      // Do not update if the existing score is better
+      return res.status(200).json({ message: "Existing mood score was better. No update." });
     }
 
     const newLog = await MoodLog.create({
