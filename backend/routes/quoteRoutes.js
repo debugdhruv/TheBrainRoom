@@ -27,7 +27,7 @@ router.get("/quote", async (req, res) => {
   }
 
   try {
-    const response = await axios.get("https://zenquotes.io/api/random", { timeout: 5000 });
+    const response = await axios.get("https://zenquotes.io/api/random", { timeout: 10000 });
     const data = response.data;
 
     if (Array.isArray(data) && data[0] && data[0].q && data[0].a) {

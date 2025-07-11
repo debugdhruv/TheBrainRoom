@@ -34,9 +34,9 @@ export default function SidebarMobile() {
     localStorage.removeItem("token");
     localStorage.removeItem("loginTimestamp");
     localStorage.removeItem("token");
-  localStorage.removeItem("userData");
-  localStorage.removeItem("loginTimestamp");
-  // localStorage.removeItem("lastLoginXP");
+    localStorage.removeItem("userData");
+    localStorage.removeItem("loginTimestamp");
+    // localStorage.removeItem("lastLoginXP");
     navigate("/login");
   };
 
@@ -80,8 +80,8 @@ export default function SidebarMobile() {
           <NavLink
             to="/dashboard/premium"
             className={`p-2 rounded-md ${location.pathname === "/dashboard/premium"
-                ? "font-semibold border border-zinc-200 bg-gradient-to-r from-purple-500 to-slate-900 text-white hover:brightness-110"
-                : "bg-purple-100 text-purple-800 font-semibold border border-purple-300"
+              ? "font-semibold border border-zinc-200 bg-gradient-to-r from-purple-500 to-slate-900 text-white hover:brightness-110"
+              : "bg-purple-100 text-purple-800 font-semibold border border-purple-300"
               }`}>
             <img
               src={location.pathname === "/dashboard/premium" ? DiamondIconFilled : DiamondIcon}
@@ -129,8 +129,8 @@ export default function SidebarMobile() {
                 to="/dashboard/premium"
                 onClick={() => setIsExpanded(false)}
                 className={`flex items-center gap-3 px-4 py-2 mt-4 rounded-md ${location.pathname === "/dashboard/premium"
-                    ? "border-zinc-200 bg-gradient-to-r from-purple-500 to-slate-900 font-bold text-white hover:brightness-110"
-                    : "bg-purple-100 text-purple-800 font-semibold border border-purple-300"
+                  ? "border-zinc-200 bg-gradient-to-r from-purple-500 to-slate-900 font-bold text-white hover:brightness-110"
+                  : "bg-purple-100 text-purple-800 font-semibold border border-purple-300"
                   }`}>
                 <img
                   src={

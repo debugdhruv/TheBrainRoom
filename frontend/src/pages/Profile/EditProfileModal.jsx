@@ -193,9 +193,9 @@ export default function EditProfileModal({ open, onClose }) {
       const res = await fetch(`${baseUrl}/api/profile/update`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+  "Content-Type": "application/json",
+  ...(token && { Authorization: `Bearer ${token}` }), // ✅ good code
+},
         body: JSON.stringify(payload),
       });
 

@@ -27,9 +27,9 @@ export default function MoodCheck() {
         await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/mood`, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+  "Content-Type": "application/json",
+  ...(token && { Authorization: `Bearer ${token}` }), // ✅ good code
+},
           body: JSON.stringify({
             q1: updated[0],
             q2: updated[1],

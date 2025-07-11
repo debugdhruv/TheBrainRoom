@@ -12,8 +12,9 @@ export const UserProvider = ({ children }) => {
       try {
         const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/profile/me`, {
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
+  "Content-Type": "application/json",
+  ...(token && { Authorization: `Bearer ${token}` }), // ✅ good code
+},
         });
 
         const data = await res.json();

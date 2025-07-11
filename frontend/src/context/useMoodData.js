@@ -19,8 +19,9 @@ export const useMoodData = (days = 7) => {
         const baseUrl = import.meta.env.VITE_APP_BASE_URL;
         const res = await fetch(`${baseUrl}/api/mood/history`, {
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
+  "Content-Type": "application/json",
+  ...(token && { Authorization: `Bearer ${token}` }), // ✅ good code
+},
         });
 
         const data = await res.json();

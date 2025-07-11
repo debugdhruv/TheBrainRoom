@@ -1,7 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-// import { useUser } from "@/context/useUser";
-// invokes the hook for context setup, doesn't extract anything
-// const { userDetails } = useUser(); 
+import { useUser } from "@/context/useUser";
 import { useMemo, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import BotIcon from "@/assets/icons/chat 3.svg";
@@ -10,48 +8,50 @@ import { moodQuestions } from "./moodData";
 import { useXP } from "@/context/useXP";
 
 export default function MoodResult() {
-
+    const { userDetails } = useUser(); 
+    
     const location = useLocation();
     const navigate = useNavigate();
     const { addXP } = useXP();
-
+    
     const [responses, setResponses] = useState([]);
-
+    
     useEffect(() => {
-      const fetchMood = async () => {
-        const token = localStorage.getItem("token");
-        try {
-          const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/mood/today`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          const data = await res.json();
-          if (res.ok && data && data.scores) {
-            const scoresArray = [
-              data.scores.q1,
-              data.scores.q2,
-              data.scores.q3,
-              data.scores.q4,
-              data.scores.q5,
-            ];
-            setResponses(scoresArray);
-          }
-        } catch (err) {
-          console.error("❌ Could not fetch today's mood result:", err);
+        const fetchMood = async () => {
+            const token = localStorage.getItem("token");
+            try {
+                const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/mood/today`, {
+                    headers: {
+  "Content-Type": "application/json",
+  ...(token && { Authorization: `Bearer ${token}` }), // ✅ good code
+},
+                });
+                const data = await res.json();
+                if (res.ok && data && data.scores) {
+                    const scoresArray = [
+                        data.scores.q1,
+                        data.scores.q2,
+                        data.scores.q3,
+                        data.scores.q4,
+                        data.scores.q5,
+                    ];
+                    setResponses(scoresArray);
+                }
+            } catch (err) {
+                console.error("❌ Could not fetch today's mood result:", err);
+            }
+        };
+        
+        if (!location.state?.responses?.length) {
+            fetchMood();
+        } else {
+            setResponses(location.state.responses);
         }
-      };
-
-      if (!location.state?.responses?.length) {
-        fetchMood();
-      } else {
-        setResponses(location.state.responses);
-      }
     }, [location.state]);
-
+    
     const weightedScore = useMemo(() => {
         if (!responses.length || responses.length !== moodQuestions.length) return 0;
-
+        
         let total = 0;
         let totalWeight = 0;
         for (let i = 0; i < responses.length; i++) {
@@ -61,12 +61,12 @@ export default function MoodResult() {
             total += normalized * weight;
             totalWeight += weight;
         }
-
+        
         return (total / totalWeight).toFixed(1);
     }, [responses]);
-
+    
     const averageScore = weightedScore;
-
+    
     // Arc length for the foreground arc
     const radius = 42;
     const arcLength = Math.PI * radius * 1.5; // 270° arc length
@@ -78,7 +78,7 @@ export default function MoodResult() {
         { label: "Neutral", message: "You’re doing alright. Keep checking in with yourself." },
         { label: "Calm", message: "Peace looks good on you. Keep nurturing it." },
     ];
-
+    
     const getMood = (score) => {
         if (score < 3) return moodMap[0];
         if (score < 5) return moodMap[1];
@@ -86,19 +86,27 @@ export default function MoodResult() {
         if (score < 8) return moodMap[3];
         return moodMap[4];
     };
-
+    
     const mood = getMood(averageScore);
-
+    
     // XP reward for completing mood check
     useEffect(() => {
-      const today = new Date().toISOString().split("T")[0];
-      const lastRewardDate = localStorage.getItem("xp_moodcheck_date");
+  const today = new Date().toISOString().split("T")[0];
 
-      if (lastRewardDate !== today) {
-        addXP(25, "Completed Mood Check");
-        localStorage.setItem("xp_moodcheck_date", today);
-      }
-    }, [addXP]);
+  console.log("💡 CURRENT USER ID:", userDetails?._id || userDetails?.email);
+  console.log("📜 XP HISTORY:", userDetails?.xpHistory);
+
+  const alreadyGiven = userDetails?.xpHistory?.some(
+    (entry) => entry.date === today && entry.action === "Completed Mood Check"
+  );
+
+  console.log("⚠️ Already Given?", alreadyGiven);
+
+  if (!alreadyGiven) {
+    console.log("🎯 XP BEING AWARDED");
+    addXP(25, "Completed Mood Check");
+  }
+}, [userDetails?.xpHistory, userDetails?._id, userDetails?.email, addXP]);
 
     const suggestions = [
         {

@@ -48,9 +48,9 @@ export const XPProvider = ({ children }) => {
       await fetch(`${baseUrl}/api/profile/xp`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+  "Content-Type": "application/json",
+  ...(token && { Authorization: `Bearer ${token}` }), // ✅ good code
+},
         body: JSON.stringify({ amount, reason }),
       });
     } catch (err) {

@@ -47,8 +47,9 @@ export default function MoodChart({ range }) {
         const baseUrl = import.meta.env.VITE_APP_BASE_URL;
         const res = await fetch(`${baseUrl}/api/mood/history`, {
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
+  "Content-Type": "application/json",
+  ...(token && { Authorization: `Bearer ${token}` }), // ✅ good code
+},
         });
         const data = await res.json();
         if (Array.isArray(data)) setMoodData(data);
@@ -128,7 +129,7 @@ export default function MoodChart({ range }) {
             strokeWidth={2}
             fill="url(#moodGradient)"
             activeDot={{ r: 6, fill: "#9333EA", stroke: "white", strokeWidth: 2 }}
-            dot={true}
+            dot={false}
             isAnimationActive={true}
             animationDuration={500}
           />
