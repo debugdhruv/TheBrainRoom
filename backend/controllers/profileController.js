@@ -62,33 +62,37 @@ const updateProfile = async (req, res) => {
 };
 
 const updateXP = async (req, res) => {
-  const { amount, reason } = req.body;
+  const { amount, reason, oncePerDay } = req.body;
   if (amount === undefined || !reason) {
     return res.status(400).json({ message: "Amount and reason are required" });
   }
 
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.user._id,
-      {
-        $inc: { xp: amount },
-        $push: {
-          xpHistory: {
-            $each: [{
-              points: amount,
-              action: reason,
-              date: new Date().toISOString().split("T")[0],
-            }],
-            $position: 0
-          }
-        }
-      },
-      { new: true }
-    );
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ message: "User not found" });
 
-    if (!updatedUser) return res.status(404).json({ message: "User not found" });
+    const today = new Date().toISOString().split("T")[0];
 
-    res.status(200).json({ xp: updatedUser.xp, xpHistory: updatedUser.xpHistory });
+    if (oncePerDay) {
+      const alreadyExists = user.xpHistory.some(
+        (entry) => entry.date === today && entry.action === reason
+      );
+
+      if (alreadyExists) {
+        return res.status(200).json({ success: false, message: "XP already awarded today" });
+      }
+    }
+
+    user.xp += amount;
+    user.xpHistory.unshift({
+      points: amount,
+      action: reason,
+      date: today,
+    });
+
+    await user.save();
+
+    res.status(200).json({ success: true, xp: user.xp, xpHistory: user.xpHistory });
   } catch (err) {
     console.error("❌ XP Update Error:", err);
     res.status(500).json({ message: "Failed to update XP" });

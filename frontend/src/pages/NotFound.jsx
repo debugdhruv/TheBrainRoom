@@ -29,7 +29,7 @@ export default function NotFound() {
           onClick={handleRedirect}
           className="inline-block px-6 py-3 bg-purple-700 text-white rounded-full hover:bg-purple-600 transition"
         >
-          Take Me Home
+          Take Me Back
         </button>
       </div>
     </div>

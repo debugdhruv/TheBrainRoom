@@ -11,52 +11,60 @@ export const XPProvider = ({ children }) => {
   const [xp, setXP] = useState(0);
   const [history, setHistory] = useState([]);
 
-  useEffect(() => {
-    if (userDetails) {
-      setXP(userDetails.xp || 0);
-      setHistory(userDetails.xpHistory || []);
-    }
-  }, [userDetails]);
+useEffect(() => {
+  if (userDetails) {
+    setXP(userDetails.xp || 0);
+    setHistory(userDetails.xpHistory || []);
+  } else {
+    setXP(0);
+    setHistory([]);
+  }
+}, [userDetails?._id]);
 
-  const addXP = async (amount, reason) => {
-    const date = new Date().toISOString().split("T")[0];
-    const updatedXP = xp + amount;
-    const updatedHistory = [
-      { date, action: reason, points: amount },
-      ...history.slice(0, 19)
-    ];
+const addXP = async (amount, reason, oncePerDay = false) => {
+  const date = new Date().toISOString().split("T")[0];
+  const updatedXP = xp + amount;
+  const updatedHistory = [
+    { date, action: reason, points: amount },
+    ...history.slice(0, 19)
+  ];
 
-    setXP(updatedXP);
-    setHistory(updatedHistory);
+  try {
+    const token = localStorage.getItem("token");
+    const baseUrl = import.meta.env.VITE_APP_BASE_URL;
 
-    // Update local userDetails context for instant frontend update
-    setUserDetails(prev => ({
-      ...prev,
-      xp: updatedXP,
-      xpHistory: updatedHistory,
-    }));
-
-    toast.success(`+${amount} XP for ${reason}`, {
-      position: "top-center",
-      duration: 2000,
+    const res = await fetch(`${baseUrl}/api/profile/xp`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
+      body: JSON.stringify({ amount, reason, oncePerDay }),
     });
 
-    try {
-      const token = localStorage.getItem("token");
-      const baseUrl = import.meta.env.VITE_APP_BASE_URL;
+    const data = await res.json();
 
-      await fetch(`${baseUrl}/api/profile/xp`, {
-        method: "PUT",
-        headers: {
-  "Content-Type": "application/json",
-  ...(token && { Authorization: `Bearer ${token}` }), // ✅ good code
-},
-        body: JSON.stringify({ amount, reason }),
+    if (res.ok && data && data.success) {
+      // Only update locally if backend confirms XP was added
+      setXP(updatedXP);
+      setHistory(updatedHistory);
+      setUserDetails((prev) => ({
+        ...prev,
+        xp: updatedXP,
+        xpHistory: updatedHistory,
+      }));
+
+      toast.success(`+${amount} XP for ${reason}`, {
+        position: "top-center",
+        duration: 2000,
       });
-    } catch (err) {
-      console.error("❌ Failed to persist XP:", err);
+    } else {
+      console.log("ℹ️ XP not added (already exists for today or server rejected)");
     }
-  };
+  } catch (err) {
+    console.error("❌ Failed to persist XP:", err);
+  }
+};
 
   return (
     <XPContext.Provider value={{ xp, history, addXP }}>
