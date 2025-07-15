@@ -67,11 +67,11 @@ const updateXP = async (req, res) => {
     return res.status(400).json({ message: "Amount and reason are required" });
   }
 
+  const today = new Date().toISOString().split("T")[0];
+
   try {
     const user = await User.findById(req.user._id);
     if (!user) return res.status(404).json({ message: "User not found" });
-
-    const today = new Date().toISOString().split("T")[0];
 
     if (oncePerDay) {
       const alreadyExists = user.xpHistory.some(
@@ -83,16 +83,22 @@ const updateXP = async (req, res) => {
       }
     }
 
-    user.xp += amount;
-    user.xpHistory.unshift({
-      points: amount,
-      action: reason,
-      date: today,
-    });
+    await User.updateOne(
+      { _id: req.user._id },
+      {
+        $inc: { xp: amount },
+        $push: {
+          xpHistory: {
+            $each: [{ points: amount, action: reason, date: today }],
+            $position: 0,
+          },
+        },
+      }
+    );
 
-    await user.save();
+    const updatedUser = await User.findById(req.user._id).select("xp xpHistory");
 
-    res.status(200).json({ success: true, xp: user.xp, xpHistory: user.xpHistory });
+    res.status(200).json({ success: true, xp: updatedUser.xp, xpHistory: updatedUser.xpHistory });
   } catch (err) {
     console.error("❌ XP Update Error:", err);
     res.status(500).json({ message: "Failed to update XP" });

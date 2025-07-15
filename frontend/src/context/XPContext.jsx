@@ -1,3 +1,80 @@
+// import { createContext, useState, useEffect } from "react";
+// import { useUser } from "./useUser";
+// import { toast } from "sonner";
+
+// const XPContext = createContext();
+// export { XPContext };
+
+// export const XPProvider = ({ children }) => {
+//   const { userDetails, setUserDetails } = useUser();
+
+//   const [xp, setXP] = useState(0);
+//   const [history, setHistory] = useState([]);
+
+// useEffect(() => {
+//   if (userDetails) {
+//     setXP(userDetails.xp || 0);
+//     setHistory(userDetails.xpHistory || []);
+//   } else {
+//     setXP(0);
+//     setHistory([]);
+//   }
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+// }, [userDetails?._id]);
+
+// const addXP = async (amount, reason, oncePerDay = false) => {
+//   const date = new Date().toISOString().split("T")[0];
+//   const updatedXP = xp + amount;
+//   const updatedHistory = [
+//     { date, action: reason, points: amount },
+//     ...history.slice(0, 19)
+//   ];
+
+//   try {
+//     const token = localStorage.getItem("token");
+//     const baseUrl = import.meta.env.VITE_APP_BASE_URL;
+
+//     const res = await fetch(`${baseUrl}/api/profile/xp`, {
+//       method: "PUT",
+//       headers: {
+//         "Content-Type": "application/json",
+//         ...(token && { Authorization: `Bearer ${token}` }),
+//       },
+//       body: JSON.stringify({ amount, reason, oncePerDay }),
+//     });
+
+//     const data = await res.json();
+
+//     if (res.ok && data && data.success) {
+//       // Only update locally if backend confirms XP was added
+//       setXP(updatedXP);
+//       setHistory(updatedHistory);
+//       setUserDetails((prev) => ({
+//         ...prev,
+//         xp: updatedXP,
+//         xpHistory: updatedHistory,
+//       }));
+
+//       toast.success(`+${amount} XP for ${reason}`, {
+//         position: "top-center",
+//         duration: 2000,
+//       });
+//     } else {
+//       console.log("ℹ️ XP not added (already exists for today or server rejected)");
+//     }
+//   } catch (err) {
+//     console.error("❌ Failed to persist XP:", err);
+//   }
+// };
+
+//   return (
+//     <XPContext.Provider value={{ xp, history, addXP }}>
+//       {children}
+//     </XPContext.Provider>
+//   );
+// };
+
+
 import { createContext, useState, useEffect } from "react";
 import { useUser } from "./useUser";
 import { toast } from "sonner";
@@ -11,23 +88,32 @@ export const XPProvider = ({ children }) => {
   const [xp, setXP] = useState(0);
   const [history, setHistory] = useState([]);
 
-useEffect(() => {
-  if (userDetails) {
-    setXP(userDetails.xp || 0);
-    setHistory(userDetails.xpHistory || []);
-  } else {
-    setXP(0);
-    setHistory([]);
-  }
-}, [userDetails?._id]);
+  // const xpCache = new Set(); // Local cache to track daily XP actions
+
+  useEffect(() => {
+    if (userDetails) {
+      setXP(userDetails.xp || 0);
+      setHistory(userDetails.xpHistory || []);
+    } else {
+      setXP(0);
+      setHistory([]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userDetails?._id]);
 
 const addXP = async (amount, reason, oncePerDay = false) => {
-  const date = new Date().toISOString().split("T")[0];
-  const updatedXP = xp + amount;
-  const updatedHistory = [
-    { date, action: reason, points: amount },
-    ...history.slice(0, 19)
-  ];
+  const today = new Date().toISOString().split("T")[0];
+
+  // Check if XP already given for today for this action
+  if (oncePerDay) {
+    const alreadyGiven = history.some(
+      (entry) => entry.date === today && entry.action === reason
+    );
+    if (alreadyGiven) {
+      console.log("⚠️ XP already given today for:", reason);
+      return; // ⛔ Skip call and toast
+    }
+  }
 
   try {
     const token = localStorage.getItem("token");
@@ -45,21 +131,26 @@ const addXP = async (amount, reason, oncePerDay = false) => {
     const data = await res.json();
 
     if (res.ok && data && data.success) {
-      // Only update locally if backend confirms XP was added
-      setXP(updatedXP);
-      setHistory(updatedHistory);
-      setUserDetails((prev) => ({
-        ...prev,
-        xp: updatedXP,
-        xpHistory: updatedHistory,
-      }));
+  const updatedXP = data.xp;
+  const updatedHistory = data.xpHistory;
 
-      toast.success(`+${amount} XP for ${reason}`, {
-        position: "top-center",
-        duration: 2000,
-      });
+  setXP(updatedXP);
+  setHistory(updatedHistory);
+  setUserDetails((prev) => ({
+    ...prev,
+    xp: updatedXP,
+    xpHistory: updatedHistory,
+  }));
+
+  // ✅ Only show toast if it was newly awarded
+  if (!oncePerDay || data.message !== "XP already awarded today") {
+    toast.success(`+${amount} XP for ${reason}`, {
+      position: "top-center",
+      duration: 2000,
+    });
+  }
     } else {
-      console.log("ℹ️ XP not added (already exists for today or server rejected)");
+      console.log("ℹ️ XP not added by server");
     }
   } catch (err) {
     console.error("❌ Failed to persist XP:", err);
