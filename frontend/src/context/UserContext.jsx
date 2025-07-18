@@ -17,7 +17,7 @@ export const UserProvider = ({ children }) => {
 },
         });
 
-        const data = await res.json();
+        const data = await res.json(); 
         if (res.ok) {
           setUserDetails(data.user);
         } else {

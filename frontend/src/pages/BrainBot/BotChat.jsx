@@ -400,6 +400,7 @@
 
 
 import { useEffect, useRef, useState } from "react";
+import { useUser } from "@/context/useUser";
 import ChatBubble from "./ChatBubble";
 import MessageInput from "./MessageInput";
 import StarIcon from "@/assets/icons/starsAI.svg";
@@ -408,6 +409,7 @@ import { fetchBrainBotReply } from "@/api/brainbot";
 
 export default function BotChat({ initialMessage, moodReport = null, fromMoodResult = false, onUserStart }) {
   const { addXP } = useXP();
+  const { userDetails } = useUser();
   const [messages, setMessages] = useState([]);
   const [isBotTyping, setIsBotTyping] = useState(false);
   const [started, setStarted] = useState(false);
@@ -466,7 +468,7 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
   }, [addXP]);
 
   // Add showSuggestions state
-  const [showSuggestions, setShowSuggestions] = useState(true);
+  const [showSuggestions, setShowSuggestions] = useState(!fromMoodResult);
 
   return (
     <div className="flex flex-col h-screen max-w-3xl mx-auto">
@@ -483,16 +485,30 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
 
         {showReport && moodReport && started && (
           <div className="w-full flex justify-end px-2">
-            <div className="relative max-w-md w-full bg-purple-100 border border-purple-200 rounded-xl shadow-sm">
-              <span className="absolute top-2 right-2 text-[10px] font-bold text-purple-500 bg-purple-200 px-2 py-0.5 rounded-sm uppercase tracking-wide">
-                Confidential
-              </span>
-              <div className="bg-purple-200 px-4 py-2">
-                <p className="text-xs font-bold text-purple-800">Today’s Mood Check</p>
-                <p className="text-[10px] text-purple-700">{new Date().toLocaleDateString()}</p>
+            <div className="relative max-w-md w-full bg-purple-100 border border-purple-200 rounded-xl shadow-sm overflow-hidden">
+              <div className="bg-purple-200 px-4 py-2 flex justify-between items-center">
+                <div>
+                  <p className="text-xs font-bold text-purple-800">Today’s Mood Check</p>
+                  <p className="text-[10px] text-purple-700">{new Date().toLocaleDateString()}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs font-semibold text-purple-900">6/10</p>
+                  <p className="text-xs font-semibold text-purple-900">Anxious</p>
+                </div>
               </div>
-              <div className="p-4">
-                <p className="text-xs text-purple-900 font-medium">Assessing your mental health report...</p>
+              <div className="p-4 bg-purple-50">
+                {userDetails?.dob && userDetails?.gender && (() => {
+                  const dob = new Date(userDetails.dob);
+                  const age = new Date().getFullYear() - dob.getFullYear();
+                  return (
+                    <div className="text-[13px] text-purple-700">
+                      <p>
+                        Age: <span className="font-semibold">{age}</span> |
+                        Gender: <span className="font-semibold capitalize">{userDetails.gender}</span>
+                      </p>
+                    </div>
+                  );
+                })()}
               </div>
             </div>
           </div>
