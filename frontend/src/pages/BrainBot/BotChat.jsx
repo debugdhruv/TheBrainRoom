@@ -476,7 +476,7 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
             <img src={StarIcon} alt="BrainBot Icon" className="w-10 h-10" />
             <h1 className="text-2xl font-bold text-slate-800">Ask BrainBot anything</h1>
             <p className="text-sm text-zinc-500 max-w-xs mx-auto">
-              Talk about your feelings, ask for suggestions or just vent.
+              Talk about your feelings, ask for suggestions.
             </p>
           </div>
         )}

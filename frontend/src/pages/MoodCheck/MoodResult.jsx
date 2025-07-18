@@ -385,6 +385,25 @@ export default function MoodResult() {
       link: "https://www.youtube.com/watch?v=ZToicYcHIOU",
       thumbnail: "https://img.youtube.com/vi/ZToicYcHIOU/mqdefault.jpg",
     },
+    {
+      title: "5-minute breathing practice",
+      source: "YouTube",
+      link: "https://www.youtube.com/watch?v=aNXKjGFUlMs",
+      thumbnail: "https://img.youtube.com/vi/aNXKjGFUlMs/mqdefault.jpg",
+    },
+    {
+      title: "Grounding techniques to reduce anxiety",
+      source: "Article",
+      link: "https://www.healthline.com/health/grounding-techniques",
+      thumbnail: "https://source.unsplash.com/400x200/?mindfulness",
+    },
+    {
+      title: "Declutter your mind before bed",
+      source: "YouTube",
+      link: "https://www.youtube.com/watch?v=ZToicYcHIOU",
+      thumbnail: "https://img.youtube.com/vi/ZToicYcHIOU/mqdefault.jpg",
+    },
+    
   ];
 
   const handleRetake = () => navigate("/dashboard/mood");

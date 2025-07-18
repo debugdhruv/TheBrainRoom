@@ -1,4 +1,5 @@
 import BotIcon from "@/assets/icons/starsAI.svg";
+import ReactMarkdown from "react-markdown";
 
 export default function ChatBubble({ type, text, title, description, url, image, source }) {
 
@@ -46,7 +47,17 @@ export default function ChatBubble({ type, text, title, description, url, image,
             <span className="text-xs text-zinc-500">BrainBot</span>
           </div>
         )}
-        <p className="whitespace-pre-wrap">{text}</p>
+        <ReactMarkdown
+          components={{
+            p: ({ ...props }) => <p className="prose prose-sm max-w-none whitespace-pre-wrap" {...props} />,
+            strong: ({ ...props }) => <strong className="font-semibold text-slate-700" {...props} />,
+            a: ({ ...props }) => (
+              <a className="underline" target="_blank" rel="noopener noreferrer" {...props} />
+            )
+          }}
+        >
+          {text}
+        </ReactMarkdown>
       </div>
     </div>
   );

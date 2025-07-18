@@ -7,11 +7,6 @@ import BotChat from "./BotChat";
 export default function BotIdle() {
   const [started, setStarted] = useState(false);
   const [initialMessage, setInitialMessage] = useState("");
-  const suggestions = [
-    "I feel overwhelmed lately",
-    "Give me some journaling ideas",
-    "Suggest calming exercises",
-  ];
 
   const handleStart = (text) => {
     if (!text.trim()) return;
@@ -39,16 +34,6 @@ export default function BotIdle() {
         <p className="flex justify-center text-sm text-zinc-500 mb-3">
           Suggestions on what to ask our AI
         </p>
-        <div className="flex justify-center mb-4 flex-wrap gap-2">
-          {suggestions.map((text, index) => (
-            <button
-              key={index}
-              onClick={() => handleStart(text)}
-              className="px-4 py-2 text-sm font-medium text-purple-700 bg-purple-100/70 rounded-full hover:bg-purple-200 transition border border-purple-200">
-              {text}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* Footer - message input and disclaimer */}
