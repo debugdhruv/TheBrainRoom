@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import BotIdle from "./BotIdle";
 import BotChat from "./BotChat";
 
 export default function Chatbot() {
@@ -23,7 +22,7 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-3xl mx-auto">
       <BotChat
         initialMessage={initialMessage}
         moodReport={moodReport}
