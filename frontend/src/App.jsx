@@ -12,6 +12,7 @@ import { Toaster } from "@/components/ui/sonner";
 import NotFound from "@/pages/NotFound";
 import ProtectedRoute from "@/components/common/ProtectedRoute";
 import { isSessionValid } from "@/utils/session";
+import BotIntro from "./pages/BrainBot/BotIntro";
 
 export default function App() {
   return (
@@ -49,6 +50,14 @@ export default function App() {
           </Route>
           <Route
             path="bot"
+            element={
+              <ProtectedRoute>
+                <BotIntro />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="bot/chat"
             element={
               <ProtectedRoute>
                 <Bot />

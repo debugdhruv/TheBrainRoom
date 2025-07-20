@@ -5,26 +5,30 @@ import MessageInput from "./MessageInput";
 import StarIcon from "@/assets/icons/starsAI.svg";
 import { useXP } from "@/context/useXP";
 import { fetchBrainBotReply } from "@/api/brainbot";
-import BotIntro from "./BotIntro.jsx";
+import { useLocation } from "react-router-dom";
 
-export default function BotChat({ initialMessage, moodReport = null, fromMoodResult = false, onUserStart }) {
+export default function BotChat() {
   const { addXP } = useXP();
   const { userDetails } = useUser();
   const [messages, setMessages] = useState([]);
   const [isBotTyping, setIsBotTyping] = useState(false);
   const [started, setStarted] = useState(false);
+  const [hasSentInitialMessage, setHasSentInitialMessage] = useState(false);
   const scrollRef = useRef(null);
   const endRef = useRef(null);
   const [showWarning, setShowWarning] = useState(false);
 
+  const location = useLocation();
+  // Get initialMessage, moodReport, fromMoodResult from location.state
+  const { moodReport = null, fromMoodResult = false, initialMessage = "" } = location.state || {};
   const showReport = fromMoodResult;
 
+  // Add showSuggestions state (preserved from original)
+  const [showSuggestions, setShowSuggestions] = useState(!fromMoodResult);
+
   useEffect(() => {
-    if (initialMessage && !started) {
-      handleSend(initialMessage);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialMessage]);
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   // Hide suggestions if fromMoodResult becomes true
   useEffect(() => {
@@ -33,86 +37,72 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
     }
   }, [fromMoodResult]);
 
-  const handleSend = useCallback(async (text) => {
-    if (!text.trim()) return;
-    if (isBotTyping) {
-      setShowWarning(true);
-      setTimeout(() => setShowWarning(false), 3000);
-      return;
-    }
+  // Define handleSend before useEffect that uses it
+  const handleSend = useCallback(
+    async (text) => {
+      if (!text?.trim()) return;
+      if (isBotTyping) {
+        setShowWarning(true);
+        setTimeout(() => setShowWarning(false), 3000);
+        return;
+      }
 
-    setMessages((prev) => [...prev, { type: "user", text }]);
-    if (scrollRef.current) {
-      setTimeout(() => {
-        scrollRef.current.scrollTo({
-          top: scrollRef.current.scrollHeight,
-          behavior: "smooth",
-        });
+      setMessages((prev) => [...prev, { type: "user", text }]);
+      scrollToBottom();
+      setIsBotTyping(true);
+      setStarted(true);
+      setShowSuggestions(false);
+
+      if (text.trim().toLowerCase() === "hi") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: "card",
+            title: "5-Minute Breathing Exercise",
+            description: "Follow this short video to relax your body and calm your mind.",
+            image: "https://img.youtube.com/vi/odADwWzHR24/hqdefault.jpg",
+            url: "https://www.youtube.com/watch?v=odADwWzHR24",
+            source: "YouTube"
+          }
+        ]);
+        scrollToBottom();
+        setIsBotTyping(false);
+        return;
+      }
+
+      try {
+        const reply = await fetchBrainBotReply(text);
+        setMessages((prev) => [...prev, { type: "bot", text: reply }]);
+        scrollToBottom();
+      } catch {
+        setMessages((prev) => [...prev, { type: "bot", text: "Oops! Something went wrong. Try again later." }]);
+        scrollToBottom();
+      } finally {
+        setIsBotTyping(false);
+      }
+    },
+    [isBotTyping]
+  );
+
+  // On mount or when initialMessage changes: send initial message if provided and not already sent and chat not started
+  useEffect(() => {
+    if (initialMessage && !hasSentInitialMessage && !started) {
+      // Delay execution to next tick to avoid double-fire in React StrictMode
+      const timeout = setTimeout(() => {
+        handleSend(initialMessage);
+        setHasSentInitialMessage(true);
       }, 0);
+      return () => clearTimeout(timeout);
     }
-    setIsBotTyping(true);
-    setStarted(true);
-    setShowSuggestions(false);
-    if (onUserStart) onUserStart(text);
-
-    // Special handling for "Hi"
-    if (text.trim().toLowerCase() === "hi") {
-      setMessages((prev) => [
-        ...prev,
-        {
-          type: "card",
-          title: "5-Minute Breathing Exercise",
-          description: "Follow this short video to relax your body and calm your mind.",
-          image: "https://img.youtube.com/vi/odADwWzHR24/hqdefault.jpg",
-          url: "https://www.youtube.com/watch?v=odADwWzHR24",
-          source: "YouTube"
-        }
-      ]);
-      if (scrollRef.current) {
-        setTimeout(() => {
-          scrollRef.current.scrollTo({
-            top: scrollRef.current.scrollHeight,
-            behavior: "smooth",
-          });
-        }, 0);
-      }
-      setIsBotTyping(false);
-      return;
-    }
-
-    try {
-      const reply = await fetchBrainBotReply(text);
-      setMessages((prev) => [...prev, { type: "bot", text: reply }]);
-      if (scrollRef.current) {
-        setTimeout(() => {
-          scrollRef.current.scrollTo({
-            top: scrollRef.current.scrollHeight,
-            behavior: "smooth",
-          });
-        }, 0);
-      }
-    } catch {
-      setMessages((prev) => [...prev, { type: "bot", text: "Oops! Something went wrong. Try again later." }]);
-      if (scrollRef.current) {
-        setTimeout(() => {
-          scrollRef.current.scrollTo({
-            top: scrollRef.current.scrollHeight,
-            behavior: "smooth",
-          });
-        }, 0);
-      }
-    } finally {
-      setIsBotTyping(false);
-    }
-  }, [isBotTyping, onUserStart]);
+  }, [initialMessage, hasSentInitialMessage, started, handleSend]);
 
   useEffect(() => {
+    const container = scrollRef.current;
     const handleLinkClick = (e) => {
       const link = e.target.closest("[data-bot-link]");
       if (link) {
         e.preventDefault();
         addXP(50, "Followed AI Suggestion");
-
         setTimeout(() => {
           const a = document.createElement("a");
           a.href = link.href;
@@ -125,24 +115,37 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
         }, 1000);
       }
     };
-
-    const container = scrollRef.current;
     container?.addEventListener("click", handleLinkClick);
     return () => container?.removeEventListener("click", handleLinkClick);
   }, [addXP]);
 
-  // Add showSuggestions state
-  const [showSuggestions, setShowSuggestions] = useState(!fromMoodResult);
-
-  useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      setTimeout(() => {
+        scrollRef.current.scrollTo({
+          top: scrollRef.current.scrollHeight,
+          behavior: "smooth",
+        });
+      }, 0);
+    }
+  };
 
   return (
-    <div className="flex flex-col max-w-3xl overflow-hidden mx-auto">
+    <div className="flex flex-col max-w-3xl mx-auto">
       <div ref={scrollRef} className="flex-1 overflow-y-auto py-6 px-4 space-y-4">
-        {!started && <BotIntro />}
-
+        {!started && <ChatBubble type="bot" text="" />}
+        {!started && <div style={{ display: "none" }} />}
+        {!started && <></>}
+        {!started && null}
+        {!started && undefined}
+        {!started && false}
+        {!started && 0}
+        {/* Show BotIntro only if not started */}
+        {!started && (
+          <div>
+            {/* You may want to import BotIntro and use here if needed */}
+          </div>
+        )}
         {showReport && moodReport && started && (
           <div className="w-full flex justify-end px-2">
             <div className="relative max-w-md w-full bg-purple-100 border border-purple-200 rounded-xl shadow-sm overflow-hidden">
@@ -202,8 +205,9 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
           </div>
         )}
       </div>
+      
       {/* Footer Section */}
-      <div className="bottom relative mt-[332px] sm:mt-[380px] bg-white/50 backdrop-blur-md pt-3 pb-0 px-0 border-t border-zinc-200 z-10 w-full">
+      <div className="bottom-10 fixed mt-[332px] sm:mt-[380px] bg-white/50 backdrop-blur-md pt-3 pb-0 px-0 border-t border-zinc-200 z-10 w-96 sm:max-w-3xl sm:w-full mx-auto">
         {showSuggestions && (
           <div className="flex justify-center flex-wrap sm:mb-4 mb-6 gap-2">
             {["I feel overwhelmed lately", "Give me some journaling ideas", "Suggest calming exercises"].map((text, index) => (
