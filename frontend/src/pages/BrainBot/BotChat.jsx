@@ -5,6 +5,7 @@ import MessageInput from "./MessageInput";
 import StarIcon from "@/assets/icons/starsAI.svg";
 import { useXP } from "@/context/useXP";
 import { fetchBrainBotReply } from "@/api/brainbot";
+import BotIntro from "./BotIntro.jsx";
 
 export default function BotChat({ initialMessage, moodReport = null, fromMoodResult = false, onUserStart }) {
   const { addXP } = useXP();
@@ -13,6 +14,7 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
   const [isBotTyping, setIsBotTyping] = useState(false);
   const [started, setStarted] = useState(false);
   const scrollRef = useRef(null);
+  const endRef = useRef(null);
   const [showWarning, setShowWarning] = useState(false);
 
   const showReport = fromMoodResult;
@@ -21,7 +23,7 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
     if (initialMessage && !started) {
       handleSend(initialMessage);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialMessage]);
 
   // Hide suggestions if fromMoodResult becomes true
@@ -40,6 +42,14 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
     }
 
     setMessages((prev) => [...prev, { type: "user", text }]);
+    if (scrollRef.current) {
+      setTimeout(() => {
+        scrollRef.current.scrollTo({
+          top: scrollRef.current.scrollHeight,
+          behavior: "smooth",
+        });
+      }, 0);
+    }
     setIsBotTyping(true);
     setStarted(true);
     setShowSuggestions(false);
@@ -58,6 +68,14 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
           source: "YouTube"
         }
       ]);
+      if (scrollRef.current) {
+        setTimeout(() => {
+          scrollRef.current.scrollTo({
+            top: scrollRef.current.scrollHeight,
+            behavior: "smooth",
+          });
+        }, 0);
+      }
       setIsBotTyping(false);
       return;
     }
@@ -65,8 +83,24 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
     try {
       const reply = await fetchBrainBotReply(text);
       setMessages((prev) => [...prev, { type: "bot", text: reply }]);
+      if (scrollRef.current) {
+        setTimeout(() => {
+          scrollRef.current.scrollTo({
+            top: scrollRef.current.scrollHeight,
+            behavior: "smooth",
+          });
+        }, 0);
+      }
     } catch {
       setMessages((prev) => [...prev, { type: "bot", text: "Oops! Something went wrong. Try again later." }]);
+      if (scrollRef.current) {
+        setTimeout(() => {
+          scrollRef.current.scrollTo({
+            top: scrollRef.current.scrollHeight,
+            behavior: "smooth",
+          });
+        }, 0);
+      }
     } finally {
       setIsBotTyping(false);
     }
@@ -100,18 +134,14 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
   // Add showSuggestions state
   const [showSuggestions, setShowSuggestions] = useState(!fromMoodResult);
 
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
-    <div className="flex flex-col h-screen max-w-3xl mx-auto">
-      <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
-        {!started && (
-          <div className="flex flex-col items-center text-center space-y-6">
-            <img src={StarIcon} alt="BrainBot Icon" className="w-10 h-10" />
-            <h1 className="text-2xl font-bold text-slate-800">Ask BrainBot anything</h1>
-            <p className="text-sm text-zinc-500 max-w-xs mx-auto">
-              Talk about your feelings, ask for suggestions.
-            </p>
-          </div>
-        )}
+    <div className="flex flex-col max-w-3xl overflow-hidden mx-auto">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto py-6 px-4 space-y-4">
+        {!started && <BotIntro />}
 
         {showReport && moodReport && started && (
           <div className="w-full flex justify-end px-2">
@@ -157,6 +187,9 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
           />
         ))}
 
+        <div className="h-2" />
+        <div ref={endRef} />
+
         {isBotTyping && (
           <div className="w-full flex justify-start px-2">
             <div className="max-w-md text-sm px-4 py-3 rounded-xl shadow-sm bg-zinc-100 text-slate-700 rounded-bl-none">
@@ -169,10 +202,10 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
           </div>
         )}
       </div>
-
-      <div className="px-4 mb-14">
+      {/* Footer Section */}
+      <div className="bottom relative mt-[332px] sm:mt-[380px] bg-white/50 backdrop-blur-md pt-3 pb-0 px-0 border-t border-zinc-200 z-10 w-full">
         {showSuggestions && (
-          <div className="flex justify-center mb-4 flex-wrap gap-2">
+          <div className="flex justify-center flex-wrap sm:mb-4 mb-6 gap-2">
             {["I feel overwhelmed lately", "Give me some journaling ideas", "Suggest calming exercises"].map((text, index) => (
               <button
                 key={index}
@@ -189,7 +222,7 @@ export default function BotChat({ initialMessage, moodReport = null, fromMoodRes
         <div className="relative">
           <MessageInput onSend={handleSend} disabled={isBotTyping} />
           <div
-            className={`absolute bottom-full mb-2 left-0 right-0 flex justify-center transition-opacity duration-500 ${
+            className={`absolute bottom-full mb-8 left-0 right-0 flex justify-center transition-opacity duration-500 ${
               showWarning ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
           >
