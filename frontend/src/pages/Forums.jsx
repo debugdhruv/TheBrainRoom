@@ -62,6 +62,37 @@ const forumServers = [
     invite: "https://discord.com/invite/HXmp5ukR5z",
     image: "https://placehold.co/400x200?text=The+Server",
   },
+  // Additional Discord servers
+  {
+    name: "Mental Health Hub",
+    members: "10.5K+",
+    invite: "https://discord.com/invite/mentalhealthhub",
+    image: "https://placehold.co/400x200?text=The Server",
+  },
+  {
+    name: "Serenity Support",
+    members: "8.2K+",
+    invite: "https://discord.com/invite/serenitysupport",
+    image: "https://placehold.co/400x200?text=The Server",
+  },
+  {
+    name: "Safe Haven",
+    members: "13.4K+",
+    invite: "https://discord.com/invite/safehaven",
+    image: "https://placehold.co/400x200?text=The Server",
+  },
+  {
+    name: "Anxiety Alliance",
+    members: "7.9K+",
+    invite: "https://discord.com/invite/anxietyalliance",
+    image: "https://placehold.co/400x200?text=The Server",
+  },
+  {
+    name: "Depression Support Zone",
+    members: "16.2K+",
+    invite: "https://discord.com/invite/depressionsupportzone",
+    image: "https://placehold.co/400x200?text=The Server",
+  },
 ];
 
 export default function Forums() {
