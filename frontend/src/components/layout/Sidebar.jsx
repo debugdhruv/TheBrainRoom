@@ -131,9 +131,9 @@ export default function Sidebar() {
               <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
               Logout
             </button>
-            <a href="https://github.com/debugdhruv/The-Brain-Room" target="blank" className="text-zinc-500 underline text-xs">
+            {/* <a href="https://github.com/debugdhruv/The-Brain-Room" target="blank" className="text-zinc-500 underline text-xs">
               Source Code
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

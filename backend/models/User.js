@@ -18,13 +18,18 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  type: {
+    type: String,
+    enum: ["normal", "premium"],
+    default: "normal",
+  },
   xpHistory: [
     {
       points: { type: Number, required: true },
       action: { type: String, required: true },
       date: { type: String, required: true },
     }
-  ],
+  ]
 }, { timestamps: true });
 
 module.exports = mongoose.model("User", userSchema);

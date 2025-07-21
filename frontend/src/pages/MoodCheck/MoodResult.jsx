@@ -408,7 +408,7 @@ export default function MoodResult() {
 
   const handleRetake = () => navigate("/dashboard/mood");
   const handleTalk = () => {
-    navigate("/dashboard/bot", {
+    navigate("/dashboard/bot/chat", {
       state: {
         fromMoodResult: true,
         moodReport: {

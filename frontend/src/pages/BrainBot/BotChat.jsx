@@ -133,20 +133,7 @@ export default function BotChat() {
   return (
     <div className="flex flex-col max-w-3xl mx-auto">
       <div ref={scrollRef} className="flex-1 overflow-y-auto py-6 px-4 space-y-4">
-        {!started && <ChatBubble type="bot" text="" />}
-        {!started && <div style={{ display: "none" }} />}
-        {!started && <></>}
-        {!started && null}
-        {!started && undefined}
-        {!started && false}
-        {!started && 0}
-        {/* Show BotIntro only if not started */}
-        {!started && (
-          <div>
-            {/* You may want to import BotIntro and use here if needed */}
-          </div>
-        )}
-        {showReport && moodReport && started && (
+        {showReport && moodReport && (
           <div className="w-full flex justify-end px-2">
             <div className="relative max-w-md w-full bg-purple-100 border border-purple-200 rounded-xl shadow-sm overflow-hidden">
               <div className="bg-purple-200 px-4 py-2 flex justify-between items-center">
@@ -155,8 +142,12 @@ export default function BotChat() {
                   <p className="text-[10px] text-purple-700">{new Date().toLocaleDateString()}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs font-semibold text-purple-900">6/10</p>
-                  <p className="text-xs font-semibold text-purple-900">Anxious</p>
+                  <p className="text-xs font-semibold text-purple-900">
+                    {moodReport?.score ? `${moodReport.score}/10` : "–"}
+                  </p>
+                  <p className="text-xs font-semibold text-purple-900">
+                    {moodReport?.mood || "–"}
+                  </p>
                 </div>
               </div>
               <div className="p-4 bg-purple-50">
@@ -166,8 +157,7 @@ export default function BotChat() {
                   return (
                     <div className="text-[13px] text-purple-700">
                       <p>
-                        Age: <span className="font-semibold">{age}</span> |
-                        Gender: <span className="font-semibold capitalize">{userDetails.gender}</span>
+                        Age: <span className="font-semibold">{age}</span> | Gender: <span className="font-semibold capitalize">{userDetails.gender}</span>
                       </p>
                     </div>
                   );
@@ -190,8 +180,6 @@ export default function BotChat() {
           />
         ))}
 
-        <div className="h-2" />
-        <div ref={endRef} />
 
         {isBotTyping && (
           <div className="w-full flex justify-start px-2">
@@ -205,9 +193,11 @@ export default function BotChat() {
           </div>
         )}
       </div>
+      <div ref={endRef} />
+      <div className="h-12" />
       
       {/* Footer Section */}
-      <div className="bottom-10 fixed mt-[332px] sm:mt-[380px] bg-white/50 backdrop-blur-md pt-3 pb-0 px-0 border-t border-zinc-200 z-10 w-96 sm:max-w-3xl sm:w-full mx-auto">
+      <div className="bottom-0 fixed bg-white/50 backdrop-blur-lg pt-2 pb-4 px-0 border-t border-zinc-200 z-10 w-96 sm:max-w-3xl sm:w-full mx-auto">
         {showSuggestions && (
           <div className="flex justify-center flex-wrap sm:mb-4 mb-6 gap-2">
             {["I feel overwhelmed lately", "Give me some journaling ideas", "Suggest calming exercises"].map((text, index) => (

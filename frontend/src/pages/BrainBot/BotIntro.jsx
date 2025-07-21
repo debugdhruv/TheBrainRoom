@@ -30,7 +30,7 @@ export default function BotIntro() {
           </p>
         </div>
       </div>
-      <footer className="bottom-10 fixed mt-[332px] sm:mt-[380px] bg-white/50 backdrop-blur-md pt-3 pb-0 px-0 border-t border-zinc-200 z-10 w-96 sm:max-w-3xl sm:w-full mx-auto">
+      <footer className="bottom-0 fixed bg-white/50 backdrop-blur-md pt-2 pb-4 px-0 border-t border-zinc-200 z-10 w-96 sm:max-w-3xl sm:w-full mx-auto">
         <div className="flex flex-wrap justify-center sm:mb-4 mb-6 gap-2">
           {["I feel overwhelmed lately", "Give me some journaling ideas", "Suggest calming exercises"].map((text, index) => (
             <button
@@ -48,3 +48,9 @@ export default function BotIntro() {
     </div>
   );
 }
+
+
+
+
+
+// mt-[332px] sm:mt-[380px]
