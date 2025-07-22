@@ -1,10 +1,12 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import SidebarMobile from "./SidebarMobile";
+import AboutButton from "@/components/common/aboutButton";
 
 export default function DashboardLayout() {
   return (
     <div className="flex h-screen w-full overflow-hidden">
+      <AboutButton />
       {/* Desktop Sidebar */}
       <div className="hidden md:block">
         <Sidebar />

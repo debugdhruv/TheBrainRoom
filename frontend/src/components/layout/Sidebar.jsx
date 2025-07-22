@@ -117,17 +117,6 @@ export default function Sidebar() {
         </div>
         <div className="flex-grow" />
         <div className="mb-12 text-sm space-y-10">
-          <div>
-            <NavLink
-              to="/dashboard/about"
-              className={({ isActive }) =>
-                `underline transition-colors duration-200 ${
-                  isActive ? "text-zinc-800 font-semibold" : "text-zinc-400 hover:text-zinc-600"
-                }`
-              }>
-              About Me!
-            </NavLink>
-          </div>
           <div className="flex justify-between items-center">
             <button
               onClick={handleLogout}
@@ -136,9 +125,6 @@ export default function Sidebar() {
               <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
               Logout
             </button>
-            <a href="https://github.com/debugdhruv/The-Brain-Room" target="blank" className="text-zinc-500 underline text-xs">
-              Source Code
-            </a>
           </div>
         </div>
       </div>

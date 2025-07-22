@@ -89,6 +89,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+        </Route>
           <Route
             path="about"
             element={
@@ -97,7 +98,6 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-        </Route>
 
         {/* Fallback Route Page */}
         <Route path="*" element={<NotFound />} />
