@@ -1,11 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { XPContext } from "@/context/XPContext";
 import { toast } from "sonner";
 
 const Premium = () => {
   const { xp, userType, setUserType } = useContext(XPContext);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const isEligible = xp >= 2000;
   const isUnlocked = userType === "premium";
 
@@ -39,7 +38,7 @@ const Premium = () => {
   const shouldShowPopup = !isUnlocked;
 
   return (
-    <div className="relative min-h-screen text-gray-800 px-6 py-12 flex flex-col items-center justify-center">
+    <div className="relative text-gray-800 px-6 py-12 flex flex-col items-center justify-center">
       {shouldShowPopup && (
         <div className="absolute inset-0 backdrop-blur-sm bg-black/40 z-20 flex items-center justify-center px-4">
           <div className="bg-white p-8 rounded-lg shadow-lg text-center max-w-md mx-auto">
@@ -63,9 +62,8 @@ const Premium = () => {
       )}
 
       <div
-        className={`${
-          !isUnlocked ? "blur-sm opacity-30 pointer-events-none select-none" : ""
-        } transition-all duration-500 max-w-3xl text-center`}
+        className={`${!isUnlocked ? "blur-sm opacity-30 pointer-events-none select-none" : ""
+          } transition-all duration-500 max-w-3xl text-center`}
       >
         <h1 className="text-5xl font-extrabold mb-6 text-purple-800">
           🌟 BrainRoom Premium
@@ -79,41 +77,6 @@ const Premium = () => {
           <li>🧘‍♀️ Exclusive offline workshops</li>
           <li>🤝 Networking resources</li>
         </ul>
-      </div>
-
-      {/* Contact Form Section */}
-      <div className="mt-20 w-full max-w-xl bg-white p-6 rounded-lg shadow-md">
-        <h3 className="text-xl font-semibold mb-4 text-slate-800">📬 Contact Us</h3>
-        <form
-          onSubmit={() => {
-            setIsSubmitting(true);
-          }}
-          action="https://formspree.io/f/mrblerlp"
-          method="POST"
-          className="flex flex-col space-y-4"
-        >
-          <input
-            type="email"
-            name="email"
-            required
-            placeholder="Your Email"
-            className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
-          <textarea
-            name="message"
-            required
-            rows="4"
-            placeholder="Your Message"
-            className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
-          <button
-            type="submit"
-            className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Sending message..." : "Send Message"}
-          </button>
-        </form>
       </div>
     </div>
   );

@@ -13,6 +13,7 @@ import NotFound from "@/pages/NotFound";
 import ProtectedRoute from "@/components/common/ProtectedRoute";
 import { isSessionValid } from "@/utils/session";
 import BotIntro from "./pages/BrainBot/BotIntro";
+import AboutPage from "@/pages/About";
 
 export default function App() {
   return (
@@ -88,7 +89,16 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="about"
+            element={
+              <ProtectedRoute>
+                <AboutPage />
+              </ProtectedRoute>
+            }
+          />
         </Route>
+
         {/* Fallback Route Page */}
         <Route path="*" element={<NotFound />} />
         {/* Explicit /404 Page */}

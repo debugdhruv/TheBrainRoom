@@ -118,10 +118,15 @@ export default function Sidebar() {
         <div className="flex-grow" />
         <div className="mb-12 text-sm space-y-10">
           <div>
-            <p className="text-zinc-400">Reach out to me:</p>
-            <a href="mailto:dhruvtiwari.1130@gmail.com" className="underline">
-              dhruvtiwari.1130@gmail.com
-            </a>
+            <NavLink
+              to="/dashboard/about"
+              className={({ isActive }) =>
+                `underline transition-colors duration-200 ${
+                  isActive ? "text-zinc-800 font-semibold" : "text-zinc-400 hover:text-zinc-600"
+                }`
+              }>
+              About Me!
+            </NavLink>
           </div>
           <div className="flex justify-between items-center">
             <button
@@ -131,9 +136,9 @@ export default function Sidebar() {
               <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
               Logout
             </button>
-            {/* <a href="https://github.com/debugdhruv/The-Brain-Room" target="blank" className="text-zinc-500 underline text-xs">
+            <a href="https://github.com/debugdhruv/The-Brain-Room" target="blank" className="text-zinc-500 underline text-xs">
               Source Code
-            </a> */}
+            </a>
           </div>
         </div>
       </div>
