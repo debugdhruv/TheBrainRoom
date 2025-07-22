@@ -24,6 +24,8 @@ import DiamondIconFilled from "@/assets/icons/diamond 2.svg";
 
 import LogoutIcon from "@/assets/icons/logout 1.svg";
 
+import InfoIcon from "@/assets/icons/info2.svg";
+
 
 export default function SidebarMobile() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -88,13 +90,18 @@ export default function SidebarMobile() {
               alt="Premium"
               className="h-5 w-5" />
           </NavLink>
+          <NavLink
+            to="/about"
+            className="sm:hidden mt-4 flex border border-cyan-700 p-1 items-center justify-center rounded-full w-full text-cyan-800 font-semibold transition-all duration-200">
+            <img src={InfoIcon} alt="About" className="h-8 w-8" />
+          </NavLink>
         </div>
 
         <div className="flex flex-col items-center gap-4 pb-20">
           <button onClick={handleLogout} className="p-2 rounded-md hover:bg-zinc-100">
-            <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
+            <img src={LogoutIcon} alt="Logout" className="h-6 w-6" />
           </button>
-          <img src={Logo} alt="Brain Room" className="h-6 w-6" />
+          <img src={Logo} alt="Brain Room" className="mt-4 h-6 w-6" />
         </div>
       </div>
 
@@ -142,6 +149,11 @@ export default function SidebarMobile() {
                   className="h-5 w-5" />
                 The Brain Room+
               </NavLink>
+              <NavLink
+            to="/about"
+            className="sm:hidden mt-4 flex border border-cyan-700 p-1 items-center justify-center rounded-full w-full text-cyan-800 font-semibold transition-all duration-200">
+            <img src={InfoIcon} alt="About" className="h-8 w-8" />
+          </NavLink>
             </nav>
           </div>
 
