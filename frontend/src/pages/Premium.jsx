@@ -65,7 +65,7 @@ const Premium = () => {
         className={`${!isUnlocked ? "blur-sm opacity-30 pointer-events-none select-none" : ""
           } transition-all duration-500 max-w-3xl text-center`}
       >
-        <h1 className="text-5xl font-extrabold mb-6 text-purple-800">
+        <h1 className="text-5xl font-extrabold mb-6 text-cyan-800">
           🌟 BrainRoom Premium
         </h1>
         <p className="text-lg text-gray-700 mb-10 px-4">

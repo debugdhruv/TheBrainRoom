@@ -17,7 +17,7 @@ export default function NotFound() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white text-center">
       <div className="relative mb-4">
-        <p className="text-[120px] sm:text-[200px] md:text-[300px] lg:text-[400px] xl:text-[500px] font-normal animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-yellow-500">
+        <p className="text-[120px] sm:text-[200px] md:text-[300px] lg:text-[400px] xl:text-[500px] font-normal animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-pink-500 to-yellow-500">
           404
         </p>
       </div>
@@ -27,7 +27,7 @@ export default function NotFound() {
         </p>
         <button
           onClick={handleRedirect}
-          className="inline-block px-6 py-3 bg-purple-700 text-white rounded-full hover:bg-purple-600 transition"
+          className="inline-block px-6 py-3 bg-cyan-700 text-white rounded-full hover:bg-cyan-600 transition"
         >
           Take Me Back
         </button>

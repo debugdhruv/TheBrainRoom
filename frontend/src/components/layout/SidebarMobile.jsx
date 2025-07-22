@@ -80,8 +80,8 @@ export default function SidebarMobile() {
           <NavLink
             to="/dashboard/premium"
             className={`p-2 rounded-md ${location.pathname === "/dashboard/premium"
-              ? "font-semibold border border-zinc-200 bg-gradient-to-r from-purple-500 to-slate-900 text-white hover:brightness-110"
-              : "bg-purple-100 text-purple-800 font-semibold border border-purple-300"
+              ? "font-semibold border border-zinc-200 bg-gradient-to-r from-cyan-500 to-slate-900 text-white hover:brightness-110"
+              : "bg-cyan-100 text-cyan-800 font-semibold border border-cyan-300"
               }`}>
             <img
               src={location.pathname === "/dashboard/premium" ? DiamondIconFilled : DiamondIcon}
@@ -128,9 +128,9 @@ export default function SidebarMobile() {
               <NavLink
                 to="/dashboard/premium"
                 onClick={() => setIsExpanded(false)}
-                className={`flex items-center gap-3 px-4 py-2 mt-4 rounded-md ${location.pathname === "/dashboard/premium"
-                  ? "border-zinc-200 bg-gradient-to-r from-purple-500 to-slate-900 font-bold text-white hover:brightness-110"
-                  : "bg-purple-100 text-purple-800 font-semibold border border-purple-300"
+                className={`flex items-center gap-3 px-4 py-2 mt-10 rounded-md ${location.pathname === "/dashboard/premium"
+                  ? "border-zinc-200 bg-gradient-to-r from-cyan-500 to-slate-900 font-bold text-white hover:brightness-110"
+                  : "bg-cyan-100 text-cyan-800 font-semibold border border-cyan-300"
                   }`}>
                 <img
                   src={
@@ -147,16 +147,9 @@ export default function SidebarMobile() {
 
           {/* BOTTOM: Footer Content */}
           <div className="space-y-6 text-sm pb-8">
-            <div>
-              <p className="text-zinc-400">Reach out to me:</p>
-              <a href="mailto:dhruvtiwari.1130@gmail.com" className="underline">
-                dhruvtiwari.1130@gmail.com
-              </a>
-            </div>
-
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 text-purple-700 bg-purple-100 px-3 py-1 rounded-full text-base">
+              className="flex items-center gap-2 text-cyan-700 bg-cyan-100 px-3 py-1 font-semibold rounded-full text-base">
               <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
               Logout
             </button>

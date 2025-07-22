@@ -124,7 +124,7 @@ export default function ProfileMain() {
             </div>
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-auto">
-            <Button className="border border-purple-700 hover:bg-purple-700 hover:text-white font-semibold rounded-lg text-purple-700" variant="outline" onClick={() => setIsEditOpen(true)}>
+            <Button className="border border-cyan-700 hover:bg-cyan-700 hover:text-white font-semibold rounded-lg text-cyan-700" variant="outline" onClick={() => setIsEditOpen(true)}>
               Edit Profile
             </Button>
           </div>
@@ -162,7 +162,7 @@ export default function ProfileMain() {
             <Popover>
               <PopoverTrigger asChild>
                 <button
-                  className="absolute underline top-4 right-4 flex items-center gap-1 text-sm text-purple-700 hover:opacity-80 transition"
+                  className="absolute underline top-4 right-4 flex items-center gap-1 text-sm text-cyan-700 hover:opacity-80 transition"
                 >
                   <span>how is XP calculated?</span>
                 </button>
@@ -176,23 +176,23 @@ export default function ProfileMain() {
                 <ul className="space-y-2 text-md text-zinc-600">
                   <li className="flex justify-between">
                     <span>Daily login</span>
-                    <span className="text-purple-700 font-medium">+10 XP</span>
+                    <span className="text-cyan-700 font-medium">+10 XP</span>
                   </li>
                   <li className="flex justify-between">
                     <span>Follow AI suggestion</span>
-                    <span className="text-purple-700 font-medium">+50 XP</span>
+                    <span className="text-cyan-700 font-medium">+50 XP</span>
                   </li>
                   <li className="flex justify-between">
                     <span>Join a server</span>
-                    <span className="text-purple-700 font-medium">+5 XP</span>
+                    <span className="text-cyan-700 font-medium">+5 XP</span>
                   </li>
                   <li className="flex justify-between">
                     <span>Refer a friend</span>
-                    <span className="text-purple-700 font-medium">+100 XP</span>
+                    <span className="text-cyan-700 font-medium">+100 XP</span>
                   </li>
                   <li className="flex justify-between">
                     <span>Weekly bonus</span>
-                    <span className="text-purple-700 font-medium">+20 XP</span>
+                    <span className="text-cyan-700 font-medium">+20 XP</span>
                   </li>
                 </ul>
               </PopoverContent>
@@ -200,7 +200,7 @@ export default function ProfileMain() {
 
             <div className="text-left sm:text-center flex flex-col justify-center items-start sm:items-center w-full min-h-28 sm:min-h-36 sm:py-2">
               <p className="text-lg font-bold text-zinc-500">Total XP</p>
-              <h2 className="text-7xl font-bold text-purple-600">{xp}</h2>
+              <h2 className="text-7xl font-bold text-cyan-600">{xp}</h2>
               <p className="text-md font-semibold text-zinc-400 mt-1">earned so far</p>
             </div>
           </div>
@@ -221,7 +221,7 @@ export default function ProfileMain() {
                         <p className="font-medium">{item.action}</p>
                         <p className="text-xs text-zinc-400">{item.date}</p>
                       </div>
-                      <span className="text-purple-700 font-semibold">+{item.points} XP</span>
+                      <span className="text-cyan-700 font-semibold">+{item.points} XP</span>
                     </li>
                   ))}
                 </ul>
@@ -230,7 +230,7 @@ export default function ProfileMain() {
             {history.length > 5 && (
               <button
                 onClick={() => setShowFullHistory(!showFullHistory)}
-                className="text-purple-600 text-sm font-medium mt-2 hover:underline"
+                className="text-cyan-600 text-sm font-medium mt-2 hover:underline"
               >
                 {showFullHistory ? "See Less" : "See More"}
               </button>

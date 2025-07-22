@@ -24,18 +24,14 @@ export default function BotChat() {
   const showReport = fromMoodResult;
 
   // Add showSuggestions state (preserved from original)
-  const [showSuggestions, setShowSuggestions] = useState(!fromMoodResult);
+  // const [showSuggestions, setShowSuggestions] = useState(!fromMoodResult);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   // Hide suggestions if fromMoodResult becomes true
-  useEffect(() => {
-    if (fromMoodResult) {
-      setShowSuggestions(false);
-    }
-  }, [fromMoodResult]);
+
 
   // Define handleSend before useEffect that uses it
   const handleSend = useCallback(
@@ -51,7 +47,7 @@ export default function BotChat() {
       scrollToBottom();
       setIsBotTyping(true);
       setStarted(true);
-      setShowSuggestions(false);
+      // setShowSuggestions(false);
 
       if (text.trim().toLowerCase() === "hi") {
         setMessages((prev) => [
@@ -135,27 +131,27 @@ export default function BotChat() {
       <div ref={scrollRef} className="flex-1 overflow-y-auto py-6 px-4 space-y-4">
         {showReport && moodReport && (
           <div className="w-full flex justify-end px-2">
-            <div className="relative max-w-md w-full bg-purple-100 border border-purple-200 rounded-xl shadow-sm overflow-hidden">
-              <div className="bg-purple-200 px-4 py-2 flex justify-between items-center">
+            <div className="relative max-w-md w-full border border-cyan-100 rounded-xl shadow-sm overflow-hidden">
+              <div className="bg-cyan-700 px-4 py-2 flex justify-between items-center">
                 <div>
-                  <p className="text-xs font-bold text-purple-800">Today’s Mood Check</p>
-                  <p className="text-[10px] text-purple-700">{new Date().toLocaleDateString()}</p>
+                  <p className="text-xs font-bold text-white">Today’s Mood Check</p>
+                  <p className="text-[11px] font-semibold text-white/80">{new Date().toLocaleDateString()}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs font-semibold text-purple-900">
+                  <p className="text-xs font-semibold text-white">
                     {moodReport?.score ? `${moodReport.score}/10` : "–"}
                   </p>
-                  <p className="text-xs font-semibold text-purple-900">
+                  <p className="text-xs font-semibold text-white">
                     {moodReport?.mood || "–"}
                   </p>
                 </div>
               </div>
-              <div className="p-4 bg-purple-50">
+              <div className="p-4 bg-cyan-50">
                 {userDetails?.dob && userDetails?.gender && (() => {
                   const dob = new Date(userDetails.dob);
                   const age = new Date().getFullYear() - dob.getFullYear();
                   return (
-                    <div className="text-[13px] text-purple-700">
+                    <div className="text-[13px] text-cyan-700">
                       <p>
                         Age: <span className="font-semibold">{age}</span> | Gender: <span className="font-semibold capitalize">{userDetails.gender}</span>
                       </p>
@@ -197,22 +193,21 @@ export default function BotChat() {
       <div className="h-12" />
       
       {/* Footer Section */}
-      <div className="bottom-0 fixed bg-white/50 backdrop-blur-lg pt-2 pb-4 px-0 border-t border-zinc-200 z-10 w-96 sm:max-w-3xl sm:w-full mx-auto">
-        {showSuggestions && (
-          <div className="flex justify-center flex-wrap sm:mb-4 mb-6 gap-2">
+      <div className="bottom-0 fixed bg-white/50 backdrop-blur-md pt-2 pb-4 px-0 z-10 w-auto sm:max-w-3xl sm:w-auto mx-auto">
+        
+          <div className="opacity-0 flex justify-center flex-wrap sm:mb-4 mb-6 gap-2">
             {["I feel overwhelmed lately", "Give me some journaling ideas", "Suggest calming exercises"].map((text, index) => (
               <button
                 key={index}
                 onClick={() => {
                   handleSend(text);
-                  setShowSuggestions(false);
+                  // setShowSuggestions(false);
                 }}
-                className="px-4 py-2 text-sm font-medium text-purple-700 bg-purple-100/70 rounded-full hover:bg-purple-200 transition border border-purple-200">
+                className="px-4 py-2 text-sm font-medium text-cyan-700 bg-cyan-100/70 rounded-full hover:bg-cyan-200 transition border border-cyan-200">
                 {text}
               </button>
             ))}
           </div>
-        )}
         <div className="relative">
           <MessageInput onSend={handleSend} disabled={isBotTyping} />
           <div
@@ -220,7 +215,7 @@ export default function BotChat() {
               showWarning ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
           >
-            <div className="font-semibold text-sm text-red-700 bg-red-50 px-3 py-1 rounded-md shadow">
+            <div className="font-semibold text-sm text-cyan-700 bg-cyan-50 px-3 py-1 rounded-md shadow">
               Let BrainBot finish replying first!
             </div>
           </div>

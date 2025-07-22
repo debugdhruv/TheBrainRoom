@@ -103,8 +103,8 @@ export default function MoodChart({ range }) {
         >
           <defs>
             <linearGradient id="moodGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#9333EA" stopOpacity={0.3} />
-              <stop offset="95%" stopColor="#9333EA" stopOpacity={0.05} />
+              <stop offset="5%" stopColor="#06B6D4" stopOpacity={0.3} />
+              <stop offset="95%" stopColor="#06B6D4" stopOpacity={0.05} />
             </linearGradient>
           </defs>
 
@@ -119,16 +119,16 @@ export default function MoodChart({ range }) {
           <CartesianGrid vertical={false} stroke="#E4E4E7" />
           <Tooltip
             content={<CustomTooltip />}
-            cursor={{ stroke: "#9333EA", strokeWidth: 1 }}
+            cursor={{ stroke: "#06B6D4", strokeWidth: 1 }}
           />
 
           <Area
             type="monotone"
             dataKey="mood"
-            stroke="#9333EA"
+            stroke="#06B6D4"
             strokeWidth={2}
             fill="url(#moodGradient)"
-            activeDot={{ r: 6, fill: "#9333EA", stroke: "white", strokeWidth: 2 }}
+            activeDot={{ r: 6, fill: "#06B6D4", stroke: "white", strokeWidth: 2 }}
             dot={false}
             isAnimationActive={true}
             animationDuration={500}

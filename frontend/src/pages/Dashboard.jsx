@@ -68,7 +68,7 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <div className="relative group">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-green-100 via-teal-300 to-purple-500 rounded-xl animate-gradient" />
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-green-100 via-cyan-300 to-cyan-500 rounded-xl animate-gradient" />
           <div
             onClick={() => handleCardClick(sampleCards[0].link)}
             className="relative cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition-all overflow-hidden"

@@ -25,7 +25,7 @@ export default function ChatBubble({ type, text, title, description, url, image,
             <h3 className="text-sm font-semibold text-slate-800">{title}</h3>
             <p className="text-xs text-zinc-600">{description}</p>
             {source && (
-              <p className="text-xs text-purple-600 font-medium">{`View on ${source}`}</p>
+              <p className="text-xs text-cyan-600 font-medium">{`View on ${source}`}</p>
             )}
           </div>
         </a>
@@ -38,7 +38,7 @@ export default function ChatBubble({ type, text, title, description, url, image,
       <div
         className={`max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg text-sm px-4 py-3 rounded-xl shadow-sm ${
           isUser
-            ? "bg-purple-600 text-white rounded-br-none"
+            ? "bg-cyan-600 text-white rounded-br-none"
             : "bg-zinc-100 text-slate-700 rounded-bl-none"
         }`}>
         {!isUser && (

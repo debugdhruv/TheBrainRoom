@@ -129,7 +129,7 @@ export default function Forums() {
                     window.open(server.invite, "_blank", "noopener,noreferrer");
                   }, 1000);
                 }}
-                className="mt-3 w-full bg-purple-600 text-white text-sm font-medium rounded-full py-2 text-center hover:opacity-70 transition">
+                className="mt-3 w-full bg-cyan-600 text-white text-sm font-medium rounded-full py-2 text-center hover:opacity-70 transition">
                 Join Server
               </button>
             </div>

@@ -103,10 +103,10 @@ export default function Sidebar() {
           </nav>
           <NavLink
             to="/dashboard/premium"
-            className={`mt-6 flex items-center justify-center gap-2 px-4 py-2 rounded-md w-full transition-all 
+            className={`mt-10 flex items-center justify-center gap-2 px-4 py-2 rounded-md w-full transition-all 
               ${isPremiumActive
-                ? "font-semibold border border-zinc-200 bg-gradient-to-r from-purple-500 to-slate-900 text-white hover:brightness-110"
-                : "bg-purple-100 text-purple-800 font-semibold border border-purple-300"
+                ? "font-semibold border border-zinc-200 bg-gradient-to-r from-cyan-500 to-slate-900 text-white hover:brightness-110"
+                : "bg-cyan-100 text-cyan-800 font-semibold border border-cyan-300"
               }`}>
             <img
               src={isPremiumActive ? DiamondIconFilled : DiamondIcon}
@@ -120,7 +120,7 @@ export default function Sidebar() {
           <div className="flex justify-between items-center">
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 text-purple-700 bg-purple-100 px-3 py-1 rounded-full text-base"
+              className="flex items-center gap-2 text-cyan-700 bg-cyan-100 px-3 py-1 font-bold rounded-full text-base"
             >
               <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
               Logout

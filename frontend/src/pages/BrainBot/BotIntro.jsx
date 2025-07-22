@@ -18,7 +18,7 @@ export default function BotIntro() {
 
   return (
     <div className="flex flex-col max-w-3xl overflow-hidden mx-auto">
-      <div className="flex-1 overflow-y-auto py-6 px-4 space-y-4">
+      <div className="flex-1 overflow-y-auto py-0 px-0 space-y-4">
         <div className="w-full flex flex-col items-center text-center justify-center space-y-4 pt-16 pb-8">
           <img src={StarIcon} alt="BrainBot Icon" className="w-10 h-10" />
           <h1 className="text-lg font-semibold text-slate-600">
@@ -30,13 +30,13 @@ export default function BotIntro() {
           </p>
         </div>
       </div>
-      <footer className="bottom-0 fixed bg-white/50 backdrop-blur-md pt-2 pb-4 px-0 border-t border-zinc-200 z-10 w-96 sm:max-w-3xl sm:w-full mx-auto">
+      <footer className="bottom-0 fixed bg-white/50 backdrop-blur-md pt-2 pb-4 px-0 border-t border-zinc-200 z-10 w-auto sm:max-w-3xl sm:w-auto mx-auto">
         <div className="flex flex-wrap justify-center sm:mb-4 mb-6 gap-2">
           {["I feel overwhelmed lately", "Give me some journaling ideas", "Suggest calming exercises"].map((text, index) => (
             <button
               key={index}
               onClick={() => handleSend(text)}
-              className="px-4 py-2 text-sm font-medium text-purple-700 bg-purple-100/70 rounded-full hover:bg-purple-200 transition border border-purple-200">
+              className="px-4 py-2 text-sm font-medium text-cyan-700 bg-cyan-100/70 rounded-full hover:bg-cyan-200 transition border border-cyan-200">
               {text}
             </button>
           ))}

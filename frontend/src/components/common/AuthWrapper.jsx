@@ -6,7 +6,7 @@ export default function AuthWrapper({ children }) {
     <div className="flex flex-col md:flex-row h-screen w-full">
 
       {/* Left branding panel */}
-      <div className="hidden md:grid md:w-1.5/6 bg-gradient-to-b from-zinc-900 to-purple-600 text-white p-12 rounded-none md:rounded-r-3xl grid-cols-1 justify-left space-y-0 space-x-0">
+      <div className="hidden md:grid md:w-1.5/6 bg-gradient-to-b from-zinc-900 to-cyan-600 text-white p-12 rounded-none md:rounded-r-3xl grid-cols-1 justify-left space-y-0 space-x-0">
         <h1 className="text-3xl font-semibold items-left space-x-0">
           <span><img src={Logo} alt="The Brain Room" className="h-24" /></span>
           <span>The Brain Room</span>

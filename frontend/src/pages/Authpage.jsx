@@ -176,8 +176,6 @@ const payload =
       setTimeout(() => {
         navigate("/dashboard");
       }, 2000);
-      // console.log("✅ Success:", data);
-      // navigate("/dashboard");
     } catch (err) {
       console.error("❌ Request failed:", err);
     }
@@ -194,13 +192,13 @@ const payload =
         <div className="flex justify-center mb-6">
           <button
             onClick={() => handleToggle("login")}
-            className={`px-4 py-2 border-b-2 transition-all duration-200 ${mode === "login" ? "border-black font-semibold" : "border-transparent"}`}>
+            className={`px-4 py-2 border-b-4 transition-all duration-200 ${mode === "login" ? "border-cyan-700 font-semibold" : "border-transparent"}`}>
             Login
           </button>
 
           <button
             onClick={() => handleToggle("register")}
-            className={`px-4 py-2 border-b-2 transition-all duration-200 ${mode === "register" ? "border-black font-semibold" : "border-transparent"}`}>
+            className={`px-4 py-2 border-b-4 transition-all duration-200 ${mode === "register" ? "border-cyan-700 font-semibold" : "border-transparent"}`}>
             Register
           </button>
         </div>
@@ -230,12 +228,12 @@ const payload =
                 <div className="flex space-x-2 mt-1">
                   <div className="w-full">
                     {submitted && errors.firstName && (
-                      <div className="bg-red-100 text-red-700 text-xs rounded px-2 py-1">{errors.firstName}</div>
+                      <div className="bg-cyan-100 text-cyan-700 text-xs rounded px-2 py-1">{errors.firstName}</div>
                     )}
                   </div>
                   <div className="w-full">
                     {submitted && errors.lastName && (
-                      <div className="bg-red-100 text-red-700 text-xs rounded px-2 py-1">{errors.lastName}</div>
+                      <div className="bg-cyan-100 text-cyan-700 text-xs rounded px-2 py-1">{errors.lastName}</div>
                     )}
                   </div>
                 </div>
@@ -255,7 +253,7 @@ const payload =
                       </SelectContent>
                     </Select>
                     {submitted && errors.gender && (
-                      <div className="bg-red-100 text-red-700 text-xs rounded px-2 py-1 mt-1">{errors.gender}</div>
+                      <div className="bg-cyan-100 text-cyan-700 text-xs rounded px-2 py-1 mt-1">{errors.gender}</div>
                     )}
                   </div>
                   {/* DOB block */}
@@ -291,7 +289,7 @@ const payload =
                       </PopoverContent>
                     </Popover>
                     {submitted && errors.dob && (
-                      <div className="bg-red-100 text-red-700 text-xs rounded px-2 py-1 mt-1">{errors.dob}</div>
+                      <div className="bg-cyan-100 text-cyan-700 text-xs rounded px-2 py-1 mt-1">{errors.dob}</div>
                     )}
                   </div>
                 </div>
@@ -307,7 +305,7 @@ const payload =
             onChange={(e) => setEmail(e.target.value)}
           />
           {submitted && errors.email && (
-            <div className="bg-red-100 text-red-700 text-xs rounded px-2 py-1">{errors.email}</div>
+            <div className="bg-cyan-100 text-cyan-700 text-xs rounded px-2 py-1">{errors.email}</div>
           )}
 
           {mode === "register" && (
@@ -396,7 +394,7 @@ const payload =
                 )}
               </div>
               {submitted && errors.otp && (
-                <div className="bg-red-100 text-red-700 text-xs rounded px-2 py-1 mt-1">{errors.otp}</div>
+                <div className="bg-cyan-100 text-cyan-700 text-xs rounded px-2 py-1 mt-1">{errors.otp}</div>
               )}
             </div>
           )}
@@ -423,10 +421,10 @@ const payload =
             </button>
           </div>
           {submitted && errors.password && (
-            <div className="bg-red-100 text-red-700 text-xs rounded px-2 py-1">{errors.password}</div>
+            <div className="bg-cyan-100 text-cyan-700 text-xs rounded px-2 py-1">{errors.password}</div>
           )}
 
-          <Button className="w-full" type="submit">Continue →</Button>
+          <Button className="bg-cyan-700 hover:bg-cyan-800 w-full" type="submit">Continue</Button>
         </form>
 
         {/* Social login */}
