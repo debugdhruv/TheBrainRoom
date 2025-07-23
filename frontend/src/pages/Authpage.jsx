@@ -41,12 +41,24 @@ export default function AuthPage({ mode: initialMode }) {
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [lastOtpSentTime, setLastOtpSentTime] = useState(null);
+  const [resendCooldown, setResendCooldown] = useState(0);
+  useEffect(() => {
+    if (!lastOtpSentTime) return;
+    const interval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - lastOtpSentTime) / 1000);
+      const remaining = 30 - elapsed;
+      setResendCooldown(remaining > 0 ? remaining : 0);
+      if (remaining <= 0) clearInterval(interval);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [lastOtpSentTime]);
 
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour >= 2 && hour < 12) return "Good Morning";
-    if (hour >= 12 && hour < 16) return "Good Afternoon";
-    return "Good Evening";
+    if (hour >= 2 && hour < 12) return "Good Morning! 🌆";
+    if (hour >= 12 && hour < 16) return "Good Afternoon! ✌🏻";
+    return "Good Evening! 🌌";
   };
   useEffect(() => {
     if (location.pathname.includes("register")) setMode("register");
@@ -185,7 +197,7 @@ const payload =
     <AuthWrapper>
       <div className="w-full max-w-md mt-auto mb-6">
         <h2 className="text-2xl font-semibold mb-4 text-left ml-1">
-          {getGreeting()}! <span className="inline-block">👋</span>
+          {getGreeting()}
         </h2>
 
         {/* Tabs */}
@@ -298,12 +310,50 @@ const payload =
           )}
 
           {/* Email Field */}
-          <Input
-            placeholder="Email Address"
-            className="w-full placeholder:text-zinc-500"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <div className="relative w-full">
+            <Input
+              placeholder="Email Address"
+              className="w-full placeholder:text-zinc-500 pr-28"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {mode === "register" && email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && !otpSent && (
+              <div
+                onClick={async () => {
+                  setIsSendingOtp(true);
+                  try {
+                    const baseUrl = import.meta.env.VITE_APP_BASE_URL;
+                    const res = await fetch(`${baseUrl}/api/auth/otp/send`, {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ email }),
+                    });
+                    const data = await res.json();
+                    if (res.ok) {
+                      toast.success("OTP sent successfully", { duration: 2000 });
+                      setOtpSent(true);
+                      setLastOtpSentTime(Date.now());
+                      setTimeout(() => {
+                        otpRef.current?.focus();
+                      }, 300);
+                    } else {
+                      toast.error(data.message || "Failed to send OTP");
+                    }
+                  } catch (err) {
+                    toast.error("Something went wrong");
+                    console.error("OTP send error:", err);
+                  } finally {
+                    setIsSendingOtp(false);
+                  }
+                }}
+                className={`absolute right-2 top-1/2 transform -translate-y-1/2 text-sm text-cyan-700 cursor-pointer px-3 py-1 rounded transition-opacity ${
+                  isSendingOtp ? "opacity-50 pointer-events-none" : "hover:bg-cyan-100"
+                }`}
+              >
+                {isSendingOtp ? "Sending..." : "Send OTP"}
+              </div>
+            )}
+          </div>
           {submitted && errors.email && (
             <div className="bg-cyan-100 text-cyan-700 text-xs rounded px-2 py-1">{errors.email}</div>
           )}
@@ -311,42 +361,7 @@ const payload =
           {mode === "register" && (
             <div>
               <div className="flex items-center gap-2">
-                <Button
-                  type="button"
-                  onClick={async () => {
-                    if (!email || errors.email) return;
-                    setIsSendingOtp(true);
-                    try {
-                      const baseUrl = import.meta.env.VITE_APP_BASE_URL;
-                      const res = await fetch(`${baseUrl}/api/auth/otp/send`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ email }),
-                      });
-                      const data = await res.json();
-                      if (res.ok) {
-                        toast.success("OTP sent successfully", { duration: 2000 });
-                        setOtpSent(true);
-                        setTimeout(() => {
-                          otpRef.current?.focus();
-                        }, 300);
-                      } else {
-                        toast.error(data.message || "Failed to send OTP");
-                      }
-                    } catch (err) {
-                      toast.error("Something went wrong");
-                      console.error("OTP send error:", err);
-                    } finally {
-                      setIsSendingOtp(false);
-                    }
-                  }}
-                  disabled={isSendingOtp || otpSent}
-                  className={`transition-all duration-150 ${isSendingOtp || otpSent ? "opacity-50 cursor-not-allowed" : ""}`}
-                  variant="outline"
-                >
-                  {isSendingOtp ? "Sending..." : "Send OTP"}
-                </Button>
-
+                {/* OTP Input and Verify button (show only after OTP sent) */}
                 {otpSent && (
                   <Input
                     ref={otpRef}
@@ -387,7 +402,7 @@ const payload =
                       }
                     }}
                     disabled={isVerifying || otpVerified}
-                    className={`transition-all duration-150 ${isVerifying || otpVerified ? "opacity-50 cursor-not-allowed" : ""}`}
+                    className={`transition-all bg-cyan-700 hover:bg-cyan-800 duration-150 ${isVerifying || otpVerified ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
                     {isVerifying ? "Verifying..." : otpVerified ? "Verified ✅" : "Verify"}
                   </Button>
@@ -395,6 +410,49 @@ const payload =
               </div>
               {submitted && errors.otp && (
                 <div className="bg-cyan-100 text-cyan-700 text-xs rounded px-2 py-1 mt-1">{errors.otp}</div>
+              )}
+              {/* Resend OTP with cooldown */}
+              {otpSent && !otpVerified && (
+                <div className="text-xs text-zinc-500 mt-2">
+                  Didn’t get the code?
+                  {resendCooldown > 0 ? (
+                    <span className="ml-1 text-cyan-600">{`Resend in ${resendCooldown}s`}</span>
+                  ) : (
+                    <span
+                      className="ml-1 text-cyan-700 cursor-pointer hover:underline"
+                      onClick={async () => {
+                        if (!email || resendCooldown > 0) return;
+                        setIsSendingOtp(true);
+                        try {
+                          const baseUrl = import.meta.env.VITE_APP_BASE_URL;
+                          const res = await fetch(`${baseUrl}/api/auth/otp/send`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ email }),
+                          });
+                          const data = await res.json();
+                          if (res.ok) {
+                            toast.success("OTP resent successfully");
+                            setOtpSent(true);
+                            setLastOtpSentTime(Date.now());
+                            setTimeout(() => {
+                              otpRef.current?.focus();
+                            }, 300);
+                          } else {
+                            toast.error(data.message || "Failed to resend OTP");
+                          }
+                        } catch (err) {
+                          console.error("OTP resend error:", err);
+                          toast.error("Something went wrong");
+                        } finally {
+                          setIsSendingOtp(false);
+                        }
+                      }}
+                    >
+                      Resend OTP
+                    </span>
+                  )}
+                </div>
               )}
             </div>
           )}

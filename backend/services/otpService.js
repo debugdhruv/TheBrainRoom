@@ -25,9 +25,16 @@ const sendOtp = async (req, res) => {
       return res.status(400).json({ message: "Email is required" });
     }
 
+    // Throttle: Prevent requesting OTP too frequently
+    const existing = otpStore.get(email);
+    const otpCooldown = 30 * 1000; // 30 seconds
+    if (existing && Date.now() < existing.expiresAt - 4.5 * 60 * 1000) {
+      return res.status(429).json({ message: "Please wait before requesting a new OTP" });
+    }
+
     const otp = generateOtp();
     const expiresAt = Date.now() + 5 * 60 * 1000;
-    otpStore.set(email, { otp, expiresAt });
+    otpStore.set(email, { otp, expiresAt, lastSent: Date.now() });
 
     const mailOptions = {
       from: process.env.OTP_EMAIL_USER,
@@ -44,6 +51,8 @@ const sendOtp = async (req, res) => {
     res.status(500).json({ message: "Failed to send OTP" });
   }
 };
+
+
 
 // ✅ New: Express-compatible Verify OTP endpoint
 const verifyOtp = async (req, res) => {
