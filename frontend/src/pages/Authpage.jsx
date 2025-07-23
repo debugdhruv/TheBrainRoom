@@ -323,11 +323,27 @@ const payload =
                   setIsSendingOtp(true);
                   try {
                     const baseUrl = import.meta.env.VITE_APP_BASE_URL;
+
+                    // STEP 1: Check if email exists before sending OTP
+                    const checkRes = await fetch(`${baseUrl}/api/auth/check-email`, {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ email }),
+                    });
+
+                    if (checkRes.status === 409) {
+                      toast.error("Email already exists, Try Logging in!");
+                      setIsSendingOtp(false);
+                      return;
+                    }
+
+                    // STEP 2: Send OTP only if email is available
                     const res = await fetch(`${baseUrl}/api/auth/otp/send`, {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ email }),
                     });
+
                     const data = await res.json();
                     if (res.ok) {
                       toast.success("OTP sent successfully", { duration: 2000 });

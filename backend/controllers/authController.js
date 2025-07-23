@@ -79,20 +79,36 @@ const loginUser = async (req, res) => {
   }
 };
 
-// Send OTP endpoint
-const sendOTP = async (req, res) => {
+
+const checkEmailExists = async (req, res) => {
   const { email } = req.body;
   try {
-    const success = otpService.sendOTP(email);
-    if (!success) return res.status(500).json({ message: "Failed to send OTP" });
-    res.status(200).json({ message: "OTP sent successfully" });
+    const user = await User.findOne({ email });
+    if (user) {
+      return res.status(409).json({ message: "User with this email already exists." });
+    }
+    return res.status(200).json({ message: "Email is available." });
   } catch (err) {
-    console.error("❌ OTP Send Error:", err);
-    res.status(500).json({ message: "Internal server error" });
+    console.error("Error checking email:", err);
+    res.status(500).json({ message: "Server error while checking email." });
   }
 };
+
+// Send OTP endpoint
+// const sendOTP = async (req, res) => {
+//   const { email } = req.body;
+//   try {
+//     const success = otpService.sendOTP(email);
+//     if (!success) return res.status(500).json({ message: "Failed to send OTP" });
+//     res.status(200).json({ message: "OTP sent successfully" });
+//   } catch (err) {
+//     console.error("❌ OTP Send Error:", err);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
 module.exports = {
   registerUser,
   loginUser,
-  sendOTP
+  // sendOTP,
+  checkEmailExists
 };
