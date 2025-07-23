@@ -11,8 +11,6 @@ const registerUser = async (req, res) => {
   const { firstName, lastName, email, password, gender, dob } = req.body;
   console.log("📥 Registration Payload:", req.body);
 
-
-
   try {
     const userExists = await User.findOne({ email });
     if (userExists) return res.status(400).json({ message: "Email already registered" });
@@ -79,7 +77,6 @@ const loginUser = async (req, res) => {
   }
 };
 
-
 const checkEmailExists = async (req, res) => {
   const { email } = req.body;
   try {
@@ -94,21 +91,29 @@ const checkEmailExists = async (req, res) => {
   }
 };
 
-// Send OTP endpoint
-// const sendOTP = async (req, res) => {
-//   const { email } = req.body;
-//   try {
-//     const success = otpService.sendOTP(email);
-//     if (!success) return res.status(500).json({ message: "Failed to send OTP" });
-//     res.status(200).json({ message: "OTP sent successfully" });
-//   } catch (err) {
-//     console.error("❌ OTP Send Error:", err);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// };
+const resetPassword = async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (err) {
+    console.error("❌ Reset Password Error:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
-  // sendOTP,
-  checkEmailExists
+  checkEmailExists,
+  resetPassword,
 };

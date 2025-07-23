@@ -16,6 +16,7 @@ import CalendarIcon from "@/assets/icons/calendar.svg"
 import { toast } from "sonner";
 import EyeOpen from "@/assets/icons/eye1.svg"
 import EyeClosed from "@/assets/icons/eye2.svg"
+import ForgotPasswordDrawer from "@/pages/ForgotPasswordDrawer";
 
 export default function AuthPage({ mode: initialMode }) {
 
@@ -494,10 +495,14 @@ const payload =
               />
             </button>
           </div>
+          {mode === "login" && (
+            <div className="w-full text-right">
+              <ForgotPasswordDrawer />
+            </div>
+          )}
           {submitted && errors.password && (
             <div className="bg-cyan-100 text-cyan-700 text-xs rounded px-2 py-1">{errors.password}</div>
           )}
-
           <Button className="bg-cyan-700 hover:bg-cyan-800 w-full" type="submit">Continue</Button>
         </form>
 
