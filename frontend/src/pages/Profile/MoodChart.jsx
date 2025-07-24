@@ -3,12 +3,14 @@ import {
   AreaChart,
   Area,
   XAxis,
+  YAxis,
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
 
 const moodLabels = {
+  0: "Unattempted",
   1: "Low",
   2: "Anxious",
   3: "Neutral",
@@ -19,8 +21,8 @@ const moodLabels = {
 const moodToValue = {
   Depressed: 1,
   Anxious: 2,
-  Stressed: 3,
-  Neutral: 4,
+  Neutral: 3,
+  Good: 4,
   Calm: 5,
 };
 
@@ -67,14 +69,14 @@ export default function MoodChart({ range }) {
     if (range === "7d") {
       const endDate = new Date(today);
       const startDate = new Date(endDate);
-      startDate.setDate(endDate.getDate() - endDate.getDay()); // Start from current week's Sunday
+      startDate.setDate(endDate.getDate() - 6); // 7 days ago from today
 
       for (let i = 0; i < 7; i++) {
         const d = new Date(startDate);
         d.setDate(startDate.getDate() + i);
         const dateKey = d.toISOString().split("T")[0];
         const found = moodData.find((entry) => entry.date === dateKey);
-        const moodValue = found ? moodToValue[found.moodResult] || null : null;
+        const moodValue = found ? moodToValue[found.moodResult] : 0;
         const label = d.toLocaleDateString("en-US", { weekday: "short" });
         data.push({ day: label, mood: moodValue });
       }
@@ -85,7 +87,7 @@ export default function MoodChart({ range }) {
         d.setDate(startDate.getDate() + i);
         const dateKey = d.toISOString().split("T")[0];
         const found = moodData.find((entry) => entry.date === dateKey);
-        const moodValue = found ? moodToValue[found.moodResult] || null : null;
+        const moodValue = found ? moodToValue[found.moodResult] : 0;
         const label = `${d.getDate()}`;
         data.push({ day: label, mood: moodValue });
       }
@@ -95,6 +97,7 @@ export default function MoodChart({ range }) {
   }, [range, moodData]);
 
   return (
+    <div aria-label="Mood trend chart over time">
     <div className="bg-white rounded-xl border p-4 shadow-sm w-full">
       <ResponsiveContainer width="100%" height={340}>
         <AreaChart
@@ -115,8 +118,7 @@ export default function MoodChart({ range }) {
             tickLine={false}
             interval="preserveStartEnd"
           />
-
-          <CartesianGrid vertical={false} stroke="#E4E4E7" />
+          <YAxis domain={[0, 5]} hide />
           <Tooltip
             content={<CustomTooltip />}
             cursor={{ stroke: "#06B6D4", strokeWidth: 1 }}
@@ -135,6 +137,7 @@ export default function MoodChart({ range }) {
           />
         </AreaChart>
       </ResponsiveContainer>
+    </div>
     </div>
   );
 }

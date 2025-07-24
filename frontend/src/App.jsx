@@ -90,15 +90,15 @@ export default function App() {
             }
           />
         </Route>
-          <Route
-            path="about"
-            element={
-              <ProtectedRoute>
-                <AboutPage />
-              </ProtectedRoute>
-            }
-          />
-
+        <Route
+          path="about"
+          element={
+            <ProtectedRoute>
+              <AboutPage />
+            </ProtectedRoute>
+          }
+        />
+        
         {/* Fallback Route Page */}
         <Route path="*" element={<NotFound />} />
         {/* Explicit /404 Page */}

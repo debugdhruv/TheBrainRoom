@@ -2,7 +2,7 @@ import { Drawer, DrawerContent, DrawerTrigger, DrawerClose } from "@/components/
 import { Input } from "@/components/ui/input";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import EyeOpen from "@/assets/icons/eye1.svg"
 import EyeClosed from "@/assets/icons/eye2.svg"
@@ -17,6 +17,16 @@ export default function ForgotPasswordDrawer() {
   const baseUrl = import.meta.env.VITE_APP_BASE_URL;
   const [passwordError, setPasswordError] = useState("");
 
+  const [resendCooldown, setResendCooldown] = useState(0);
+
+  useEffect(() => {
+    let timer;
+    if (resendCooldown > 0) {
+      timer = setTimeout(() => setResendCooldown((prev) => prev - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [resendCooldown]);
+
   const handleEmailSubmit = async () => {
     if (!email) return;
     setIsSubmitting(true);
@@ -28,7 +38,7 @@ export default function ForgotPasswordDrawer() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
-      toast.success("OTP sent to email");
+      toast.success(`OTP sent to ${email}`);
       setStep(2);
     } catch (err) {
       toast.error(err.message || "Failed to send OTP");
@@ -77,6 +87,12 @@ export default function ForgotPasswordDrawer() {
     }
   };
 
+  const handleResendOtp = async () => {
+    if (resendCooldown > 0) return;
+    await handleEmailSubmit(); // reuse the send OTP logic
+    setResendCooldown(30); // start cooldown
+  };
+
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -110,23 +126,37 @@ export default function ForgotPasswordDrawer() {
         )}
 
         {step === 2 && (
-          <InputOTP
-            maxLength={4}
-            value={otp}
-            onChange={(val) => {
-              setOtp(val);
-              if (val.length === 4) {
-                handleOtpComplete(val);
-              }
-            }}
-            className="w-full max-w-sm"
-          >
-            <InputOTPGroup className="">
-              {[...Array(4)].map((_, i) => (
-                <InputOTPSlot key={i} index={i} className="h-14 w-14 text-xl" />
-              ))}
-            </InputOTPGroup>
-          </InputOTP>
+          <>
+            <InputOTP
+              maxLength={4}
+              value={otp}
+              onChange={(val) => {
+                setOtp(val);
+                if (val.length === 4) {
+                  handleOtpComplete(val);
+                }
+              }}
+              className="w-full max-w-sm"
+            >
+              <InputOTPGroup className="">
+                {[...Array(4)].map((_, i) => (
+                  <InputOTPSlot key={i} index={i} className="h-14 w-14 text-xl" />
+                ))}
+              </InputOTPGroup>
+            </InputOTP>
+            <div className="text-sm text-muted-foreground mt-2">
+              Didn’t get the OTP?{" "}
+              <button
+                onClick={handleResendOtp}
+                className={`underline transition-opacity duration-200 ${
+                  resendCooldown > 0 ? "text-cyan-700 opacity-50 cursor-not-allowed" : "text-cyan-700"
+                }`}
+                disabled={resendCooldown > 0}
+              >
+                {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : "Resend OTP"}
+              </button>
+            </div>
+          </>
         )}
 
         {step === 3 && (
