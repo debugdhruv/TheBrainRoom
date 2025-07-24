@@ -14,7 +14,7 @@ import ProtectedRoute from "@/components/common/ProtectedRoute";
 import { isSessionValid } from "@/utils/session";
 import BotIntro from "./pages/BrainBot/BotIntro";
 import AboutPage from "@/pages/About";
-
+import PasswordProtectPage from "./pages/pwdProtect";
 export default function App() {
   return (
     <>
@@ -96,6 +96,12 @@ export default function App() {
             <ProtectedRoute>
               <AboutPage />
             </ProtectedRoute>
+          }
+        />
+        <Route path="/pwd-protect" element={
+          <ProtectedRoute>
+            <PasswordProtectPage />
+          </ProtectedRoute>
           }
         />
         

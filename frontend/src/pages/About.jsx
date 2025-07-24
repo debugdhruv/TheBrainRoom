@@ -4,7 +4,8 @@ import { toast } from "sonner";
 import profile from "@/assets/profile.png"
 import logo from "@/assets/darklogo.png"
 import BackIcon from "@/assets/icons/back.svg";
-
+import linkedin from "@/assets/icons/linkedin.svg"
+import instagram from "@/assets/icons/instagram.svg"
 const About = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const About = () => {
           onClick={handleBack}
           className="flex items-center bg-cyan-50 text-cyan-600 font-bold text-md border border-cyan-200 pr-5 pl-4 py-2 rounded-full hover:bg-cyan-200  disabled:opacity-30"
         >
-          <img src={BackIcon} alt="Back" className="h-4 w-4" /> Back
+          <img src={BackIcon} alt="Back" className="h-4 w-4" /> Go Back
         </button>
       </div>
       <div className="flex flex-col items-center justify-center px-8 lg:px-24 py-16 bg-white">
@@ -28,6 +29,15 @@ const About = () => {
             alt="Dhruv"
             className="rounded-full sm:rounded-xl shadow-xl w-80 h-80 object-cover"
           />
+          {/* Mobile : Social Media Icons */}
+          <div className="lg:hidden flex justify-center gap-6 mb-4">
+            <a href="https://www.linkedin.com/in/debugdhruv" target="_blank" rel="noopener noreferrer">
+              <img src={linkedin} alt="LinkedIn" className="w-8 h-8 hover:opacity-80 transition-opacity duration-200" />
+            </a>
+            <a href="https://www.instagram.com/dhruv_the_el_pee_da" target="_blank" rel="noopener noreferrer">
+              <img src={instagram} alt="Instagram" className="w-8 h-8 hover:opacity-80 transition-opacity duration-200" />
+            </a>
+          </div>
           <div className="text-justify max-w-2xl">
             <h1 className="text-3xl font-bold text-slate-900 mb-4">Hi, I’m Dhruv</h1>
             <p className="text-slate-700 text-base mb-4 leading-relaxed">
@@ -46,6 +56,15 @@ const About = () => {
                 Resume
               </a>
             </p>
+          {/* Desktop : Social Media Icons */}
+          <div className="hidden lg:flex justify-start items-center gap-6 mb-6">
+            <a href="https://www.linkedin.com/in/debugdhruv" target="_blank" rel="noopener noreferrer">
+              <img src={linkedin} alt="LinkedIn" className="w-8 h-8 hover:opacity-80 transition-opacity duration-200" />
+            </a>
+            <a href="https://www.instagram.com/dhruv_the_el_pee_da" target="_blank" rel="noopener noreferrer">
+              <img src={instagram} alt="Instagram" className="w-8 h-8 hover:opacity-80 transition-opacity duration-200" />
+            </a>
+          </div>
           </div>
         </div>
 
@@ -61,10 +80,13 @@ const About = () => {
             <p className="text-slate-500 text-justify max-w-2xl font-medium mx-auto">
               The Brain Room is your digital mental wellness companion. It is designed and developed by me using Figma and the MERN stack, powered by DeepSeek LLM Model for AI Chatbot, and crafted to help users track moods, reflect deeper, and talk freely with our friendly BrainBot. It’s more than a website, it’s your daily check-in space, journal, and AI friend all in one.
               <div className="pt-2" />
-              <a href="https://www.github.com/debugdhruv/thebrainroom.git"
-                target="_blank"
+              <a
+                href="/pwd-protect"
+                // target="_blank"
                 rel="noopener noreferrer"
-                className="text-indigo-600 font-medium underline hover:text-indigo-800">Source Code
+                className="text-indigo-600 font-medium underline hover:text-indigo-800"
+              >
+                Source Code
               </a>
             </p>
           </div>

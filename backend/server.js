@@ -7,9 +7,8 @@ const profileRoutes = require("./routes/profileRoutes");
 const quoteRoutes = require("./routes/quoteRoutes");
 const moodRoutes = require("./routes/moodRoutes");
 const brainBotRoutes = require("./routes/brainBotRoutes");
+const pwdRoutes = require("./routes/pwdRoutes");
 
-// const dotenv = require("dotenv");
-// dotenv.config();
 connectDB();
 
 const app = express();
@@ -49,6 +48,7 @@ app.use("/api/profile", profileRoutes);
 app.use("/api", quoteRoutes);
 app.use("/api/mood", moodRoutes);
 app.use("/api/brainbot", brainBotRoutes);
+app.use("/api/get-protected-link", pwdRoutes);
 
 app.get("/", (req, res) => {
   res.status(404).end();

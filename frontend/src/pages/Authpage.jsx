@@ -44,6 +44,7 @@ export default function AuthPage({ mode: initialMode }) {
   const [submitted, setSubmitted] = useState(false);
   const [lastOtpSentTime, setLastOtpSentTime] = useState(null);
   const [resendCooldown, setResendCooldown] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   useEffect(() => {
     if (!lastOtpSentTime) return;
     const interval = setInterval(() => {
@@ -129,28 +130,33 @@ export default function AuthPage({ mode: initialMode }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     setSubmitted(true);
     validateForm();
-    if (!isFormValid) return;
+    if (!isFormValid) {
+      setIsSubmitting(false);
+      return;
+    }
     if (mode === "register" && !otpVerified) {
       toast.error("Please verify your email with the OTP before registering.");
+      setIsSubmitting(false);
       return;
     }
 
-const payload =
-  mode === "register"
-    ? {
-        firstName,
-        lastName,
-        email,
-        password,
-        gender,
-        dob: dob ? dob.toISOString() : null,
-      }
-    : {
-        email,
-        password,
-      };
+    const payload =
+      mode === "register"
+        ? {
+            firstName,
+            lastName,
+            email,
+            password,
+            gender,
+            dob: dob ? dob.toISOString() : null,
+          }
+        : {
+            email,
+            password,
+          };
 
     try {
       const baseUrl = import.meta.env.VITE_APP_BASE_URL;
@@ -164,6 +170,7 @@ const payload =
 
       if (!res.ok) {
         toast.error("Wrong credentials", { duration: 1500, position: "top-center" });
+        setIsSubmitting(false);
         return;
       }
 
@@ -186,11 +193,13 @@ const payload =
         }, 1000);
       }
 
+      setIsSubmitting(false);
       setTimeout(() => {
         navigate("/dashboard");
       }, 2000);
     } catch (err) {
       console.error("❌ Request failed:", err);
+      setIsSubmitting(false);
     }
   };
 
@@ -503,7 +512,13 @@ const payload =
           {submitted && errors.password && (
             <div className="bg-cyan-100 text-cyan-700 text-xs rounded px-2 py-1">{errors.password}</div>
           )}
-          <Button className="bg-cyan-700 hover:bg-cyan-800 w-full" type="submit">Continue</Button>
+          <Button className="bg-cyan-700 hover:bg-cyan-800 w-full" type="submit">
+            {isSubmitting
+              ? mode === "register"
+                ? "Signing up..."
+                : "Logging in..."
+              : "Continue"}
+          </Button>
         </form>
 
         {/* Social login */}
