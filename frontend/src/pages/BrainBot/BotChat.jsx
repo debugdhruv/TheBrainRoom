@@ -35,7 +35,7 @@ export default function BotChat() {
 
   // Define handleSend before useEffect that uses it
   const handleSend = useCallback(
-    async (text) => {
+    async (text, options = { silent: false }) => {
       if (!text?.trim()) return;
       if (isBotTyping) {
         setShowWarning(true);
@@ -43,7 +43,10 @@ export default function BotChat() {
         return;
       }
 
-      setMessages((prev) => [...prev, { type: "user", text }]);
+      if (!options.silent) {
+        setMessages((prev) => [...prev, { type: "user", text }]);
+      }
+
       scrollToBottom();
       setIsBotTyping(true);
       setStarted(true);
@@ -80,17 +83,28 @@ export default function BotChat() {
     [isBotTyping]
   );
 
-  // On mount or when initialMessage changes: send initial message if provided and not already sent and chat not started
+  // On mount or when initialMessage/moodReport changes: send correct initial message if provided and not already sent and chat not started
   useEffect(() => {
-    if (initialMessage && !hasSentInitialMessage && !started) {
-      // Delay execution to next tick to avoid double-fire in React StrictMode
+    if (fromMoodResult && moodReport && !hasSentInitialMessage && !started) {
+      const moodText = `Hey, here's my mental health report. Please help me evaluate, advise, and suggest.
+Score: ${moodReport?.score}/10
+Mood: ${moodReport?.mood}
+${userDetails?.dob ? "Age: " + (new Date().getFullYear() - new Date(userDetails.dob).getFullYear()) : ""}
+${userDetails?.gender ? "Gender: " + userDetails.gender : ""}`.trim();
+
+      const timeout = setTimeout(() => {
+        handleSend(moodText, { silent: true });
+        setHasSentInitialMessage(true);
+      }, 500); // Small delay for natural feel
+      return () => clearTimeout(timeout);
+    } else if (initialMessage && !hasSentInitialMessage && !started) {
       const timeout = setTimeout(() => {
         handleSend(initialMessage);
         setHasSentInitialMessage(true);
       }, 0);
       return () => clearTimeout(timeout);
     }
-  }, [initialMessage, hasSentInitialMessage, started, handleSend]);
+  }, [fromMoodResult, moodReport, initialMessage, hasSentInitialMessage, started, userDetails, handleSend]);
 
   useEffect(() => {
     const container = scrollRef.current;
@@ -193,21 +207,25 @@ export default function BotChat() {
       <div className="h-12" />
       
       {/* Footer Section */}
-      <div className="bottom-0 fixed bg-white/50 backdrop-blur-md pt-2 pb-4 px-0 z-10 w-auto sm:max-w-3xl sm:w-auto mx-auto">
-        
-          <div className="opacity-0 flex justify-center flex-wrap sm:mb-4 mb-6 gap-2">
-            {["I feel overwhelmed lately", "Give me some journaling ideas", "Suggest calming exercises"].map((text, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  handleSend(text);
-                  // setShowSuggestions(false);
-                }}
-                className="px-4 py-2 text-sm font-medium text-cyan-700 bg-cyan-100/70 rounded-full hover:bg-cyan-200 transition border border-cyan-200">
-                {text}
-              </button>
-            ))}
+      <div className="bottom-0 fixed pt-2 pb-4 px-0 z-10 w-auto sm:max-w-3xl sm:w-auto mx-auto">
+          <div className="opacity-0 pointer-events-none select-none">
+          
+        <div className="opacity-0 flex justify-center flex-wrap sm:mb-4 mb-6 gap-2">
+          {["I feel overwhelmed lately", "Give me some journaling ideas", "Suggest calming exercises"].map((text, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                handleSend(text);
+                // setShowSuggestions(false);
+              }}
+              className="px-4 py-2 text-sm font-medium text-cyan-700 bg-cyan-100/70 rounded-full hover:bg-cyan-200 transition border border-cyan-200">
+              {text}
+            </button>
+          ))}
+        </div>
+       
           </div>
+        
         <div className="relative">
           <MessageInput onSend={handleSend} disabled={isBotTyping} />
           <div
