@@ -486,7 +486,7 @@ export default function AuthPage({ mode: initialMode }) {
           {/* Password Field */}
           <div className="relative">
             <Input
-              placeholder="Create your Password"
+              placeholder={mode === "register" ? "Create your Password" : "Enter your Password"}
               className="w-full pr-16 placeholder:text-zinc-500"
               type={showPassword ? "text" : "password"}
               value={password}

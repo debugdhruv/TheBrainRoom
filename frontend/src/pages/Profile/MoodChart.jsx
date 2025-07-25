@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
+import { loaderEvents } from "@/context/loaderEvents";
 import {
   AreaChart,
   Area,
@@ -60,6 +61,10 @@ export default function MoodChart({ range }) {
       }
     };
     fetchData();
+    loaderEvents.on("refreshMoodChart", fetchData);
+    return () => {
+      loaderEvents.off("refreshMoodChart", fetchData);
+    };
   }, []);
 
   const chartData = useMemo(() => {

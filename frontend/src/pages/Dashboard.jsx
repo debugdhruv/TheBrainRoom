@@ -100,12 +100,12 @@ export default function Dashboard() {
       </div>
       
       <div className="mt-16 text-left px-0 text-zinc-200 hover:text-zinc-500 transition-colors duration-600 ease-in-out">
-        <div className="flex space-x-2 pl-2 text-4xl font-bold">
-          <span>made with</span>
-          <img src={heart} className="w-10 h-10 opacity-80" alt="Heart Icon" />
+        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-4 pl-2 text-4xl font-bold">
+          <span className="whitespace-nowrap">made with</span>
+          <img src={heart} className="w-8 h-8 sm:w-10 sm:h-10 opacity-80" alt="Heart Icon" />
           <span>by</span>
         </div>
-        <p className="text-[110px] sm:text-[140px] font-extrabold">Dhruv</p>
+        <p className="text-[80px] sm:text-[140px] font-extrabold leading-none">Dhruv</p>
       </div>
     </div>
   );

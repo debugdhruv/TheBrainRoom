@@ -6,6 +6,7 @@ import BotIcon from "@/assets/icons/chat 3.svg";
 import BackIcon from "@/assets/icons/back.svg";
 import { moodQuestions } from "./moodData";
 import { useXP } from "@/context/useXP";
+import { loaderEvents } from "@/context/loaderEvents";
 
 export default function MoodResult() {
 //   const { userDetails } = useUser();
@@ -88,12 +89,17 @@ export default function MoodResult() {
 
   const mood = getMood(averageScore);
 
-  useEffect(() => {
-    if (!hasGivenRef.current) {
-      hasGivenRef.current = true;
-      addXP(25, "Completed Mood Check", true);
-    }
-  }, [addXP]);
+useEffect(() => {
+  if (!hasGivenRef.current) {
+    hasGivenRef.current = true;
+    addXP(25, "Completed Mood Check", true);
+    
+    // Wait 500ms before emitting so backend has time to save
+    setTimeout(() => {
+      loaderEvents.emit("refreshMoodChart");
+    }, 900);
+  }
+}, [addXP]);
 
   const suggestions = [
     {
