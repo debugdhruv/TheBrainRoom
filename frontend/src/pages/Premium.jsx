@@ -38,22 +38,25 @@ const Premium = () => {
   const shouldShowPopup = !isUnlocked;
 
   return (
-    <div className="relative text-gray-800 px-6 py-12 flex flex-col items-center justify-center">
+    <div className="relative sm:top-52 h-auto px-6 py-20 flex items-center justify-center overflow-hidden">
       {shouldShowPopup && (
-        <div className="absolute inset-0 backdrop-blur-sm bg-black/40 z-20 flex items-center justify-center px-4">
-          <div className="bg-white p-8 rounded-lg shadow-lg text-center max-w-md mx-auto">
-            <h2 className="text-2xl font-semibold mb-4">
+        <div className="absolute inset-0 bg-black/40 z-20 flex items-center justify-center px-4">
+          <div className="bg-white/70 backdrop-blur-md border border-white/30 p-8 rounded-xl shadow-2xl text-center max-w-md mx-auto animate-fade-in transition-all">
+            <h2 className="text-2xl font-bold mb-3 text-cyan-900">
               {isEligible
-                ? "🎉 Congratulations, you're eligible to unlock this!"
+                ? "🎉 You're eligible to go Premium!"
                 : "🔒 Premium content is locked"}
             </h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-sm text-gray-700 mb-6">
               {isEligible
-                ? "Tap below to unlock access to exclusive offline workshops and networking resources."
-                : "Reach 2000 XP to unlock exclusive offline workshops and networking resources."}
+                ? "Unlock exclusive access to offline workshops and networking now."
+                : "Reach 2000 XP to unlock offline workshops and networking resources."}
             </p>
             {isEligible && !isUnlocked && (
-              <Button onClick={handleUnlock} className="w-full">
+              <Button
+                onClick={handleUnlock}
+                className="w-full bg-cyan-700 hover:bg-cyan-800 text-white font-semibold"
+              >
                 Unlock Premium Access
               </Button>
             )}
@@ -62,21 +65,35 @@ const Premium = () => {
       )}
 
       <div
-        className={`${!isUnlocked ? "blur-sm opacity-30 pointer-events-none select-none" : ""
-          } transition-all duration-500 max-w-3xl text-center`}
+        className={`transition-all duration-500 ease-in-out max-w-4xl w-full px-6 text-center ${!isUnlocked ? "blur-sm opacity-30 pointer-events-none select-none" : ""
+          }`}
       >
-        <h1 className="text-5xl font-extrabold mb-6 text-cyan-800">
+        <h1 className="text-5xl md:text-6xl font-extrabold mb-6 text-cyan-800 animate-slide-up">
           🌟 BrainRoom Premium
         </h1>
-        <p className="text-lg text-gray-700 mb-10 px-4">
-          Welcome to the Premium tier of The Brain Room — a serene space
-          dedicated to your growth and connection. As a premium member, you
-          unlock access to:
+        <p className="text-lg md:text-xl text-gray-700 mb-10">
+          Welcome to the premium tier of The Brain Room — a serene space
+          dedicated to your growth and connection.
         </p>
-        <ul className="text-gray-700 space-y-6 text-xl list-disc list-inside px-6 text-left">
-          <li>🧘‍♀️ Exclusive offline workshops</li>
-          <li>🤝 Networking resources</li>
-        </ul>
+
+        <div className="grid md:grid-cols-2 gap-6 text-left">
+          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl border border-cyan-100 transition-transform hover:-translate-y-1">
+            <h3 className="text-xl font-semibold text-cyan-700 mb-2">
+              🧘‍♀️ Exclusive Offline Workshops
+            </h3>
+            <p className="text-sm text-gray-600">
+              Join focused offline events designed to enhance your wellbeing and skills.
+            </p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl border border-cyan-100 transition-transform hover:-translate-y-1">
+            <h3 className="text-xl font-semibold text-cyan-700 mb-2">
+              🤝 Networking Resources
+            </h3>
+            <p className="text-sm text-gray-600">
+              Connect with likeminded individuals and open new doors through exclusive groups.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

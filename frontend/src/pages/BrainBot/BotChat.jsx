@@ -189,8 +189,6 @@ ${userDetails?.gender ? "Gender: " + userDetails.gender : ""}`.trim();
             source={msg.source}
           />
         ))}
-
-
         {isBotTyping && (
           <div className="w-full flex justify-start px-2">
             <div className="max-w-md text-sm px-4 py-3 rounded-xl shadow-sm bg-zinc-100 text-slate-700 rounded-bl-none">
@@ -207,34 +205,18 @@ ${userDetails?.gender ? "Gender: " + userDetails.gender : ""}`.trim();
       <div className="h-12" />
       
       {/* Footer Section */}
-      <div className="bottom-0 fixed pt-2 pb-4 px-0 z-10 w-auto sm:max-w-3xl sm:w-auto mx-auto">
-          <div className="opacity-0 pointer-events-none select-none">
-          
-        <div className="opacity-0 flex justify-center flex-wrap sm:mb-4 mb-6 gap-2">
-          {["I feel overwhelmed lately", "Give me some journaling ideas", "Suggest calming exercises"].map((text, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                handleSend(text);
-                // setShowSuggestions(false);
-              }}
-              className="px-4 py-2 text-sm font-medium text-cyan-700 bg-cyan-100/70 rounded-full hover:bg-cyan-200 transition border border-cyan-200">
-              {text}
-            </button>
-          ))}
-        </div>
-       
-          </div>
-        
-        <div className="relative">
-          <MessageInput onSend={handleSend} disabled={isBotTyping} />
-          <div
-            className={`absolute bottom-full mb-8 left-0 right-0 flex justify-center transition-opacity duration-500 ${
-              showWarning ? "opacity-100" : "opacity-0 pointer-events-none"
-            }`}
-          >
-            <div className="font-semibold text-sm text-cyan-700 bg-cyan-50 px-3 py-1 rounded-md shadow">
-              Let BrainBot finish replying first!
+      <div className="fixed bottom-4 w-4/5 sm:w-2/5 px-4 sm:px-6 md:px-8 lg:px-0 z-10 backdrop-blur-md bg-white/50">
+        <div className="mx-auto w-full max-w-3xl">
+          <div className="relative">
+            <MessageInput onSend={handleSend} disabled={isBotTyping} />
+            <div
+              className={`absolute bottom-full mb-8 left-0 right-0 flex justify-center transition-opacity duration-500 ${
+                showWarning ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <div className="font-semibold text-sm text-cyan-700 bg-cyan-50 px-3 py-1 rounded-md shadow">
+                Let BrainBot finish replying first!
+              </div>
             </div>
           </div>
         </div>

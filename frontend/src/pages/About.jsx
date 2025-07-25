@@ -6,6 +6,15 @@ import logo from "@/assets/darklogo.png"
 import BackIcon from "@/assets/icons/back.svg";
 import linkedin from "@/assets/icons/linkedin.svg"
 import instagram from "@/assets/icons/instagram.svg"
+import resume from "@/assets/icons/doc.svg"
+import emailOutline from "@/assets/icons/emailOutline.svg";
+import emailFilled from "@/assets/icons/emailFilled.svg";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger
+} from "@/components/ui/hover-card";
+
 const About = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -30,13 +39,57 @@ const About = () => {
             className="rounded-full sm:rounded-xl shadow-xl w-80 h-80 object-cover"
           />
           {/* Mobile : Social Media Icons */}
-          <div className="lg:hidden flex justify-center gap-6 mb-4">
-            <a href="https://www.linkedin.com/in/debugdhruv" target="_blank" rel="noopener noreferrer">
-              <img src={linkedin} alt="LinkedIn" className="w-8 h-8 hover:opacity-80 transition-opacity duration-200" />
-            </a>
-            <a href="https://www.instagram.com/dhruv_the_el_pee_da" target="_blank" rel="noopener noreferrer">
-              <img src={instagram} alt="Instagram" className="w-8 h-8 hover:opacity-80 transition-opacity duration-200" />
-            </a>
+          <div className="lg:hidden flex justify-center gap-8 mb-4">
+            <HoverCard openDelay={300}>
+              <HoverCardTrigger>
+                <a href="https://www.linkedin.com/in/debugdhruv" target="_blank" rel="noopener noreferrer">
+                  <img src={linkedin} alt="LinkedIn" className="w-8 h-8 hover:opacity-80 transition-opacity duration-200" />
+                </a>
+              </HoverCardTrigger>
+              <HoverCardContent className="text-sm px-3 py-1.5">
+                LinkedIn
+              </HoverCardContent>
+            </HoverCard>
+
+            <HoverCard openDelay={300}>
+              <HoverCardTrigger>
+                <a href="https://drive.google.com/file/d/1QajQRx9Xu8NeX3yaG_dmtDn6XNjkS4YO/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                  <img src={resume} alt="Instagram" className="w-8 h-8 hover:opacity-80 transition-opacity duration-200" />
+                </a>
+              </HoverCardTrigger>
+              <HoverCardContent className="text-sm px-3 py-1.5">
+                Resume
+              </HoverCardContent>
+            </HoverCard>
+
+            <HoverCard openDelay={300}>
+              <HoverCardTrigger>
+                <a href="https://www.instagram.com/dhruv_the_el_pee_da" target="_blank" rel="noopener noreferrer">
+                  <img src={instagram} alt="Instagram" className="w-8 h-8 hover:opacity-80 transition-opacity duration-200" />
+                </a>
+              </HoverCardTrigger>
+              <HoverCardContent className="text-sm px-3 py-1.5">
+                Instagram
+              </HoverCardContent>
+            </HoverCard>
+
+            <HoverCard openDelay={300}>
+              <HoverCardTrigger>
+                <a href="mailto:debug.dhruv@gmail.com">
+                  <img
+                    src={emailOutline}
+                    alt="Email"
+                    className="w-8 h-8 hover:opacity-80 transition-opacity duration-200 hover:scale-105"
+                    onMouseEnter={(e) => (e.currentTarget.src = emailFilled)}
+                    onMouseLeave={(e) => (e.currentTarget.src = emailOutline)}
+                  />
+                </a>
+              </HoverCardTrigger>
+              <HoverCardContent className="text-sm px-3 py-1.5">
+                Email
+              </HoverCardContent>
+            </HoverCard>
+
           </div>
           <div className="text-justify max-w-2xl">
             <h1 className="text-3xl font-bold text-slate-900 mb-4">Hi, I’m Dhruv</h1>
@@ -47,24 +100,60 @@ const About = () => {
             <p className="text-slate-700 text-base mb-4 leading-relaxed">
               I’m currently open to new opportunities — whether it’s full-time, freelance, or just a good conversation
               about design and tech. If you’re interested, feel free to leave a message in the form below. I’d love to connect!
-              <div className="pt-2" />
-              <a
-                href="https://drive.google.com/file/d/1QajQRx9Xu8NeX3yaG_dmtDn6XNjkS4YO/view?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-indigo-600 font-medium underline hover:text-indigo-800">
-                Resume
-              </a>
             </p>
-          {/* Desktop : Social Media Icons */}
-          <div className="hidden lg:flex justify-start items-center gap-6 mb-6">
-            <a href="https://www.linkedin.com/in/debugdhruv" target="_blank" rel="noopener noreferrer">
-              <img src={linkedin} alt="LinkedIn" className="w-8 h-8 hover:opacity-80 transition-opacity duration-200" />
-            </a>
-            <a href="https://www.instagram.com/dhruv_the_el_pee_da" target="_blank" rel="noopener noreferrer">
-              <img src={instagram} alt="Instagram" className="w-8 h-8 hover:opacity-80 transition-opacity duration-200" />
-            </a>
-          </div>
+            {/* Desktop : Social Media Icons */}
+            <div className="hidden lg:flex justify-start items-center gap-6 mb-6">
+              <HoverCard openDelay={300}>
+                <HoverCardTrigger>
+                  <a href="https://www.linkedin.com/in/debugdhruv" target="_blank" rel="noopener noreferrer">
+                    <img src={linkedin} alt="LinkedIn" className="w-8 h-8 hover:opacity-80 transition-opacity duration-200" />
+                  </a>
+                </HoverCardTrigger>
+                <HoverCardContent className="text-sm px-3 py-1.5">
+                  LinkedIn
+                </HoverCardContent>
+              </HoverCard>
+
+              <HoverCard openDelay={300}>
+                <HoverCardTrigger>
+                  <a href="https://drive.google.com/file/d/1QajQRx9Xu8NeX3yaG_dmtDn6XNjkS4YO/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                    <img src={resume} alt="Instagram" className="w-8 h-8 hover:opacity-80 transition-opacity duration-200" />
+                  </a>
+                </HoverCardTrigger>
+                <HoverCardContent className="text-sm px-3 py-1.5">
+                  Resume
+                </HoverCardContent>
+              </HoverCard>
+
+              <HoverCard openDelay={300}>
+                <HoverCardTrigger>
+                  <a href="https://www.instagram.com/dhruv_the_el_pee_da" target="_blank" rel="noopener noreferrer">
+                    <img src={instagram} alt="Instagram" className="w-8 h-8 hover:opacity-80 transition-opacity duration-200" />
+                  </a>
+                </HoverCardTrigger>
+                <HoverCardContent className="text-sm px-3 py-1.5">
+                  Instagram
+                </HoverCardContent>
+              </HoverCard>
+
+              <HoverCard openDelay={300}>
+                <HoverCardTrigger>
+                  <a href="mailto:debug.dhruv@gmail.com">
+                    <img
+                      src={emailOutline}
+                      alt="Email"
+                      className="w-10 h-10 hover:opacity-80 transition-opacity duration-200 hover:scale-105"
+                      onMouseEnter={(e) => (e.currentTarget.src = emailFilled)}
+                      onMouseLeave={(e) => (e.currentTarget.src = emailOutline)}
+                    />
+                  </a>
+                </HoverCardTrigger>
+                <HoverCardContent className="text-sm px-3 py-1.5">
+                  dhruvtiwari.1130@gmail.com
+                </HoverCardContent>
+              </HoverCard>
+
+            </div>
           </div>
         </div>
 
