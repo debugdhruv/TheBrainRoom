@@ -16,7 +16,7 @@ A full-stack web application that helps users track moods, access well-being too
 - [🤝 Contributing](#-contributing)
 - [📫 Contact](#-contact)
 - [🚀 Live Demo](#-live-demo)
-- [🔌 Setup Instructions](#setup-instructions)
+- [🔌 Setup Instructions](#-setup-instructions)
 - [🧾 License](#-license)
 - [🛡️ Note](#️-note)
 
@@ -148,8 +148,6 @@ This project is currently a solo build by **me**, but I’m open to feedback, co
 
 ## 🔌 Setup Instructions
 
-## 🛠️ Local Setup Instructions
-
 Follow this step-by-step guide to set up **The Brain Room** on your local machine and start contributing or exploring.
 
 ---
@@ -218,7 +216,7 @@ OPENROUTER_API_KEY = your_api_key_of_OpenRouter
 Create a file named `.env` inside the `/frontend` directory:
 
 ```env
-VITE_APP_BASE_URL=http://localhost:5000
+VITE_APP_BASE_URL=http://localhost:5050
 ```
 
 > 🌐 This points your frontend to the backend API during development.
@@ -269,12 +267,6 @@ npm run dev
   - Gmail SMTP credentials
   - Frontend `.env` pointing to correct backend URL
 
----
-
-## ✅ You're All Set!
-
-You can now explore the codebase, test features, or build your own version on top of it.
-Have fun building 🛠️  
 ---
 
 ## 🧾 License
