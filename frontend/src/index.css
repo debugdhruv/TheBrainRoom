@@ -117,3 +117,13 @@ body,
     appearance: none;
   }
 }
+
+::selection {
+  background-color: #98dfee; /* Cyan-ish bg */
+  color: #00586a;
+}
+
+::-moz-selection {
+  background-color: #98dfee; /* Cyan-ish bg */
+  color: #00586a;
+}
