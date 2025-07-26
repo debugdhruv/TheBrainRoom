@@ -70,39 +70,43 @@ A full-stack web application that helps users track moods, access well-being too
 
 ## 🧩 Folder Structure
 
+<pre>
+
 the-brain-room/
 ├── backend/
-│   ├── config/         # DB connection and app configs
-│   ├── controllers/    # Route logic (e.g. moodController.js)
-│   ├── middleware/     # Auth, error handlers
-│   ├── models/         # Mongoose schemas (e.g. MoodLog.js, User.js)
-│   ├── routes/         # All API endpoints
-│   ├── services/       # OTP service, utilities
-│   ├── server.js       # Express app entry point
-│   └── package.json    # Backend dependencies & scripts
+│   ├── config/             # DB connection and app configs
+│   ├── controllers/        # Route logic (e.g. moodController.js)
+│   ├── middleware/         # Auth, error handlers
+│   ├── models/             # Mongoose schemas (MoodLog.js, User.js)
+│   ├── routes/             # All API endpoints
+│   ├── services/           # OTP service, utilities
+│   ├── server.js           # Express app entry point
+│   └── package.json        # Backend dependencies & scripts
 │
 ├── frontend/
 │   ├── src/
-│   │   ├── api/         # API request functions
-│   │   ├── assets/      # Icons, logos, and illustrations
-│   │   ├── components/  # Reusable UI components
-│   │   ├── context/     # React Context files (XP, User, Loader etc.)
-│   │   ├── lib/         # Utility libraries, middleware
-│   │   ├── pages/       # App screens like MoodCheck, Dashboard, BotChat
-│   │   ├── utils/       # Helper functions
+│   │   ├── api/            # API request functions
+│   │   ├── assets/         # Icons, logos, and illustrations
+│   │   ├── components/     # Reusable UI components
+│   │   ├── context/        # React Context (XP, User, Loader)
+│   │   ├── lib/            # Custom libraries or middleware
+│   │   ├── pages/          # Main app screens (MoodCheck, BotChat etc.)
+│   │   ├── utils/          # Utility helper functions
+│   │   ├── App.jsx         # Root app component
 │   │   ├── App.css
-│   │   ├── App.jsx      # Root App component with routes
 │   │   ├── index.css
-│   │   └── main.jsx     # Vite app entry point
-│   ├── index.html       # Root HTML
-│   ├── tailwind.config.js
-│   ├── vite.config.js
-│   ├── postcss.config.js
-│   └── package.json     # Frontend dependencies & scripts
+│   │   └── main.jsx        # Vite entry point
+│   ├── index.html          # HTML template
+│   ├── tailwind.config.js  # Tailwind config
+│   ├── vite.config.js      # Vite config
+│   └── package.json        # Frontend dependencies
 │
-├── README.md            # Project overview, docs
-├── LICENSE              # License info
-└── .gitignore           # Files to ignore during version control
+├── .gitignore              # Ignored files
+├── LICENSE                 # License info
+└── README.md               # Project overview & documentation
+
+</pre>
+
 ---
 
 ## 🤝 Contributing
