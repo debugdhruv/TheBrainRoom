@@ -5,6 +5,22 @@ A full-stack web application that helps users track moods, access well-being too
 
 ---
 
+## 📚 Index
+
+- [🌟 Features](#-features)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [🧠 AI Integration](#-ai-integration)
+- [🔒 Authentication Flow](#-authentication-flow)
+- [📊 Mood Tracking Logic](#-mood-tracking-logic)
+- [🧩 Folder Structure](#-folder-structure)
+- [🤝 Contributing](#-contributing)
+- [📫 Contact](#-contact)
+- [🚀 Live Demo](#-live-demo)
+- [🧾 License](#-license)
+- [🛡️ Note](#️-note)
+
+---
+
 ## 🌟 Features
 
 - ✅ **Daily Mood Check** — Track how you feel with 5 simple questions, scored and visualized beautifully.
@@ -118,8 +134,8 @@ This project is currently a solo build by **me**, but I’m open to feedback, co
 ## 📫 Contact
 
 - 📧 Email: dhruvtiwari.1130@gmail.com
-- 💬 WhatsApp: +91 7974914363
 - 🔗 LinkedIn: https://www.linkedin.com/in/dhruvux/
+- 💬 WhatsApp: +91 7974914363
 
 ---
 
