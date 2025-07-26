@@ -109,9 +109,9 @@ This project is currently a solo build by **me**, but I’m open to feedback, co
 
 ## 📫 Contact
 
-- 📧 Email: [dhruvtiwari.1130@gmail.com]
+- 📧 Email: dhruvtiwari.1130@gmail.com
 - 💬 WhatsApp: +91 7974914363
-- 🔗 LinkedIn: [https://www.linkedin.com/in/dhruvux/]
+- 🔗 LinkedIn: https://www.linkedin.com/in/dhruvux/
 
 ---
 
