@@ -9,15 +9,14 @@ A full-stack web application that helps users track moods, access well-being too
 
 - [🌟 Features](#-features)
 - [🛠️ Tech Stack](#️-tech-stack)
+- [🧩 Folder Structure](#-folder-structure)
 - [🧠 AI Integration](#-ai-integration)
 - [🔒 Authentication Flow](#-authentication-flow)
 - [📊 Mood Tracking Logic](#-mood-tracking-logic)
-- [🧩 Folder Structure](#-folder-structure)
-- [🤝 Contributing](#-contributing)
-- [📫 Contact](#-contact)
 - [🚀 Live Demo](#-live-demo)
 - [🔌 Setup Instructions](#-setup-instructions)
-- [🧾 License](#-license)
+- [📫 Contact](#-contact)
+- [🤝 Contributing](#-contributing)
 - [🛡️ Note](#️-note)
 
 ---
@@ -277,4 +276,4 @@ This project is for educational and demo purposes. All rights reserved © Dhruv.
 
 ## 🛡️ Note
 
-The source code is password protected and a private repo to prevent unauthorized use. Please be fair and think twice to your real self, "Do I really wanna copy paste the whole base or make my own?", and If you are just exploring and watching how I made it all, Yeah man it took me time haha.. 
+The source code is password-protected to prevent misuse. So If you are here I am assuming with a fair reason. Be real with yourself — do you want to build your own or just copy-paste mine? 😄 If you’re just exploring how I built it, welcome aboard — it took effort, trust me!
