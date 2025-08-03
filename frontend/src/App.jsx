@@ -114,3 +114,8 @@ export default function App() {
     </>
   );
 }
+
+console.log = () => {}
+console.error = () => {}
+console.info = () => {}
+console.warn = () => {}
