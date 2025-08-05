@@ -27,8 +27,7 @@ export default function Chatbot() {
         initialMessage={initialMessage}
         moodReport={moodReport}
         fromMoodResult={fromMoodResult}
-        onUserStart={handleStart}
-      />
+        onUserStart={handleStart}/>
     </div>
   );
 }

@@ -12,8 +12,7 @@ export default function ChatBubble({ type, text, title, description, url, image,
           data-bot-link
           target="_blank"
           rel="noopener noreferrer"
-          className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg w-full bg-white border border-zinc-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all block"
-        >
+          className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg w-full bg-white border border-zinc-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all block">
           {image && (
             <img src={image} alt="Suggestion Thumbnail" className="w-full h-40 object-cover" />
           )}
@@ -54,8 +53,7 @@ export default function ChatBubble({ type, text, title, description, url, image,
             a: ({ ...props }) => (
               <a className="underline" target="_blank" rel="noopener noreferrer" {...props} />
             )
-          }}
-        >
+          }}>
           {text}
         </ReactMarkdown>
       </div>

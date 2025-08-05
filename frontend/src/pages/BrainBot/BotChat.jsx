@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useXP } from "@/context/useXP";
 import { useUser } from "@/context/useUser";
+import { useLocation } from "react-router-dom";
+import { fetchBrainBotReply } from "@/api/brainbot";
 import ChatBubble from "./ChatBubble";
 import MessageInput from "./MessageInput";
 import StarIcon from "@/assets/icons/starsAI.svg";
-import { useXP } from "@/context/useXP";
-import { fetchBrainBotReply } from "@/api/brainbot";
-import { useLocation } from "react-router-dom";
 
 export default function BotChat() {
   const { addXP } = useXP();
@@ -19,11 +19,12 @@ export default function BotChat() {
   const [showWarning, setShowWarning] = useState(false);
 
   const location = useLocation();
+
   // Get initialMessage, moodReport, fromMoodResult from location.state
   const { moodReport = null, fromMoodResult = false, initialMessage = "" } = location.state || {};
   const showReport = fromMoodResult;
 
-  // Add showSuggestions state (preserved from original)
+  // //Add showSuggestions state (preserved from original)
   // const [showSuggestions, setShowSuggestions] = useState(!fromMoodResult);
 
   useEffect(() => {

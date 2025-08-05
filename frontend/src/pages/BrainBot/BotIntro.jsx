@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
+import { useUser } from "@/context/useUser";
 import StarIcon from "@/assets/icons/starsAI.svg";
 import MessageInput from "./MessageInput";
-import { useUser } from "@/context/useUser";
 
 export default function BotIntro() {
   const navigate = useNavigate();
   const { userDetails } = useUser();
   const handleSend = (message) => {
   if (!message.trim()) return;
+
   navigate("/dashboard/bot/chat", {
     state: {
       initialMessage: message,
@@ -48,9 +49,3 @@ export default function BotIntro() {
     </div>
   );
 }
-
-
-
-
-
-// mt-[332px] sm:mt-[380px]

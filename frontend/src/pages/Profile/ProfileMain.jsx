@@ -1,20 +1,15 @@
-import AvatarCircle from "./AvatarCircle";
-import { Button } from "@/components/ui/button";
-import EditProfileModal from "./EditProfileModal";
 import { useState } from "react";
 import { useEffect } from "react";
-import MoodChart from "./MoodChart";
-import XPBox from "./XPBox";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ShareIcon from "@/assets/icons/share.svg"
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent
-} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { useXP } from "@/context/useXP";
 import { useUser } from "@/context/useUser";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import EditProfileModal from "./EditProfileModal";
+import MoodChart from "./MoodChart";
+import AvatarCircle from "./AvatarCircle";
+import ShareIcon from "@/assets/icons/share.svg"
 
 export default function ProfileMain() {
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -162,16 +157,14 @@ export default function ProfileMain() {
             <Popover>
               <PopoverTrigger asChild>
                 <button
-                  className="absolute underline top-4 right-4 flex items-center gap-1 text-sm text-cyan-700 hover:opacity-80 transition"
-                >
+                  className="absolute underline top-4 right-4 flex items-center gap-1 text-sm text-cyan-700 hover:opacity-80 transition">
                   <span>how is XP calculated?</span>
                 </button>
               </PopoverTrigger>
               <PopoverContent
                 sideOffset={12}
                 align="start"
-                className="w-96 bg-white border rounded-lg shadow-lg p-6"
-              >
+                className="w-96 bg-white border rounded-lg shadow-lg p-6">
                 <p className="text-lg font-semibold text-zinc-700 mb-2">XP Breakdown</p>
                 <ul className="space-y-2 text-md text-zinc-600">
                   <li className="flex justify-between">
@@ -230,8 +223,7 @@ export default function ProfileMain() {
             {history.length > 5 && (
               <button
                 onClick={() => setShowFullHistory(!showFullHistory)}
-                className="text-cyan-600 text-sm font-medium mt-2 hover:underline"
-              >
+                className="text-cyan-600 text-sm font-medium mt-2 hover:underline">
                 {showFullHistory ? "See Less" : "See More"}
               </button>
             )}

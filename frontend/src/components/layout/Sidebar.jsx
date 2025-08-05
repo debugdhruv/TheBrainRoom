@@ -120,8 +120,7 @@ export default function Sidebar() {
           <div className="flex justify-between items-center">
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 text-cyan-700 bg-cyan-100 px-3 py-1 font-bold rounded-full text-base"
-            >
+              className="flex items-center gap-2 text-cyan-700 bg-cyan-100 px-3 py-1 font-bold rounded-full text-base">
               <img src={LogoutIcon} alt="Logout" className="h-5 w-5" />
               Logout
             </button>

@@ -178,8 +178,7 @@ export default function SidebarMobile() {
       <div
         className={`fixed inset-0 z-30 transition-opacity duration-500 ${isExpanded ? "bg-black/20 backdrop-blur-sm" : "pointer-events-none opacity-0"
           }`}
-        onClick={() => setIsExpanded(false)}
-      />
+        onClick={() => setIsExpanded(false)}/>
     </>
   );
 }

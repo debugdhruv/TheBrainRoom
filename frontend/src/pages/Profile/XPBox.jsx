@@ -1,8 +1,4 @@
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
 export default function XPBox({ xp }) {
   const history = [
@@ -20,16 +16,14 @@ export default function XPBox({ xp }) {
         <Popover>
           <PopoverTrigger asChild>
             <button
-              className="absolute underline top-4 right-4 flex items-center gap-1 text-sm text-cyan-700 hover:opacity-80 transition"
-            >
+              className="absolute underline top-4 right-4 flex items-center gap-1 text-sm text-cyan-700 hover:opacity-80 transition">
               <span>how is XP calculated?</span>
             </button>
           </PopoverTrigger>
           <PopoverContent
             sideOffset={12}
             align="start"
-            className="w-96 bg-white border rounded-lg shadow-lg p-6"
-          >
+            className="w-96 bg-white border rounded-lg shadow-lg p-6">
             <p className="text-lg font-semibold text-zinc-700 mb-2">XP Breakdown</p>
             <ul className="space-y-2 text-md text-zinc-600">
               <li className="flex justify-between">

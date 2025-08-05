@@ -1,6 +1,7 @@
-import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import React, { useState } from "react";
 import profile from "@/assets/profile.png"
 import logo from "@/assets/darklogo.png"
 import BackIcon from "@/assets/icons/back.svg";
@@ -9,11 +10,6 @@ import instagram from "@/assets/icons/instagram.svg"
 import resume from "@/assets/icons/doc.svg"
 import emailOutline from "@/assets/icons/emailOutline.svg";
 import emailFilled from "@/assets/icons/emailFilled.svg";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger
-} from "@/components/ui/hover-card";
 
 const About = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -21,6 +17,8 @@ const About = () => {
   const handleBack = () => {
     navigate("/dashboard");
   }
+
+
   return (
     <div className="mt-10 scale-[1.05]">
       <div className="fixed left-28 top-16 justify-start">
@@ -216,35 +214,30 @@ const About = () => {
                   name="Name"
                   required
                   placeholder="Your Name"
-                  className="w-1/2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                />
+                  className="w-1/2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
                 <input
                   type="email"
                   name="Email"
                   required
                   placeholder="Your Email"
-                  className="w-1/2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                />
+                  className="w-1/2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
               </div>
               <input
                 type="text"
                 name="Subject"
                 required
                 placeholder="Subject"
-                className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              />
+                className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
               <textarea
                 name="Message"
                 required
                 rows="4"
                 placeholder="Your Message"
-                className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              />
+                className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
               <button
                 type="submit"
                 className="bg-cyan-600 hover:bg-cyan-700 text-white font-medium py-2 px-4 rounded-md"
-                disabled={isSubmitting}
-              >
+                disabled={isSubmitting}>
                 {isSubmitting ? "Sending message..." : "Send Message"}
               </button>
             </form>

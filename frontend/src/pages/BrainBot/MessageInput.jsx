@@ -25,8 +25,7 @@ export default function MessageInput({ onSend }) {
             onKeyDown={handleKeyDown}
             placeholder="Type your message..."
             rows={1}
-            className="flex-1 resize-none text-sm bg-transparent outline-none"
-          />
+            className="flex-1 resize-none text-sm bg-transparent outline-none"/>
           <button
             onClick={handleSend}
             className="hover:bg-zinc-100 rounded-full transition">

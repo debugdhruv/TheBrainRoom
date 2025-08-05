@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { moodQuestions } from "./moodData";
 import MoodQuestion from "./MoodQuestion";
 import MoodLoader from "./MoodLoader";
-import { moodQuestions } from "./moodData";
 import BackIcon from "@/assets/icons/back.svg";
 
 export default function MoodCheck() {
@@ -27,9 +27,9 @@ export default function MoodCheck() {
         await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/mood`, {
           method: "POST",
           headers: {
-  "Content-Type": "application/json",
-  ...(token && { Authorization: `Bearer ${token}` }), // ✅ good code
-},
+            "Content-Type": "application/json",
+            ...(token && { Authorization: `Bearer ${token}` })
+          },
           body: JSON.stringify({
             q1: updated[0],
             q2: updated[1],
@@ -97,8 +97,7 @@ export default function MoodCheck() {
           <button
             onClick={handleBack}
             disabled={currentIndex === 0}
-            className="flex items-center gap-1 bg-cyan-200 text-cyan-600 font-bold text-sm border border-zinc-100 px-4 py-2 rounded-md hover:bg-cyan-100 disabled:opacity-30"
-          >
+            className="flex items-center gap-1 bg-cyan-200 text-cyan-600 font-bold text-sm border border-zinc-100 px-4 py-2 rounded-md hover:bg-cyan-100 disabled:opacity-30">
             <img src={BackIcon} alt="Back" className="h-4 w-4" /> Back
           </button>
         </div>
@@ -114,10 +113,8 @@ export default function MoodCheck() {
           {moodQuestions.map((_, idx) => (
             <div
               key={idx}
-              className={`h-[6px] rounded-full transition-all duration-300 ease-in-out ${
-                idx === currentIndex ? "bg-cyan-600 w-full" : "bg-neutral-300 w-[150px] opacity-60"
-              }`}
-            />
+              className={`h-[6px] rounded-full transition-all duration-300 ease-in-out ${idx === currentIndex ? "bg-cyan-600 w-full" : "bg-neutral-300 w-[150px] opacity-60"
+                }`}/>
           ))}
         </div>
 
@@ -126,8 +123,7 @@ export default function MoodCheck() {
           index={currentIndex}
           question={moodQuestions[currentIndex].question}
           value={responses[currentIndex]}
-          onNext={handleNext}
-        />
+          onNext={handleNext}/>
       </div>
     </div>
   );

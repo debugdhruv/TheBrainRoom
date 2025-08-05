@@ -113,13 +113,11 @@ export default function ForgotPasswordDrawer() {
               placeholder="Enter your Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full max-w-sm"
-            />
+              className="w-full max-w-sm"/>
             <Button
               className="w-full max-w-sm"
               onClick={handleEmailSubmit}
-              disabled={isSubmitting}
-            >
+              disabled={isSubmitting}>
               {isSubmitting ? "Sending OTP..." : "Verify Email"}
             </Button>
           </>
@@ -177,18 +175,15 @@ export default function ForgotPasswordDrawer() {
                     setPasswordError("");
                   }
                 }}
-                className="w-full pr-12"
-              />
+                className="w-full pr-12"/>
               <button
                 type="button"
                 onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2"
-              >
+                className="absolute right-3 top-1/2 transform -translate-y-1/2">
                 <img
                   src={showPassword ? EyeClosed : EyeOpen}
                   alt="Toggle Password"
-                  className="h-5 w-5 opacity-60 hover:opacity-100"
-                />
+                  className="h-5 w-5 opacity-60 hover:opacity-100"/>
               </button>
             </div>
 
@@ -202,8 +197,7 @@ export default function ForgotPasswordDrawer() {
               <Button
                 className="w-full max-w-sm mt-2"
                 disabled={isSubmitting || !newPassword || !!passwordError}
-                onClick={handlePasswordChange}
-              >
+                onClick={handlePasswordChange}>
                 {isSubmitting ? "Setting..." : "Set New Password"}
               </Button>
             </DrawerClose>

@@ -1,5 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { Toaster } from "@/components/ui/sonner";
+import { isSessionValid } from "@/utils/session";
 import AuthPage from "./pages/Authpage";
+import ProtectedRoute from "@/components/common/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import Mood from "./pages/MoodCheck/MoodCheck";
 import MoodResult from "./pages/MoodCheck/MoodResult";
@@ -8,13 +11,12 @@ import Forums from "./pages/Forums";
 import Profile from "./pages/Profile/ProfileMain";
 import Premium from "./pages/Premium";
 import DashboardLayout from "./components/layout/DashboardLayout";
-import { Toaster } from "@/components/ui/sonner";
 import NotFound from "@/pages/NotFound";
-import ProtectedRoute from "@/components/common/ProtectedRoute";
-import { isSessionValid } from "@/utils/session";
 import BotIntro from "./pages/BrainBot/BotIntro";
 import AboutPage from "@/pages/About";
 import PasswordProtectPage from "./pages/pwdProtect";
+
+
 export default function App() {
   return (
     <>
@@ -30,7 +32,7 @@ export default function App() {
                 <Dashboard />
               </ProtectedRoute>
             }
-          />
+            />
           <Route path="mood">
             <Route
               index
@@ -39,7 +41,7 @@ export default function App() {
                   <Mood />
                 </ProtectedRoute>
               }
-            />
+              />
             <Route
               path="result"
               element={
@@ -47,7 +49,7 @@ export default function App() {
                   <MoodResult />
                 </ProtectedRoute>
               }
-            />
+              />
           </Route>
           <Route
             path="bot"
@@ -56,7 +58,7 @@ export default function App() {
                 <BotIntro />
               </ProtectedRoute>
             }
-          />
+            />
           <Route
             path="bot/chat"
             element={
@@ -64,7 +66,7 @@ export default function App() {
                 <Bot />
               </ProtectedRoute>
             }
-          />
+            />
           <Route
             path="forums"
             element={
@@ -72,7 +74,7 @@ export default function App() {
                 <Forums />
               </ProtectedRoute>
             }
-          />
+            />
           <Route
             path="profile"
             element={
@@ -80,7 +82,7 @@ export default function App() {
                 <Profile />
               </ProtectedRoute>
             }
-          />
+            />
           <Route
             path="premium"
             element={
@@ -88,7 +90,7 @@ export default function App() {
                 <Premium />
               </ProtectedRoute>
             }
-          />
+            />
         </Route>
         <Route
           path="about"
@@ -97,14 +99,14 @@ export default function App() {
               <AboutPage />
             </ProtectedRoute>
           }
-        />
+          />
         <Route path="/pwd-protect" element={
           <ProtectedRoute>
             <PasswordProtectPage />
           </ProtectedRoute>
-          }
+        }
         />
-        
+
         {/* Fallback Route Page */}
         <Route path="*" element={<NotFound />} />
         {/* Explicit /404 Page */}
@@ -115,7 +117,9 @@ export default function App() {
   );
 }
 
-console.log = () => {}
-console.error = () => {}
-console.info = () => {}
-console.warn = () => {}
+
+// //To remove all the console line globally at once...
+// console.log = () => { }
+// console.error = () => { }
+// console.info = () => { }
+// console.warn = () => { }

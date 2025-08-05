@@ -12,12 +12,12 @@ export const UserProvider = ({ children }) => {
       try {
         const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/profile/me`, {
           headers: {
-  "Content-Type": "application/json",
-  ...(token && { Authorization: `Bearer ${token}` }), // ✅ good code
-},
+            "Content-Type": "application/json",
+            ...(token && { Authorization: `Bearer ${token}` })
+          },
         });
 
-        const data = await res.json(); 
+        const data = await res.json();
         if (res.ok) {
           setUserDetails(data.user);
         } else {

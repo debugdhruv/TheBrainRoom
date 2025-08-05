@@ -9,7 +9,6 @@ import { useXP } from "@/context/useXP";
 import { loaderEvents } from "@/context/loaderEvents";
 
 export default function MoodResult() {
-//   const { userDetails } = useUser();
   const location = useLocation();
   const navigate = useNavigate();
   const { addXP } = useXP();
@@ -137,8 +136,7 @@ useEffect(() => {
       source: "YouTube",
       link: "https://www.youtube.com/watch?v=ZToicYcHIOU",
       thumbnail: "https://img.youtube.com/vi/ZToicYcHIOU/mqdefault.jpg",
-    },
-    
+    }
   ];
 
   const handleRetake = () => navigate("/dashboard/mood");
@@ -178,8 +176,7 @@ useEffect(() => {
                 strokeLinecap="round"
                 strokeDasharray={arcLength}
                 strokeDashoffset={(1 - scoreRatio) * arcLength}
-                style={{ transition: "stroke-dashoffset 0.8s ease-out" }}
-              />
+                style={{ transition: "stroke-dashoffset 0.8s ease-out" }}/>
               <defs>
                 <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#0E6490" />

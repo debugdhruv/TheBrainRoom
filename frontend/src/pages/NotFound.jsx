@@ -27,8 +27,7 @@ export default function NotFound() {
         </p>
         <button
           onClick={handleRedirect}
-          className="inline-block px-6 py-3 bg-cyan-700 text-white rounded-full hover:bg-cyan-600 transition"
-        >
+          className="inline-block px-6 py-3 bg-cyan-700 text-white rounded-full hover:bg-cyan-600 transition">
           Take Me Back
         </button>
       </div>

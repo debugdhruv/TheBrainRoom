@@ -6,17 +6,17 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns";
-import AuthWrapper from "@/components/common/AuthWrapper";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { XPContext } from "@/context/XPContext";
 import CalendarIcon from "@/assets/icons/calendar.svg"
-import { toast } from "sonner";
 import EyeOpen from "@/assets/icons/eye1.svg"
 import EyeClosed from "@/assets/icons/eye2.svg"
 import ForgotPasswordDrawer from "@/pages/ForgotPasswordDrawer";
+import AuthWrapper from "@/components/common/AuthWrapper";
 
 export default function AuthPage({ mode: initialMode }) {
 
@@ -236,15 +236,13 @@ export default function AuthPage({ mode: initialMode }) {
                     placeholder="First Name"
                     className="w-full placeholder:text-zinc-500"
                     value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                  />
+                    onChange={(e) => setFirstName(e.target.value)}/>
                   {/* Last Name */}
                   <Input
                     placeholder="Last Name"
                     className="w-full placeholder:text-zinc-500"
                     value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
+                    onChange={(e) => setLastName(e.target.value)}/>
                 </div>
                 {/* Error messages for First Name and Last Name */}
                 <div className="flex space-x-2 mt-1">
@@ -284,18 +282,15 @@ export default function AuthPage({ mode: initialMode }) {
                       <PopoverTrigger asChild>
                         <Button
                           variant="outline"
-                          className="w-full justify-between text-left font-normal text-zinc-500 px-3 bg-white border border-input shadow-sm placeholder:text-zinc-500"
-                        >
+                          className="w-full justify-between text-left font-normal text-zinc-500 px-3 bg-white border border-input shadow-sm placeholder:text-zinc-500">
                           <span
-                            className={`text-sm ${dob ? "text-zinc-800" : "text-zinc-500"}`}
-                          >
+                            className={`text-sm ${dob ? "text-zinc-800" : "text-zinc-500"}`}>
                             {dob ? format(dob, "dd-MM-yyyy") : "Date of Birth"}
                           </span>
                           <img
                             src={CalendarIcon}
                             alt="calendar icon"
-                            className={`h-5 w-5 ${dob ? "opacity-100" : "opacity-60"}`}
-                          />
+                            className={`h-5 w-5 ${dob ? "opacity-100" : "opacity-60"}`}/>
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto max-h-[300px] overflow-y-auto p-0" align="start">
@@ -306,12 +301,13 @@ export default function AuthPage({ mode: initialMode }) {
                           captionLayout="dropdown"
                           dropdownCaption={true}
                           fromYear={1950}
-                          toYear={new Date().getFullYear()}
-                        />
+                          toYear={new Date().getFullYear()}/>
                       </PopoverContent>
                     </Popover>
                     {submitted && errors.dob && (
-                      <div className="bg-cyan-100 text-cyan-700 text-xs rounded px-2 py-1 mt-1">{errors.dob}</div>
+                      <div className="bg-cyan-100 text-cyan-700 text-xs rounded px-2 py-1 mt-1">
+                        {errors.dob}
+                      </div>
                     )}
                   </div>
                 </div>
@@ -325,8 +321,7 @@ export default function AuthPage({ mode: initialMode }) {
               placeholder="Email Address"
               className="w-full placeholder:text-zinc-500 pr-28"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+              onChange={(e) => setEmail(e.target.value)}/>
             {mode === "register" && email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && !otpSent && (
               <div
                 onClick={async () => {
@@ -394,8 +389,7 @@ export default function AuthPage({ mode: initialMode }) {
                     placeholder="Enter OTP"
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
-                    className="placeholder:text-zinc-500"
-                  />
+                    className="placeholder:text-zinc-500"/>
                 )}
 
                 {otpSent && (
@@ -473,8 +467,7 @@ export default function AuthPage({ mode: initialMode }) {
                         } finally {
                           setIsSendingOtp(false);
                         }
-                      }}
-                    >
+                      }}>
                       Resend OTP
                     </span>
                   )}
@@ -490,18 +483,15 @@ export default function AuthPage({ mode: initialMode }) {
               className="w-full pr-16 placeholder:text-zinc-500"
               type={showPassword ? "text" : "password"}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+              onChange={(e) => setPassword(e.target.value)}/>
             <button
               type="button"
               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-zinc-600 hover:text-zinc-800 transition-colors duration-200"
-              onClick={() => setShowPassword((prev) => !prev)}
-            >
+              onClick={() => setShowPassword((prev) => !prev)}>
               <img
                 src={showPassword ? EyeClosed : EyeOpen}
                 alt={showPassword ? "Hide password" : "Show password"}
-                className="h-5 w-5 opacity-60 hover:opacity-100"
-              />
+                className="h-5 w-5 opacity-60 hover:opacity-100"/>
             </button>
           </div>
           {mode === "login" && (

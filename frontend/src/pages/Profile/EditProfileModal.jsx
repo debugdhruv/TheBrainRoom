@@ -1,40 +1,20 @@
 import { useEffect, useState } from "react";
-import EditIcon from "@/assets/icons/Edit.svg";
-import CalendarIcon from "@/assets/icons/calendar.svg";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { useUser } from "@/context/useUser";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/components/ui/popover";
-
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import EditIcon from "@/assets/icons/Edit.svg";
+import CalendarIcon from "@/assets/icons/calendar.svg";
 
 export default function EditProfileModal({ open, onClose }) {
   const { userDetails, setUserDetails } = useUser();
   const [editMode, setEditMode] = useState(false);
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [dob, setDob] = useState(null);
@@ -78,9 +58,9 @@ export default function EditProfileModal({ open, onClose }) {
       const res = await fetch(`${baseUrl}/api/profile/update`, {
         method: "PUT",
         headers: {
-  "Content-Type": "application/json",
-  ...(token && { Authorization: `Bearer ${token}` }), // ✅ good code
-},
+          "Content-Type": "application/json",
+          ...(token && { Authorization: `Bearer ${token}` })
+        },
         body: JSON.stringify(payload),
       });
 
@@ -120,8 +100,7 @@ export default function EditProfileModal({ open, onClose }) {
               id="firstName"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              disabled={!editMode}
-            />
+              disabled={!editMode} />
           </div>
 
           <div className="grid gap-2">
@@ -130,8 +109,7 @@ export default function EditProfileModal({ open, onClose }) {
               id="lastName"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              disabled={!editMode}
-            />
+              disabled={!editMode} />
           </div>
 
           <div className="grid gap-2">
@@ -154,8 +132,7 @@ export default function EditProfileModal({ open, onClose }) {
                   captionLayout="dropdown"
                   dropdownCaption={true}
                   fromYear={1950}
-                  toYear={new Date().getFullYear()}
-                />
+                  toYear={new Date().getFullYear()} />
               </PopoverContent>
             </Popover>
           </div>
@@ -181,8 +158,7 @@ export default function EditProfileModal({ open, onClose }) {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              disabled={!editMode}
-            />
+              disabled={!editMode} />
           </div>
 
           <div className="grid gap-2">
@@ -193,8 +169,7 @@ export default function EditProfileModal({ open, onClose }) {
               placeholder="Enter current password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
-              disabled={!editMode}
-            />
+              disabled={!editMode} />
           </div>
 
           <div className="grid gap-2">
@@ -205,8 +180,7 @@ export default function EditProfileModal({ open, onClose }) {
               placeholder="Enter new password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              disabled={!editMode}
-            />
+              disabled={!editMode} />
           </div>
         </form>
 

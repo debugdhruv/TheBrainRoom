@@ -73,8 +73,7 @@ export default function Dashboard() {
           <div
             key={index}
             onClick={() => handleCardClick(card.link, card.title)}
-            className="cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition-all overflow-hidden border"
-          >
+            className="cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition-all overflow-hidden border">
             <div className="w-full aspect-video bg-zinc-200 flex items-center justify-center overflow-hidden">
               <img
                 src={card.thumbnail}
@@ -93,8 +92,7 @@ export default function Dashboard() {
       <div className="flex justify-center mt-6">
         <button
           onClick={() => setShowAll((prev) => !prev)}
-          className="text-cyan-600 font-medium hover:underline hover:text-cyan-800 transition"
-        >
+          className="text-cyan-600 font-medium hover:underline hover:text-cyan-800 transition">
           {showAll ? "Show Less" : "View All"}
         </button>
       </div>

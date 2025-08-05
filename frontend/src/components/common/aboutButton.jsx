@@ -13,8 +13,7 @@ export default function FloatingAboutButton() {
         ${isActive
           ? "font-bold border border-zinc-200 bg-gradient-to-r from-cyan-500 to-slate-900 text-white hover:brightness-110"
           : "text-cyan-600 font-bold border border-cyan-600"}`}
-      title="About The Brain Room"
-    >
+      title="About The Brain Room">
       Let's Connect
     </a>
   );

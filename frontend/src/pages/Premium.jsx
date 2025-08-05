@@ -55,8 +55,7 @@ const Premium = () => {
             {isEligible && !isUnlocked && (
               <Button
                 onClick={handleUnlock}
-                className="w-full bg-cyan-700 hover:bg-cyan-800 text-white font-semibold"
-              >
+                className="w-full bg-cyan-700 hover:bg-cyan-800 text-white font-semibold">
                 Unlock Premium Access
               </Button>
             )}
@@ -66,8 +65,7 @@ const Premium = () => {
 
       <div
         className={`transition-all duration-500 ease-in-out max-w-4xl w-full px-6 text-center ${!isUnlocked ? "blur-sm opacity-30 pointer-events-none select-none" : ""
-          }`}
-      >
+          }`}>
         <h1 className="text-5xl md:text-6xl font-extrabold mb-6 text-cyan-800 animate-slide-up">
           🌟 BrainRoom Premium
         </h1>

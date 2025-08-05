@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
-const otpStore = new Map(); // key: email, value: { otp, expiresAt }
+const otpStore = new Map();
 
 // ⚙️ Email transporter setup
 const transporter = nodemailer.createTransport({
